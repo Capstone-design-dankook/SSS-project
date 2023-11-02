@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,500&display=swap');
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    width: 400px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 25px;
+    font-weight: 100;
+    margin-top: 20%;
+    display: flex;
+    justify-content: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.industry_select,
+.district_select {
+    margin-bottom: 20px;
+}
+
+select {
+    width: 180px; /* 원하는 너비설정 */
+    padding: 5px; /* 여백으로 높이 설정 */
+    margin-top: 10px;
+    font-family: inherit;  /* 폰트 상속 */
+    text-align: center;
+    background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%; /* 네이티브 화살표 대체 */  
+    border: 1px solid #999; 
+    border-radius: 2px; /* iOS 둥근모서리 제거 */
+    -webkit-appearance: none; /* 네이티브 외형 감추기 */
+    -moz-appearance: none;
+    appearance: none;
+}
+
+select:focus {
+    outline: none;
+    border-color: dodgerblue;
+}
+
+
+label {
+    margin-top: 12px;
+    margin-right: 7px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.industry_select {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.district_select {
+    display: flex;
+    justify-content: center;
+}
+
+.select_submit {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    width: 50px;
+    height: 30px;
+    padding: 10px 20px;
+    background-color: dodgerblue;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
