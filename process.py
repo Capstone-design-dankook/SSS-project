@@ -4717,4 +4717,12 @@ dtype={
 }
 zungsic_4.to_sql(name='output_zungsic_4', con=conn, if_exists='replace', dtype=dtype, index=True, index_label="id")
 
+districtcode = pd.read_csv("csv/행정동코드.csv", encoding="cp949")
 
+database = "db.sqlite3"
+conn = sqlite3.connect(database)
+dtype={
+    "행정동코드": "CharField",
+    "행정동명": "CharField",
+}
+districtcode.to_sql(name='input_districtcode', con=conn, if_exists='replace', dtype=dtype, index=True, index_label="id")

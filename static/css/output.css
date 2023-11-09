@@ -1,0 +1,47 @@
+body {
+    background-color: #4065B8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+}
+
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+    padding: 1rem 2.5rem 2.5rem;
+}
+
+main {
+    background-color: white;
+    width: 68%;
+    margin-bottom: 0;
+}
+
+aside {
+    background-color: white;
+    width: 26%;
+}
+
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.header h1 {
+    font-family: 'DM Sans', sans-serif;
+    color: white;
+    font-size: 40px;
+}
+
+.chart {
+    margin-top: 20%;
+    background-color: white;
+}

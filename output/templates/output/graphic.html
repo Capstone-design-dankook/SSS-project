@@ -4,17 +4,61 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <title>Triple S</title>
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}"/>
-    <link rel="stylesheet" href="{% static 'css/pretty.css' %}"/>
-    <title>sss</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@1,9..40,500&family=Goldman&family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <div class="header">
+        <h1>Seoul Startup Spot</h1>
+    </div>
 </head>
+
 <body>
+    <div class="container">
+        <main>
+            <p>Main</P>
+        </main>
 
-<div class="header">
-    <h1>서울시 창업 위치 추천</h1>
-</div>
+        <aside>
+            <p>Side</p>
+        <aside>
+    </div>
 
-    <img src="data:image/png;base64,{{ graphic }}">
+        <div class="chart" style="width: 50%;">
+            <canvas id="population"></canvas>
+        </div>
+
+        <script>
+            const ctx = document.getElementById('population');
+            const population = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['00~06', '06~11', '11~14', '14~17', '17~21', '21~24'],
+                    datasets: [{
+                        label: '시간대별 유동인구',
+                        data: [{{ data_00_06 }}, {{ data_06_11 }}, {{ data_11_14 }}, {{ data_14_17 }}, {{ data_17_21 }}, {{ data_21_24 }}],
+                        backgroundColor: 'skyblue',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            }
+
+            );
+        </script>
+
+
 </body>
 </html>
 
