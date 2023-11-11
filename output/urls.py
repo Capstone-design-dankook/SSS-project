@@ -1,6 +1,10 @@
 from django.urls import path
 from . import views
 
+app_name = 'output'
+
 urlpatterns = [
-    path('', views.chart_view, name='output_neighborhood'),
+    path('', views.input),
+    path('input/', views.input),
+    path('output/', views.input_district, name='output'),
 ]
