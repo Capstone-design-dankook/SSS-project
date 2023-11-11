@@ -42,6 +42,7 @@ form {
 
 label {
     font-family: 'Nanum Gothic', sans-serif;
+    font-weight: 700;
     display: block;
     margin-bottom: 5px;
 }
@@ -67,6 +68,7 @@ select:focus {
 
 button {
     font-family: 'Nanum Gothic', sans-serif;
+    font-weight: 700;
     padding: 10px 20px;
     background-color: #4065B8;
     color: #fff;

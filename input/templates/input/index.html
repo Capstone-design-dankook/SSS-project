@@ -8,8 +8,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@1,9..40,500&family=Goldman&family=Nanum+Gothic&display=swap" rel="stylesheet">
-    <title>sss</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@1,9..40,500&family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <title>SSS</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
@@ -18,7 +18,7 @@
   <h1>Seoul Startup Spot</h1>
 </div>
 
-  <form id="locationForm" method="post" action="/output">
+  <form id="locationForm" method="POST" action="{% url '/output' %}">
     <div class="container">
 
       <div class="industry_select">
@@ -131,7 +131,7 @@
       </div>
 
       <div class="select_submit">
-        <button type="button" onclick="validateSelection()">찾기</button>
+        <button type="button" onclick="validateSelection()">상권 보기</button>
       </div>
 
     </div>
