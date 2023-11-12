@@ -5,7 +5,7 @@ from django.db.models import Avg
 def input(request):
     return render(request, 'output/input.html')
 
-def input_district(request):
+def output(request):
     if request.method == 'GET':
         return render(request, 'output/group.html')
 
