@@ -1,0 +1,14 @@
+@media (min-width: 600px) {
+    .home {
+        padding: 16vw 1rem;
+    }
+    .home h2 {
+        font-size: 2.5rem;
+        margin: 0 0 2rem;
+        background: none;
+        padding: 0;
+    }
+    .home p {
+        width: 38vw;
+    }
+}
