@@ -1,6 +1,10 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+class DistrictCode(models.Model):
+    행정동코드 = models.CharField(max_length=10, blank=True, null=True)
+    행정동명 = models.CharField(max_length=15, blank=True, null=True)
+
 class Final1(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
     분기당매출건수 = models.IntegerField(validators=[MinValueValidator(

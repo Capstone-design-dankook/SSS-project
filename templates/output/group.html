@@ -1,0 +1,105 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+
+    <title>SSS</title>
+
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}"/>
+
+    <link rel="stylesheet" href="{% static 'css/output.css' %}"/>
+
+    <script src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=962crbdj1x&callback=initMap"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@1,9..40,500&family=Goldman&family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+
+
+    <div class="header">
+        <h1>Seoul Startup Spot</h1>
+    </div>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="district-name">
+            {{ neighborhood }}
+        </div>
+
+        <div class="block">
+            <main>
+
+                <!--지도 api-->
+               <!--
+                <div id="map">
+                    
+                    <script>
+                        function initMap(){
+                            var mapOptions = {
+                                center: new naver.maps.LatLng(37.3595704, 127.105399),
+                                zoom:10
+                            };
+                            var map = new naver.maps.Map('map', initMap);
+                        }
+
+                    </script>
+                </div>-->
+
+                {{ data.map }}
+                
+            </main>
+
+            <aside>
+                <div class="list">
+                    <div class="small-block">
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+
+        <div class="group">
+            
+            <div class="big-button">
+                <h3>그룹1 : {{ group.2.상권코드 }}</h3>
+            
+            </div>
+        </div>
+
+        <div class="group">
+            <div class="big-button">
+            </div>
+        </div>
+
+        <div class="group">
+            <div class="big-button">
+            </div>
+        </div>
+
+        <div class="group">
+            <div class="big-button">
+            </div>
+        </div>
+
+        <div class="group">
+            <div class="big-button">
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+    <footer></footer>
+
+
+</body>
+</html>
+

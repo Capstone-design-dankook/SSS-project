@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chart.js Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div style="width: 50%;">
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('myChart');
+        const population = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['00~06', '06~11', '11~14', '14~17', '17~21', '21~24'],
+                datasets: [{
+                    label: '시간대별 유동인구',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: 'skyblue',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
