@@ -147,10 +147,10 @@
         if (selectedIndustry === 'select' || selectedDistrict === 'select' || selectedNeighborhood === 'select') {
             alert("모든 옵션을 선택해주세요!");
         } else {
-          window.location.href = "/output/";
+          document.getElementById("locationForm").submit();
         }
     }
-</script>
+  </script>
 
 </body>
 </html>

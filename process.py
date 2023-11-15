@@ -4725,4 +4725,15 @@ dtype={
     "행정동코드": "CharField",
     "행정동명": "CharField",
 }
-districtcode.to_sql(name='input_districtcode', con=conn, if_exists='replace', dtype=dtype, index=True, index_label="id")
+districtcode.to_sql(name='output_districtcode', con=conn, if_exists='replace', dtype=dtype, index=True, index_label="id")
+
+businesscode = pd.read_csv("csv/상권코드_상권명.csv", encoding="cp949")
+
+database = "db.sqlite3"
+conn = sqlite3.connect(database)
+dtype={
+    "구상권코드": "CharField",
+    "상권코드명": "CharField",
+    "행정동코드": "CharField",
+}
+businesscode.to_sql(name='output_businesscode', con=conn, if_exists='replace', dtype=dtype, index=True, index_label="id")
