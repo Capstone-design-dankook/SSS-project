@@ -93,14 +93,15 @@ main {
 
 }
 
-aside {
-    width: 40%;
+#map {
+    height : 350px;
+    width : 85%;
+    margin-left: 50px;
+    margin-top: 20px;
 }
 
-.map-image {
-    width: 85%;
-    margin-top: 30px;
-    margin-left: 50px;
+aside {
+    width: 40%;
 }
 
 .header {
