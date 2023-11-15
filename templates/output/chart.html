@@ -1,23 +1,76 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <title>Chart.js Example</title>
+    <meta charset="UTF-8">
+    <title>SSS</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/chart.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div style="width: 50%;">
-        <canvas id="myChart"></canvas>
-    </div>
+    <header class="header">
+        <h1>Seoul Startup Spot</h1>
+    </header>
+
+    <nav class="menu">
+        <ul>
+            <li><a href="#salesChart">매출금액</a></li>
+            <li><a href="#floatingPopulationChart">유동인구</a></li>
+            <li><a href="#residentialPopulationChart">생활인구</a></li>
+            <li><a href="#attractingFacilitiesChart">집객시설</a></li>
+        </ul>
+    </nav>
+
+
+    <section class="wrapper content">
+        <div class="poplulation-text">
+            <h2 class="title">17~21 유동인구가 가장 높습니다.</h2>
+        </div>
+        <div class="chart-box">
+            <canvas id="populationChart"></canvas>
+        </div>
+
+        <div class="sail-text">
+            <h2 class="title">금요일 매출이 가장 높습니다.</h2>
+        </div>
+        <div class="chart-box">
+            <canvas id="sailChart"></canvas>
+        </div>
+    </section>
 
     <script>
-        const ctx = document.getElementById('myChart');
-        const population = new Chart(ctx, {
+        const populationCtx = document.getElementById('populationChart').getContext('2d');
+        const populationChart = new Chart(populationCtx, {
             type: 'bar',
             data: {
                 labels: ['00~06', '06~11', '11~14', '14~17', '17~21', '21~24'],
                 datasets: [{
                     label: '시간대별 유동인구',
-                    data: [12, 19, 3, 5, 2, 3],
+                    data: [{{ data_00_06 }}, {{ data_06_11 }}, {{ data_11_14 }}, {{ data_14_17 }}, {{ data_17_21 }}, {{ data_21_24 }}],
+                    backgroundColor: 'lightgreen',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const sailCtx = document.getElementById('sailChart').getContext('2d');
+        const sailChart = new Chart(sailCtx, {
+            type: 'bar',
+            data: {
+                labels: ['월', '화', '수', '목', '금', '토', '일'],
+                datasets: [{
+                    label: '요일별 매출',
+                    data: [{{ mon_sail }}, {{ tue_sail }}, {{ wed_sail }}, {{ thu_sail }}, {{ fri_sail }}, {{ sat_sail }}, {{ sun_sail }}],
                     backgroundColor: 'skyblue',
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1
@@ -32,5 +85,6 @@
             }
         });
     </script>
+
 </body>
 </html>

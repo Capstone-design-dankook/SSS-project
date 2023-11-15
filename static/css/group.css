@@ -1,0 +1,81 @@
+body {
+    font-family: 'DM Sans', 'Nanum Gothic', sans-serif;
+    background-color: #f2f2f2;
+    color: #333;
+    margin: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.district-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.block {
+    display: flex;
+}
+
+main {
+    flex: 1;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+aside {
+    flex: 1;
+}
+
+.business-list {
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 12px;
+}
+
+th {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.group {
+    margin-top: 20px;
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.detail-button {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.group a:hover {
+    background-color: #2980b9;
+}

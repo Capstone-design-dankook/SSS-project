@@ -1,5 +1,5 @@
 body {
-    background-color: #17516A;
+    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,12 +9,15 @@ body {
 }
 
 .container {
-    width: 700px;
-    height: 1400px;
+    width: 900px;
+    height: 1800px;
     margin: 0 auto;
     margin-top: 20px;
-    border-radius: 10px;
     background-color: #FFFFFF;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .block {
@@ -35,8 +38,6 @@ body {
     height: 88%;
     margin-top: 30px;
     margin-left: 10px;
-    font-family: 'Nanum Gothic', sans-serif;
-    font-size: 10px;
 }
 
 .small-block {
@@ -60,7 +61,7 @@ body {
     margin-top: 3%;
 }
 
-.big-button {
+.detail-button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -109,8 +110,7 @@ aside {
 }
 
 .header h1 {
-    font-family: 'DM Sans', sans-serif;
-    color: white;
+    color: black;
     font-size: 40px;
 }
 

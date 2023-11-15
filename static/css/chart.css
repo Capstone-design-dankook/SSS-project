@@ -1,0 +1,78 @@
+body {
+    font-family: 'DM Sans', 'Nanum Gothic', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+}
+
+.header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1em;
+}
+
+.wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.title {
+    color: #333;
+}
+
+.chart-box {
+    margin-top: 20px;
+}
+
+/* Style for chart containers */
+canvas {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 600px) {
+    .wrapper {
+        padding: 10px;
+    }
+
+    .chart-box {
+        margin-top: 10px;
+    }
+}
+
+header {
+    background-color: #333;
+    color: white;
+}
+
+.menu {
+    background-color: #444;
+    overflow: hidden;
+}
+
+.menu ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.menu li {
+    float: left;
+}
+
+.menu a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.menu a:hover {
+    background-color: #555;
+}

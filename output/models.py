@@ -1,6 +1,14 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+class BusinessLocation(models.Model):
+    상권코드 = models.CharField(max_length=10, blank=True, null=True)
+    상권코드명 = models.CharField(max_length=100, blank=True, null=True)
+    x = models.FloatField(validators=[MinValueValidator(
+        0), MaxValueValidator(1000)], blank=True, null=True)
+    y = models.FloatField(validators=[MinValueValidator(
+        0), MaxValueValidator(1000)], blank=True, null=True)
+
 class DistrictCode(models.Model):
     행정동코드 = models.CharField(max_length=10, blank=True, null=True)
     행정동명 = models.CharField(max_length=15, blank=True, null=True)

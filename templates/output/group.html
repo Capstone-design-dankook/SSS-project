@@ -1,4 +1,6 @@
 {% load static %}
+{% load humanize %}
+{% load mathfilters %}
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -9,7 +11,7 @@
 
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}"/>
 
-    <link rel="stylesheet" href="{% static 'css/output.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/group.css' %}"/>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,60 +27,79 @@
 
     <div class="container">
         <div class="district-name">
-            {{ neighborhood }}
+            {{ selected_neighborhood }}
         </div>
 
         <div class="block">
             <main>
-                <img class="map-image" src="/static/images/map.png">
+                {{ map|safe }}
             </main>
 
             <aside>
-                <div class="list">
-                    <div class="small-block">
-                        상권명 매출금액 점포수 상권변화지표
-                        {{ a }}
-                        {{ names }}
-                        {{ store }}
-                    </div>
+                <div class="business-list">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th scope="col">상권명</td>
+                            <th scope="col">월별매출금액</td>
+                            <th scope="col">점포수</td>
+                            <th scope="col">상권변화지표</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for business_name in business_names %}
+                            {% for business_item in business_list %}
+                            {% if business_name.구상권코드 == business_item.상권코드 %}
+                                        <tr>
+                                            <td>{{ business_name.상권코드명 }}</td>
+                                            <td>{{ business_item.분기당매출금액|div:3|floatformat:0|intcomma }}</td>
+                                            <td>{{ business_item.점포수 }}</td>
+                                            <td>다이나믹</td>
+                                        </tr>
+                            {% endif %}
+                            {% endfor %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </aside>
 
         </div>
 
         <div class="group">
-            <a href="{% url 'output:group_detail' group_id=1 %}" class="big-button">
+            첫번째 그룹
+            <a href="{% url 'output:group_detail' group_id=1 %}" class="detail-button">
                 상세보기
             </a>
         </div>
 
         <div class="group">
-            <div class="big-button">
+            두번째 그룹
+            <a href="{% url 'output:group_detail' group_id=2 %}" class="detail-button">
                 상세보기
-            </div>
+            </a>
         </div>
 
         <div class="group">
-            <div class="big-button">
+            세번째 그룹
+            <a href="{% url 'output:group_detail' group_id=3 %}" class="detail-button">
                 상세보기
-            </div>
+            </a>
         </div>
 
         <div class="group">
-            <div class="big-button">
+            네번째 그룹
+            <a href="{% url 'output:group_detail' group_id=4 %}" class="detail-button">
                 상세보기
-            </div>
+            </a>
         </div>
 
         <div class="group">
-            <div class="big-button">
+            다섯번째 그룹
+            <a href="{% url 'output:group_detail' group_id=5 %}" class="detail-button">
                 상세보기
-            </div>
+            </a>
         </div>
-
-
-
-
 
     </div>
 
