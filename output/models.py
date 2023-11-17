@@ -1,6 +1,15 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+class Feature(models.Model):
+    업종코드 = models.IntegerField(validators=[MinValueValidator(
+        0), MaxValueValidator(9)], blank=True, null=True)
+    cluster = models.IntegerField(validators=[MinValueValidator(
+        0), MaxValueValidator(3)], blank=True, null=True)
+    단가 = models.IntegerField(validators=[MinValueValidator(
+        0), MaxValueValidator(100000)], blank=True, null=True)
+    특징 = models.CharField(max_length=100, blank=True, null=True)
+
 class BusinessLocation(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
     상권코드명 = models.CharField(max_length=100, blank=True, null=True)
@@ -1679,7 +1688,7 @@ class BBANG_1(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class BBANG_2(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -1862,7 +1871,7 @@ class BBANG_2(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class BBANG_3(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -2045,7 +2054,7 @@ class BBANG_3(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
     
 class BBANG_4(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -2228,7 +2237,7 @@ class BBANG_4(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
     
 class BUNSIC_1(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -2411,7 +2420,7 @@ class BUNSIC_1(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class BUNSIC_2(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -2594,7 +2603,7 @@ class BUNSIC_2(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
     
 class BUNSIC_3(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -2777,7 +2786,7 @@ class BUNSIC_3(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class BUNSIC_4(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -2960,7 +2969,7 @@ class BUNSIC_4(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class CAFE_1(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -3143,7 +3152,7 @@ class CAFE_1(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class CAFE_2(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -3326,7 +3335,7 @@ class CAFE_2(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class CAFE_3(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -3509,7 +3518,7 @@ class CAFE_3(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
     
 class CAFE_4(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -3692,7 +3701,7 @@ class CAFE_4(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class CHICKEN_1(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -3875,7 +3884,7 @@ class CHICKEN_1(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class CHICKEN_2(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -4058,7 +4067,7 @@ class CHICKEN_2(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class CHICKEN_3(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -4241,7 +4250,7 @@ class CHICKEN_3(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class CHICKEN_4(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -4424,7 +4433,7 @@ class CHICKEN_4(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class FASTFOOD_1(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -4607,7 +4616,7 @@ class FASTFOOD_1(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class FASTFOOD_2(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -4790,7 +4799,7 @@ class FASTFOOD_2(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class FASTFOOD_3(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -4973,7 +4982,7 @@ class FASTFOOD_3(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class FASTFOOD_4(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -5156,7 +5165,7 @@ class FASTFOOD_4(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class HANSIC_1(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -5339,7 +5348,7 @@ class HANSIC_1(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class HANSIC_2(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -5522,7 +5531,7 @@ class HANSIC_2(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class HANSIC_3(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -5705,7 +5714,7 @@ class HANSIC_3(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class HANSIC_4(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -5888,7 +5897,7 @@ class HANSIC_4(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class HOF_1(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -6071,7 +6080,7 @@ class HOF_1(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class HOF_2(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -6254,7 +6263,7 @@ class HOF_2(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class HOF_3(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -6437,7 +6446,7 @@ class HOF_3(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class HOF_4(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -6620,7 +6629,7 @@ class HOF_4(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class ILSIC_1(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -6803,7 +6812,7 @@ class ILSIC_1(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class ILSIC_2(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -6986,7 +6995,7 @@ class ILSIC_2(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class ILSIC_3(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -7169,7 +7178,7 @@ class ILSIC_3(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class ILSIC_4(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -7352,7 +7361,7 @@ class ILSIC_4(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class YANGSIC_1(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -7535,7 +7544,7 @@ class YANGSIC_1(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class YANGSIC_2(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -7718,7 +7727,7 @@ class YANGSIC_2(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class YANGSIC_3(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -7901,7 +7910,7 @@ class YANGSIC_3(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class YANGSIC_4(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -8084,7 +8093,7 @@ class YANGSIC_4(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class ZUNGSIC_1(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -8267,7 +8276,7 @@ class ZUNGSIC_1(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class ZUNGSIC_2(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -8450,7 +8459,7 @@ class ZUNGSIC_2(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class ZUNGSIC_3(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -8633,7 +8642,7 @@ class ZUNGSIC_3(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)
 
 class ZUNGSIC_4(models.Model):
     상권코드 = models.CharField(max_length=10, blank=True, null=True)
@@ -8816,4 +8825,4 @@ class ZUNGSIC_4(models.Model):
     총유동인구수 = models.BigIntegerField(validators=[MinValueValidator(
         0), MaxValueValidator(1000000000)], blank=True, null=True)
     cluster = models.IntegerField(validators=[MinValueValidator(
-        0), MaxValueValidator(3)], blank=True, null=True)
+        0), MaxValueValidator(4)], blank=True, null=True)

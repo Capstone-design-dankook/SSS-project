@@ -43,6 +43,13 @@ canvas {
     .chart-box {
         margin-top: 10px;
     }
+
+    .content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 4rem 1rem;
+    }
 }
 
 header {
@@ -76,3 +83,4 @@ header {
 .menu a:hover {
     background-color: #555;
 }
+
