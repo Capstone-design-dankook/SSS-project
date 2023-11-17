@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import *
+from .models import HANSIC
 from django.db.models import Avg
 import folium
 import pandas as pd
@@ -50,28 +51,38 @@ def output(request):
                     location=[business_location.y, business_location.x],
                     popup=business_location.상권코드명,
                 ).add_to(m)
-
-        except DistrictCode.DoesNotExist:
-            # 예외 처리 로직 추가
+            
+        except DistrictCode.DoesNotExist as e:
+            print(f"Error: {e}")
             pass
-
+            
+        # cluster_group 함수 호출
+        context = cluster_group(selected_industry, neighborhood_code)
+            
         # 매개변수 넘겨주기
         data = {
              'selected_neighborhood': selected_neighborhood,
              'business_list': business_list,
              'business_names': business_names,
              'map': m._repr_html_(),
+             'group' : context['group']
         }
 
         return render(request, 'output/group.html', data)
+    
 
-def cluster_group(request) : 
+def cluster_group(selected_industry, neighborhood_code) : 
+    
     # 분기별 상권 데이터 = area
-    data_from_db = Final1.objects.all()
+    data_from_db = Final_1.objects.all()
     area_1 = pd.DataFrame(list(data_from_db.values()))
     
     # 분기별 업종 데이터 = category
-    data_from_db = HANSIC_1.objects.all()
+    category_list = {'0':HANSIC, '1':YANGSIC_1, '2':ILSIC_1, '3':ZUNGSIC_1, '4':BUNSIC_1,
+                     '5':BBANG_1, '6':CAFE_1, '7':CHICKEN_1, '8':HOF_1, '9':FASTFOOD_1}
+    name = category_list.get(selected_industry)
+    
+    data_from_db = name.objects.all()
     category_1 = pd.DataFrame(list(data_from_db.values()))
     category_1.fillna(0,inplace=True)
     category_1_sales = category_1.groupby('cluster')['분기당매출금액'].mean().reset_index()
@@ -107,9 +118,8 @@ def cluster_group(request) :
         data_1.loc[i,'총백분율'] = data_1['총백분율'].values[i-1] + data_1['총백분율'].values[i]
     data_1.loc[4,'총백분율'] = 100.0
 
-    
     # 사용자 입력 행정동의 상권 모음 = location
-    location_1 = area_1[area_1['행정동코드']=='11740620']
+    location_1 = area_1[area_1['행정동코드']==neighborhood_code]
     location_1 = location_1.reset_index(drop=True)
     
     #location안 상권들의 분기당매출금액 백분율 구하기
@@ -145,21 +155,26 @@ def cluster_group(request) :
 
 
     data_1 = data_1.sort_values(['cluster']).reset_index(drop=True)
-    
         
     context = {'group' : data_1.to_dict(orient='records')}
     
-    return render(request, 'output/group.html', context)
+    return context
+    #return render(request, 'output/doyoung.html', context)
 
 
 
-def final_data(request) : 
+def final_data(selected_industry, neighborhood_code) : 
+    
     # 분기별 상권 데이터 = area
-    data_from_db = Final1.objects.all()
+    data_from_db = Final_1.objects.all()
     area_1 = pd.DataFrame(list(data_from_db.values()))
     
     # 분기별 업종 데이터 = category
-    data_from_db = HANSIC_1.objects.all()
+    category_list = {'0':HANSIC, '1':YANGSIC_1, '2':ILSIC_1, '3':ZUNGSIC_1, '4':BUNSIC_1,
+                     '5':BBANG_1, '6':CAFE_1, '7':CHICKEN_1, '8':HOF_1, '9':FASTFOOD_1}
+    name = category_list.get(selected_industry)
+    
+    data_from_db = name.objects.all()
     category_1 = pd.DataFrame(list(data_from_db.values()))
     category_1.fillna(0,inplace=True)
     category_1_sales = category_1.groupby('cluster')['분기당매출금액'].mean().reset_index()
@@ -195,9 +210,8 @@ def final_data(request) :
         data_1.loc[i,'총백분율'] = data_1['총백분율'].values[i-1] + data_1['총백분율'].values[i]
     data_1.loc[4,'총백분율'] = 100.0
 
-    
     # 사용자 입력 행정동의 상권 모음 = location
-    location_1 = area_1[area_1['행정동코드']=='11740620']
+    location_1 = area_1[area_1['행정동코드']==neighborhood_code]
     location_1 = location_1.reset_index(drop=True)
     
     #location안 상권들의 분기당매출금액 백분율 구하기
@@ -233,7 +247,6 @@ def final_data(request) :
 
 
     data_1 = data_1.sort_values(['cluster']).reset_index(drop=True)
-    #print('<<data_1>>\n', data_1)
     
     # 만약 2번 클러스터에 대해서 대표 데이터를 뽑는다면
     # 해당 클러스터에 분류된 상권이 하나도 없을 경우도 생각. 
@@ -264,14 +277,13 @@ def final_data(request) :
     final = pd.concat([final,dff])
     final = final.mean().to_frame().T
 
-    
-    
-    
+
     context = {'final' : final.to_dict(orient='records')}
     
-    return render(request, 'output/group.html', context)
+    return context
 
 
+#=====================================================================================================
 
 
 def input_district(request):

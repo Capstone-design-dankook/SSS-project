@@ -26,6 +26,17 @@
 
 <body>
 
+    <h1>Group Data</h1>
+    <ul>
+        {% for item in group %}
+            <li>{{ item.cluster }}: {{ item.상권코드 }}%</li>
+            <!-- 기타 필요한 출력 -->
+        {% endfor %}
+    </ul>
+
+    {{ group.0.상권코드 }}
+
+
     <div class="container">
         <div class="district-name">
             {{ selected_neighborhood }}
@@ -69,6 +80,7 @@
 
         <div class="group">
             첫번째 그룹
+            
             <a href="{% url 'output:group_detail' group_id=1 %}" class="detail-button">
                 상세보기
             </a>
@@ -101,6 +113,7 @@
                 상세보기
             </a>
         </div>
+
 
     </div>
 
