@@ -1,4 +1,6 @@
 {% load static %}
+{% load humanize %}
+{% load mathfilters %}
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -14,33 +16,103 @@
         <h1>Seoul Startup Spot</h1>
     </header>
 
-    <nav class="menu">
-        <ul>
-            <li><a href="#salesChart">매출금액</a></li>
-            <li><a href="#floatingPopulationChart">유동인구</a></li>
-            <li><a href="#residentialPopulationChart">생활인구</a></li>
-            <li><a href="#attractingFacilitiesChart">집객시설</a></li>
-        </ul>
-    </nav>
+
+    <h1>
+        FINAL DATA 1분기
+        {{ final_data_1.분기당매출금액}}
+    </h1>
 
 
-    <section class="wrapper content">
-        <div class="poplulation-text">
-            <h2 class="title">17~21 유동인구가 가장 높습니다.</h2>
-        </div>
-        <div class="chart-box">
-            <canvas id="populationChart"></canvas>
+
+
+    <div class="business">
+        <p>지역: 서울특별시 강남구 논현동</p>
+        <p>업종: 한식음식점</p>
+        <p>첫번째 그룹: </p>
+    </div>
+
+    <div class="big-container">
+
+        <nav class="menu">
+            <ul>
+                <li><a href="#salesChart">매출금액</a></li>
+                <li><a href="#floatingPopulationChart">유동인구</a></li>
+                <li><a href="#residentialPopulationChart">생활인구</a></li>
+                <li><a href="#attractingFacilitiesChart">집객시설</a></li>
+            </ul>
+        </nav>
+
+        <div class="sale">
+            <h2 class="title">월평균 추정매출은 {{ mon_sale|floatformat:0|intcomma }}원입니다.</h2>
         </div>
 
-        <div class="sail-text">
-            <h2 class="title">금요일 매출이 가장 높습니다.</h2>
-        </div>
-        <div class="chart-box">
-            <canvas id="sailChart"></canvas>
-        </div>
-    </section>
+
+        <section class="wrapper content">
+            <div class="descript-text">
+                <h2 class="title">남성 매출이 여성 매출보다 많습니다.</h2>
+                <p>
+                    남성은 평균적으로 월 {{ male_sale|floatformat:0|intcomma }}원을 소비합니다.<br>
+                    여성은 평균적으로 월 {{ female_sale|floatformat:0|intcomma }}원을 소비합니다.
+                </p>
+            </div>
+            <div class="chart-box">
+                <canvas id="genderChart"></canvas>
+            </div>
+
+            <div class="descript-text">
+                <h2 class="title">17~21 유동인구가 가장 높습니다.</h2>
+            </div>
+            <div class="chart-box">
+                <canvas id="populationChart"></canvas>
+            </div>
+
+            <div class="descript-text">
+                <h2 class="title">금요일 매출이 가장 높습니다.</h2>
+            </div>
+            <div class="chart-box">
+                <canvas id="saleChart"></canvas>
+            </div>
+
+            <div class="descript-text">
+                <h2 class="title">20대 매출이 가장 높습니다.</h2>
+                <p>
+                    10대 매출 금액 {{ 10_sale|floatformat:0|intcomma }}원<br>
+                    20대 매출 금액 {{ 20_sale|floatformat:0|intcomma }}원<br>
+                    30대 매출 금액 {{ 30_sale|floatformat:0|intcomma }}원<br>
+                    40대 매출 금액 {{ 40_sale|floatformat:0|intcomma }}원<br>
+                    50대 매출 금액 {{ 50_sale|floatformat:0|intcomma }}원<br>
+                    60대 이상 매출 금액 {{ 60_sale|floatformat:0|intcomma }}원
+                </p>
+            </div>
+            <div class="chart-box">
+                <canvas id="ageChart"></canvas>
+            </div>
+        </section>
+    </div>
 
     <script>
+        const genderCtx = document.getElementById('genderChart').getContext('2d');
+        const genderChart = new Chart(genderCtx, {
+            type: 'pie',
+            data: {
+                labels: ['남성', '여성'],
+                datasets: [{
+                    label: '남성/여성 매출비율',
+                    data: [{{ male_sale }}, {{ female_sale }}],
+                    backgroundColor: ['lightblue', 'lightpink'],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
         const populationCtx = document.getElementById('populationChart').getContext('2d');
         const populationChart = new Chart(populationCtx, {
             type: 'bar',
@@ -63,16 +135,38 @@
             }
         });
 
-        const sailCtx = document.getElementById('sailChart').getContext('2d');
-        const sailChart = new Chart(sailCtx, {
+        const saleCtx = document.getElementById('saleChart').getContext('2d');
+        const saleChart = new Chart(saleCtx, {
             type: 'bar',
             data: {
                 labels: ['월', '화', '수', '목', '금', '토', '일'],
                 datasets: [{
                     label: '요일별 매출',
-                    data: [{{ mon_sail }}, {{ tue_sail }}, {{ wed_sail }}, {{ thu_sail }}, {{ fri_sail }}, {{ sat_sail }}, {{ sun_sail }}],
+                    data: [{{ mon_sale }}, {{ tue_sale }}, {{ wed_sale }}, {{ thu_sale }}, {{ fri_sale }}, {{ sat_sale }}, {{ sun_sale }}],
                     backgroundColor: 'skyblue',
                     borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const ageCtx = document.getElementById('ageChart').getContext('2d');
+        const ageChart = new Chart(ageCtx, {
+            type: 'pie',
+            data: {
+                labels: ['10대', '20대', '30대', '440대', '50대', '60대 이상'],
+                datasets: [{
+                    label: '연령대별 매출 비율',
+                    data: [{{ 10_sale }}, {{ 20_sale }}, {{ 30_sale }}, {{ 40_sale }}, {{ 50_sale }}, {{ 60_sale }}],
+                    backgroundColor: 'lightpink',
+                    borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1
                 }]
             },

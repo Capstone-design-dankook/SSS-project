@@ -26,20 +26,34 @@
 
 <body>
 
-    <h1>Group Data</h1>
-    <ul>
-        {% for item in group %}
-            <li>{{ item.cluster }}: {{ item.상권코드 }}%</li>
-            <!-- 기타 필요한 출력 -->
-        {% endfor %}
-    </ul>
+    <!--DB에 important_data 파일이 없어서 안뜨는 부분인데 뜨는지 확인 부탁
+    <h1>    
+        {% if important_data %}
+            <h2>Important Data</h2>
+                {% for item in important_data.important_feature %}
+                    <tr>
+                        <td>{{ item.업종코드 }}</td>
+                        <td>{{ item.cluster }}</td>
+                        <td>{{ item.단가 }}</td>
+                        <td>{{ item.특징 }}</td>
+                    </tr>
+                {% endfor %}
+        {% else %}
+            <p>No important data available.</p>
+        {% endif %}
+    </h1>
+    -->
 
-    {{ group.0.상권코드 }}
+    <h1>
+        상권코드 잘 뜨는지 확인
+        {{ group_data }}
+    </h1>
+
 
 
     <div class="container">
         <div class="district-name">
-            {{ selected_neighborhood }}
+            {{ selected_neighborhood }} {{ selected_industry_name }}
         </div>
 
         <div class="block">
@@ -80,36 +94,40 @@
 
         <div class="group">
             첫번째 그룹
-            
-            <a href="{% url 'output:group_detail' group_id=1 %}" class="detail-button">
+            {{ group_data.0.상권코드 }}
+            <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=0 %}" class="detail-button">
                 상세보기
             </a>
         </div>
 
         <div class="group">
             두번째 그룹
-            <a href="{% url 'output:group_detail' group_id=2 %}" class="detail-button">
+            {{ group_data.1.상권코드 }}
+            <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=1 %}" class="detail-button">
                 상세보기
             </a>
         </div>
 
         <div class="group">
             세번째 그룹
-            <a href="{% url 'output:group_detail' group_id=3 %}" class="detail-button">
+            {{ group_data.2.상권코드 }}
+            <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=2 %}" class="detail-button">
                 상세보기
             </a>
         </div>
 
         <div class="group">
             네번째 그룹
-            <a href="{% url 'output:group_detail' group_id=4 %}" class="detail-button">
+            {{ group_data.3.상권코드 }}
+            <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=3 %}" class="detail-button">
                 상세보기
             </a>
         </div>
 
         <div class="group">
             다섯번째 그룹
-            <a href="{% url 'output:group_detail' group_id=5 %}" class="detail-button">
+            {{ group_data.4.상권코드 }}
+            <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=4 %}" class="detail-button">
                 상세보기
             </a>
         </div>

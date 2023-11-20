@@ -4749,3 +4749,15 @@ dtype={
     "y": "FloatField"
 }
 businesslocation.to_sql(name='output_businesslocation', con=conn, if_exists='replace', dtype=dtype, index=True, index_label="id")
+
+feature = pd.read_csv("csv/important_feature.csv", encoding="cp949")
+
+database = "db.sqlite3"
+conn = sqlite3.connect(database)
+dtype={
+    "업종코드": "IntegerField",
+    "cluster": "IntegerField",
+    "단가": "IntegerField",
+    "특징": "CharField"
+}
+feature.to_sql(name='output_feature', con=conn, if_exists='replace', dtype=dtype, index=True, index_label="id")
