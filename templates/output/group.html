@@ -25,11 +25,6 @@
 </head>
 
 <body>
-
-    
-
-
-
     <div class="container">
         <div class="district-name">
             {{ selected_district }} {{ selected_neighborhood }} {{ selected_industry_name }}
@@ -68,14 +63,17 @@
             </aside>
         </div>
        
+        {% if group_data.0.상권코드 %}
         <div class="group">
-            첫번째 그룹
-            {{ group_data.0.상권코드 }}
-            <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=0 %}" class="detail-button">
-                상세보기
-            </a>
+                첫번째 그룹
+                {{ group_data.0.상권코드 }}
+                <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=0 %}" class="detail-button">
+                    상세보기
+                </a>
         </div>
+        {% endif %}
 
+        {% if group_data.1.상권코드 %}
         <div class="group">
             두번째 그룹
             {{ group_data.1.상권코드 }}
@@ -83,7 +81,9 @@
                 상세보기
             </a>
         </div>
+        {% endif %}
     
+        {% if group_data.2.상권코드 %}
         <div class="group">
             세번째 그룹
             {{ group_data.2.상권코드 }}
@@ -91,7 +91,9 @@
                 상세보기
             </a>
         </div>
+        {% endif %}
 
+        {% if group_data.3.상권코드 %}
         <div class="group">
             네번째 그룹
             {{ group_data.3.상권코드 }}
@@ -99,7 +101,9 @@
                 상세보기
             </a>
         </div>
+        {% endif %}
 
+        {% if group_data.4.상권코드 %}
         <div class="group">
             다섯번째 그룹
             {{ group_data.4.상권코드 }}
@@ -107,8 +111,7 @@
                 상세보기
             </a>
         </div>
-
-
+        {% endif %}
     </div>
 
     <footer></footer>
