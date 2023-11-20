@@ -12,7 +12,7 @@ def index(request):
 def input(request):
     return render(request, 'output/input.html')
 
-def cluster_group(request) : 
+def cluster_group(): 
     # 분기별 상권 데이터 = area
     data_from_db = Final1.objects.all()
     area_1 = pd.DataFrame(list(data_from_db.values()))
@@ -90,12 +90,9 @@ def cluster_group(request) :
         else :
             print("잘못된 값입니다.")
 
-
     data_1 = data_1.sort_values(['cluster']).reset_index(drop=True)
-        
-    context = {'group' : data_1.to_dict(orient='records')}
     
-    return render(request, 'output/group.html', context)
+    return data_1.to_dict(orient='records')
 
 def get_industry_name(code):
     industry_mapping = {
@@ -123,13 +120,35 @@ def output(request):
         selected_industry_name = get_industry_name(selected_industry)
         selected_neighborhood = request.POST.get('neighborhood') # 행정동 값 가져오기
 
+        result = cluster_group()
+
+        business_list = None
+        business_names = None
+        m = None
+
         try:
             # 행정동명과 매핑되는 행정동코드 값 가져오기
             neighborhood = DistrictCode.objects.get(행정동명=selected_neighborhood)
             neighborhood_code = neighborhood.행정동코드
 
-            # 상권 1분기에서(임시로) 입력받은 행정동코드, 업종코드에 해당되는 행들 필터링
-            business_list = Final_1.objects.filter(행정동코드=neighborhood_code, 업종코드=selected_industry)
+        # 업종/분기 매핑
+            industry_table_mapping = {
+                '한식': Final_3,
+                '양식': Final_3,
+                '일식': Final_3,
+                '중식': Final_2,
+                '호프': Final_4,
+                '분식': Final_2,
+                '패스트푸드': Final_2,
+                '치킨': Final_4,
+                '카페': Final_4,
+                '제과점': Final_3,
+            }
+
+            final_table = industry_table_mapping.get(selected_industry_name)
+
+            # 입력받은 행정동코드, 업종코드에 해당되는 행들 필터링
+            business_list = final_table.objects.filter(행정동코드=neighborhood_code, 업종코드=selected_industry)
 
             # 위에서 가져온 데이터에서 상권코드 값만 리스트로 가져옴
             business_codes = [item.상권코드 for item in business_list]
@@ -137,20 +156,22 @@ def output(request):
             # 상권코드 값이 일치하는 행들 필터링 - 상권명
             business_names = BusinessCode.objects.filter(구상권코드__in=business_codes)
 
-            # 상권코드 값이 일치하는 행들 필터링 - 상권 좌표
-            business_locations = BusinessLocation.objects.filter(상권코드__in=business_codes)
+            if business_list.exists():
+                # 상권코드 값이 일치하는 행들 필터링 - 상권 좌표
+                business_locations = BusinessLocation.objects.filter(상권코드__in=business_codes)
 
-            # folium 지도 띄우기
-            m = folium.Map(location=[37.5, 127], zoom_start=12)
+                # folium 지도 띄우기
+                m = folium.Map(location=[business_locations[0].y, business_locations[0].x], zoom_start=14)
 
-            # 지도에 좌표 넣고 마커 표시하기
-            for business_location in business_locations:
-                folium.Marker(
-                    location=[business_location.y, business_location.x],
-                    popup=business_location.상권코드명,
-                ).add_to(m)
-
-            result = cluster_group(request)
+                # 지도에 좌표 넣고 마커 표시하기
+                for business_location in business_locations:
+                    folium.Marker(
+                        location=[business_location.y, business_location.x],
+                        popup=business_location.상권코드명,
+                    ).add_to(m)
+            else:
+                # 해당 지역에는 해당 업종 상권이 존재하지 않는 경우
+                m = folium.Map(location=[37.5665, 126.9780], zoom_start=11)
 
         except DistrictCode.DoesNotExist:
             # 예외 처리 로직 추가
@@ -162,13 +183,13 @@ def output(request):
              'selected_industry_name': selected_industry_name,
              'business_list': business_list,
              'business_names': business_names,
-             'map': m._repr_html_(),
+             'map': m._repr_html_() if m else None,
              'result': result,
         }
 
         return render(request, 'output/group.html', data)
 
-def final_data(request) : 
+def final_data(request): 
     # 분기별 상권 데이터 = area
     data_from_db = Final1.objects.all()
     area_1 = pd.DataFrame(list(data_from_db.values()))
