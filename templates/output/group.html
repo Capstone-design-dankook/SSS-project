@@ -26,45 +26,6 @@
 
 <body>
 
-    <h1>
-        상권명
-        <!--{{ group_data_business_names.0. }}-->
-
-        {% for item in group_data_business_names %}
-        {% if item.상권코드 == group_data.0.상권코드 %}
-            <h2>
-                여기 확인
-                {{ item.상권코드명 }}
-            </h2>
-        {% endif %}
-        {% endfor %}
-
-    </h1>
-    상권확인끝
-
-
-    <h1>
-        두번째 확인 시작0
-        {% set data = group_data.0.상권코드 %}
-        
-        {% if data %}
-            <h2>
-                {% for item in data.split(',') %}
-                    <li>{{ item }}</li>
-                {% endfor %}
-            </h2>
-        {% else %}
-            <h2>
-                No data available
-            </h2>
-        {% endif%}
-    </h1>
-
-
-
-
-
-
     <div class="container">
         <div class="district-name">
             {{ selected_neighborhood }} {{ selected_industry_name }}
@@ -105,7 +66,13 @@
        
         <div class="group">
             첫번째 그룹
-            {{ group_data.0.상권코드 }}
+            {% for code in group_data.0.상권코드 %}
+            {% for name in group_data_business_names %}
+                {% if code == name.구상권코드 %}
+                    <li> {{name.상권코드명}}</li>
+                {% endif %}
+            {% endfor %}
+            {% endfor %}
             <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=0 %}" class="detail-button">
                 상세보기
             </a>
@@ -113,7 +80,13 @@
 
         <div class="group">
             두번째 그룹
-            {{ group_data.1.상권코드 }}
+            {% for code in group_data.1.상권코드 %}
+            {% for name in group_data_business_names %}
+                {% if code == name.구상권코드 %}
+                    <li> {{name.상권코드명}}</li>
+                {% endif %}
+            {% endfor %}
+            {% endfor %}
             <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=1 %}" class="detail-button">
                 상세보기
             </a>
@@ -121,7 +94,13 @@
     
         <div class="group">
             세번째 그룹
-            {{ group_data.2.상권코드 }}
+            {% for code in group_data.2.상권코드 %}
+            {% for name in group_data_business_names %}
+                {% if code == name.구상권코드 %}
+                    <li> {{name.상권코드명}}</li>
+                {% endif %}
+            {% endfor %}
+            {% endfor %}
             <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=2 %}" class="detail-button">
                 상세보기
             </a>
@@ -129,7 +108,13 @@
 
         <div class="group">
             네번째 그룹
-            {{ group_data.3.상권코드 }}
+            {% for code in group_data.3.상권코드 %}
+            {% for name in group_data_business_names %}
+                {% if code == name.구상권코드 %}
+                    <li> {{name.상권코드명}}</li>
+                {% endif %}
+            {% endfor %}
+            {% endfor %}
             <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=3 %}" class="detail-button">
                 상세보기
             </a>
@@ -137,7 +122,13 @@
 
         <div class="group">
             다섯번째 그룹
-            {{ group_data.4.상권코드 }}
+            {% for code in group_data.4.상권코드 %}
+            {% for name in group_data_business_names %}
+                {% if code == name.구상권코드 %}
+                    <li> {{name.상권코드명}}</li>
+                {% endif %}
+            {% endfor %}
+            {% endfor %}
             <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=4 %}" class="detail-button">
                 상세보기
             </a>
