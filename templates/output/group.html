@@ -26,7 +26,35 @@
 
 <body>
 
-    
+    <h1>
+        상권명
+        <!--{{ group_data_business_names.0. }}-->
+
+        {% for item in group_data_business_names %}
+        {% if item.상권코드 == group_data.0.상권코드 %}
+            <h2>
+                여기 확인
+                {{ item.상권코드명 }}
+            </h2>
+        {% endif %}
+        {% endfor %}
+
+    </h1>
+    상권확인끝
+
+
+    <h1>
+        두번째 확인 시작0
+        {% set data = group_data.0.상권코드 %}
+        {% if data %}
+            <h2>
+                { item }
+            </h2>
+        {% endfor%}
+    </h1>
+
+
+
 
 
 
