@@ -21,17 +21,23 @@ def output(request):
     elif request.method == 'POST':
         selected_industry = request.POST.get('industry') # 업종코드 값 가져오기
         selected_industry_name = get_industry_name(selected_industry)
+        selected_district = request.POST.get('district')
         selected_neighborhood = request.POST.get('neighborhood') # 행정동 값 가져오기
 
         business_list = None
         business_names = None
         m = None
 
-        try:
-            
+        try: 
             # 행정동명과 매핑되는 행정동코드 값 가져오기
-            neighborhood = DistrictCode.objects.get(행정동명=selected_neighborhood)
-            neighborhood_code = neighborhood.행정동코드
+            if selected_neighborhood == '신사동':
+                if selected_district == '강남구':
+                    neighborhood_code = '11680510'
+                else:
+                    neighborhood_code = '11620685'
+            else:
+                neighborhood = DistrictCode.objects.get(행정동명=selected_neighborhood)
+                neighborhood_code = neighborhood.행정동코드
 
         # 업종/분기 매핑
             industry_table_mapping = {
@@ -99,6 +105,7 @@ def output(request):
 
         # 매개변수 넘겨주기
         data = {
+             'selected_district': selected_district,
              'selected_neighborhood': selected_neighborhood,
              'selected_industry_name': selected_industry_name,
              'selected_industry' : selected_industry,
