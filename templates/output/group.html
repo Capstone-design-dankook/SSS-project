@@ -83,7 +83,6 @@
                             <th scope="col">상권명</td>
                             <th scope="col">월별매출금액</td>
                             <th scope="col">점포수</td>
-                            <th scope="col">상권변화지표</td>
                         </tr>
                         </thead>
                         <tbody>
@@ -94,7 +93,6 @@
                                             <td>{{ business_name.상권코드명 }}</td>
                                             <td>{{ business_item.분기당매출금액|div:3|floatformat:0|intcomma }}</td>
                                             <td>{{ business_item.점포수 }}</td>
-                                            <td>다이나믹</td>
                                         </tr>
                             {% endif %}
                             {% endfor %}

@@ -12,6 +12,7 @@ def index(request):
 def input(request):
     return render(request, 'output/input.html')
 
+# 지도에 상권 마커 표시, 해당 지역 상권 목록과 분류된 그룹 보여주는 페이지
 def output(request):
     if request.method == 'GET':
         return render(request, 'output/group.html')
@@ -22,14 +23,34 @@ def output(request):
         selected_industry_name = get_industry_name(selected_industry)
         selected_neighborhood = request.POST.get('neighborhood') # 행정동 값 가져오기
 
+        business_list = None
+        business_names = None
+        m = None
+
         try:
             
             # 행정동명과 매핑되는 행정동코드 값 가져오기
             neighborhood = DistrictCode.objects.get(행정동명=selected_neighborhood)
             neighborhood_code = neighborhood.행정동코드
 
-            # 상권 1분기에서(임시로) 입력받은 행정동코드, 업종코드에 해당되는 행들 필터링
-            business_list = Final_1.objects.filter(행정동코드=neighborhood_code, 업종코드=selected_industry)
+        # 업종/분기 매핑
+            industry_table_mapping = {
+                '한식': Final_3,
+                '양식': Final_3,
+                '일식': Final_3,
+                '중식': Final_2,
+                '호프': Final_4,
+                '분식': Final_2,
+                '패스트푸드': Final_2,
+                '치킨': Final_4,
+                '카페': Final_4,
+                '제과점': Final_3,
+            }
+
+            final_table = industry_table_mapping.get(selected_industry_name)
+
+            # 입력받은 행정동코드, 업종코드에 해당되는 행들 필터링
+            business_list = final_table.objects.filter(행정동코드=neighborhood_code, 업종코드=selected_industry)
 
             # 위에서 가져온 데이터에서 상권코드 값만 리스트로 가져옴
             business_codes = [item.상권코드 for item in business_list]
@@ -37,12 +58,25 @@ def output(request):
             # 상권코드 값이 일치하는 행들 필터링 - 상권명
             business_names = BusinessCode.objects.filter(구상권코드__in=business_codes)
 
-            # 상권코드 값이 일치하는 행들 필터링 - 상권 좌표
-            business_locations = BusinessLocation.objects.filter(상권코드__in=business_codes)
+            if business_list.exists():
+                # 상권코드 값이 일치하는 행들 필터링 - 상권 좌표
+                business_locations = BusinessLocation.objects.filter(상권코드__in=business_codes)
 
-            # folium 지도 띄우기
-            m = folium.Map(location=[37.5, 127], zoom_start=12)
+                # folium 지도 띄우기
+                m = folium.Map(location=[business_locations[0].y, business_locations[0].x], zoom_start=14)
 
+                # 지도에 좌표 넣고 마커 표시하기
+                for business_location in business_locations:
+                    folium.Marker(
+                        location=[business_location.y, business_location.x],
+                        popup=business_location.상권코드명,
+                    ).add_to(m)
+            else:
+                # 해당 지역에는 해당 업종 상권이 존재하지 않는 경우
+                m = folium.Map(location=[37.5665, 126.9780], zoom_start=11)
+
+        except DistrictCode.DoesNotExist:
+            # 예외 처리 로직 추가
             # 지도에 좌표 넣고 마커 표시하기
             for business_location in business_locations:
                 folium.Marker(
@@ -71,13 +105,14 @@ def output(request):
              'neighborhood_code' : neighborhood_code,
              'business_list': business_list,
              'business_names': business_names,
-             'map': m._repr_html_(),
+             'map': m._repr_html_() if m else None,
              'group_data' : group_data['group'],
              'important_data' : important_data['important_feature'],
              'group_data_business_names' : group_data_business_names,
-         }
-        
+        }
+
         return render(request, 'output/group.html', data)
+
 
 def cluster_group(selected_industry, neighborhood_code) : 
     
@@ -462,3 +497,17 @@ def group_detail(request, selected_industry, neighborhood_code, group_id):
     
     return render(request, 'output/chart.html', context)
 
+def get_industry_name(code):
+    industry_mapping = {
+        '0': '한식',
+        '1': '양식',
+        '2': '일식',
+        '3': '중식',
+        '4': '분식',
+        '5': '제과점',
+        '6': '카페',
+        '7': '치킨',
+        '8': '호프',
+        '9': '패스트푸드',
+    }
+    return industry_mapping.get(code, '알 수 없는 업종')
