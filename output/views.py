@@ -23,6 +23,7 @@ def output(request):
         selected_neighborhood = request.POST.get('neighborhood') # 행정동 값 가져오기
 
         try:
+            
             # 행정동명과 매핑되는 행정동코드 값 가져오기
             neighborhood = DistrictCode.objects.get(행정동명=selected_neighborhood)
             neighborhood_code = neighborhood.행정동코드
@@ -52,10 +53,13 @@ def output(request):
         except DistrictCode.DoesNotExist as e:
             print(f"Error: {e}")
             pass
+        
+        #상권명 가져오기
+        group_data_business_names = BusinessCode.objects.all()
             
         # cluster_group 함수 호출
         group_data = cluster_group(selected_industry, neighborhood_code)
-        
+
         #중요피처 가져오는 함수 호출
         important_data = important_feature(selected_industry)
 
@@ -70,11 +74,9 @@ def output(request):
              'map': m._repr_html_(),
              'group_data' : group_data['group'],
              'important_data' : important_data['important_feature'],
-             #'quarter_data' : quarter_data['quarter_group'],
-             #'quater_data' : quarter_data,
-             #'final_group_data' : final['final']
-        }
-
+             'group_data_business_names' : group_data_business_names,
+         }
+        
         return render(request, 'output/group.html', data)
 
 def cluster_group(selected_industry, neighborhood_code) : 
@@ -166,7 +168,8 @@ def cluster_group(selected_industry, neighborhood_code) :
         else :
             print("잘못된 값입니다.")
     
-    data_1 = data_1.sort_values(['cluster']).reset_index(drop=True)
+    #data_1 = data_1.sort_values(['cluster']).reset_index(drop=True)
+
     
     context = {'group' : data_1.to_dict(orient='records')}
     
@@ -272,73 +275,75 @@ def final_data(selected_industry, neighborhood_code, quarter_code, group_id) :
     
     #그룹핑 데이터 가져오기
     data_1 = cluster_group_quarter(selected_industry,neighborhood_code, quarter_code)
-    
-    print('data_1부터 확인\n', data_1)
-    
-    #data_1 = data_1.loc[[group_id]]
-    
-    #해당 분기의 상권데이터 가져오기 + 사용자 입력 행정동 코드만 남기기 = location_1
-    quarter_list = {'1':Final1, '2':Final2, '3':Final3, '4':Final4}
-    quarter_name = quarter_list.get(quarter_code)
-    data_from_db = quarter_name.objects.all()
-    area_1 = pd.DataFrame(list(data_from_db.values()))
-    location_1 = area_1[area_1['행정동코드']==neighborhood_code]
-    location_1 = location_1.reset_index(drop=True)
-    location_1.drop(['분기코드'], axis=1, inplace=True)
-    location_1.drop(['행정동코드'], axis=1, inplace=True)
-    
-    #해당 분기의 업종데이터 가져오기
-    category_list = {'0':'HANSIC', '1':'YANGSIC', '2':'ILSIC', '3':'ZUNGSIC', '4':'BUNSIC',
-                     '5':'BBANG', '6':'CAFE', '7':'CHICKEN', '8':'HOF', '9':'FASTFOOD'}
-    category_name = category_list.get(selected_industry)
-    category_name = category_name+'_'+quarter_code
-    model_class = globals()[category_name]
-    data_from_db = model_class.objects.all()
-    category_1 = pd.DataFrame(list(data_from_db.values()))
-    
-    #대표데이터(final_data, 행 하나)만들기
-    
-    #group_id 매개변수로 받기
-    #group_id는 인덱스 번호로 -> 백분율로 정렬했을 때 같은 인덱스를 같은 그룹으로 보기로 함.
-    
-    # 해당 클러스터에 분류된 상권이 하나도 없을 경우 아예 그룹이 뜨지 않으니 코드에서는 고려하지 않음.(else 문)
-    
-    
-    #여기가 문제 
-    
-    category_1.drop(['상권코드'], axis=1, inplace=True)
-    
-    grouped_category = category_1.groupby('cluster').mean().reset_index()
-    
-    
-    final = grouped_category[grouped_category['cluster']==data_1.loc[group_id,'cluster']]
-    final.drop(['cluster'], axis=1, inplace=True)
-    
     df = pd.DataFrame({})
-    for i in range(len(data_1.loc[group_id, '상권코드'])):
-        df = pd.concat([df, location_1[location_1['상권코드']==data_1.loc[group_id,'상권코드'][i]]])
+    if len(data_1.loc[group_id,'상권코드']) == 0:
+        print(quarter_code, '분기 df부터 확인\n', df)
+        return df
+    else :
+        print(quarter_code, '분기 data_1부터 확인\n', data_1)
     
-    '''if len(data_1.loc[group_id,'상권코드']) > 0 :
-        df = pd.DataFrame({})
-
-        for i in range(len(data_1.loc[group_id,'상권코드'])):
+        #data_1 = data_1.loc[[group_id]]
+        
+        #해당 분기의 상권데이터 가져오기 + 사용자 입력 행정동 코드만 남기기 = location_1
+        quarter_list = {'1':Final1, '2':Final2, '3':Final3, '4':Final4}
+        quarter_name = quarter_list.get(quarter_code)
+        data_from_db = quarter_name.objects.all()
+        area_1 = pd.DataFrame(list(data_from_db.values()))
+        location_1 = area_1[area_1['행정동코드']==neighborhood_code]
+        location_1 = location_1.reset_index(drop=True)
+        location_1.drop(['분기코드'], axis=1, inplace=True)
+        location_1.drop(['행정동코드'], axis=1, inplace=True)
+        
+        #해당 분기의 업종데이터 가져오기
+        category_list = {'0':'HANSIC', '1':'YANGSIC', '2':'ILSIC', '3':'ZUNGSIC', '4':'BUNSIC',
+                        '5':'BBANG', '6':'CAFE', '7':'CHICKEN', '8':'HOF', '9':'FASTFOOD'}
+        category_name = category_list.get(selected_industry)
+        category_name = category_name+'_'+quarter_code
+        model_class = globals()[category_name]
+        data_from_db = model_class.objects.all()
+        category_1 = pd.DataFrame(list(data_from_db.values()))
+        
+        #대표데이터(final_data, 행 하나)만들기
+        
+        #group_id 매개변수로 받기
+        #group_id는 인덱스 번호로 -> 백분율로 정렬했을 때 같은 인덱스를 같은 그룹으로 보기로 함.
+        
+        # 해당 클러스터에 분류된 상권이 하나도 없을 경우 아예 그룹이 뜨지 않으니 코드에서는 고려하지 않음.(else 문)
+        
+        
+        #여기가 문제 
+        
+        category_1.drop(['상권코드'], axis=1, inplace=True)
+        
+        grouped_category = category_1.groupby('cluster').mean().reset_index()
+        
+        
+        final = grouped_category[grouped_category['cluster']==data_1.loc[group_id,'cluster']]
+        final.drop(['cluster'], axis=1, inplace=True)
+        
+        
+        for i in range(len(data_1.loc[group_id, '상권코드'])):
             df = pd.concat([df, location_1[location_1['상권코드']==data_1.loc[group_id,'상권코드'][i]]])
-    else : 
-        pass'''
-    
-    print('df 확인 : \n', df)
-    
-    df.drop(['상권코드'],axis=1, inplace=True)
-  
-    dff = df.mean(axis=0).to_frame().T
-    
-    
-    
-    final = pd.concat([final,dff])
-    final = final.mean().to_frame().T
+        
+        '''if len(data_1.loc[group_id,'상권코드']) > 0 :
+            df = pd.DataFrame({})
 
-    #데이터프레임 형태로 리턴
-    return final
+            for i in range(len(data_1.loc[group_id,'상권코드'])):
+                df = pd.concat([df, location_1[location_1['상권코드']==data_1.loc[group_id,'상권코드'][i]]])
+        else : 
+            pass'''
+        
+        print('df 확인 : \n', df)
+        
+        df.drop(['상권코드'],axis=1, inplace=True)
+
+        dff = df.mean(axis=0).to_frame().T
+        
+        final = pd.concat([final,dff])
+        final = final.mean().to_frame().T
+
+        #데이터프레임 형태로 리턴
+        return final
 
 #클러스터별 중요 피처 가져오는 함수 - DB문제로 잘 돌아가는지 확인 안 됨...
 def important_feature(selected_industry):
@@ -406,14 +411,22 @@ def group_detail(request, selected_industry, neighborhood_code, group_id):
     final_data_1 = final_data(selected_industry, neighborhood_code, '1', group_id)
     final_data_2 = final_data(selected_industry, neighborhood_code, '2', group_id)
     final_data_3 = final_data(selected_industry, neighborhood_code, '3', group_id)
-    final_data_4 = final_data(selected_industry, neighborhood_code, '4', group_id)    
-                
-    print('final의 데이터타입 : ', type(final_data_1))
-    print('\n\n1분기 final 확인 : \n', final_data_1)
-    print('\n\n2분기 final 확인 : \n', final_data_2)
-    print('\n\n3분기 final 확인 : \n', final_data_3)
-    print('\n\n4분기 final 확인 : \n', final_data_4)
-                
+    final_data_4 = final_data(selected_industry, neighborhood_code, '4', group_id) 
+    
+    final = pd.DataFrame({})
+    if not final_data_1.empty : 
+        final = pd.concat([final, final_data_1], ignore_index=True)
+    if not final_data_2.empty : 
+        final = pd.concat([final, final_data_2], ignore_index=True)
+    if not final_data_3.empty : 
+        final = pd.concat([final, final_data_3], ignore_index=True)
+    if not final_data_4.empty : 
+        final = pd.concat([final, final_data_4], ignore_index=True)
+    
+        
+    print('final 데이터 확인 모두 합친 것 이거 : \n', final)
+    
+                    
     data = Final1.objects.all()
 
     context = {
