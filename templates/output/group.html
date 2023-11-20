@@ -46,11 +46,18 @@
     <h1>
         두번째 확인 시작0
         {% set data = group_data.0.상권코드 %}
+        
         {% if data %}
             <h2>
-                { item }
+                {% for item in data.split(',') %}
+                    <li>{{ item }}</li>
+                {% endfor %}
             </h2>
-        {% endfor%}
+        {% else %}
+            <h2>
+                No data available
+            </h2>
+        {% endif%}
     </h1>
 
 
