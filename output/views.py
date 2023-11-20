@@ -21,6 +21,7 @@ def output(request):
     elif request.method == 'POST':
         selected_industry = request.POST.get('industry') # 업종코드 값 가져오기
         selected_industry_name = get_industry_name(selected_industry)
+        selected_district = request.POST.get('district')
         selected_neighborhood = request.POST.get('neighborhood') # 행정동 값 가져오기
 
         business_list = None
@@ -28,9 +29,16 @@ def output(request):
         m = None
 
         try:
+            
             # 행정동명과 매핑되는 행정동코드 값 가져오기
-            neighborhood = DistrictCode.objects.get(행정동명=selected_neighborhood)
-            neighborhood_code = neighborhood.행정동코드
+            if selected_neighborhood == '신사동':
+                if selected_district == '강남구':
+                    neighborhood_code = '11680510'
+                else:
+                    neighborhood_code = '11620685'
+            else:
+                neighborhood = DistrictCode.objects.get(행정동명=selected_neighborhood)
+                neighborhood_code = neighborhood.행정동코드
 
         # 업종/분기 매핑
             industry_table_mapping = {
@@ -98,6 +106,7 @@ def output(request):
 
         # 매개변수 넘겨주기
         data = {
+             'selected_district': selected_district,
              'selected_neighborhood': selected_neighborhood,
              'selected_industry_name': selected_industry_name,
              'selected_industry' : selected_industry,
@@ -302,11 +311,8 @@ def final_data(selected_industry, neighborhood_code, quarter_code, group_id) :
     data_1 = cluster_group_quarter(selected_industry,neighborhood_code, quarter_code)
     df = pd.DataFrame({})
     if len(data_1.loc[group_id,'상권코드']) == 0:
-        print(quarter_code, '분기 df부터 확인\n', df)
         return df
     else :
-        print(quarter_code, '분기 data_1부터 확인\n', data_1)
-    
         #해당 분기의 상권데이터 가져오기 + 사용자 입력 행정동 코드만 남기기 = location_1
         quarter_list = {'1':Final1, '2':Final2, '3':Final3, '4':Final4}
         quarter_name = quarter_list.get(quarter_code)
@@ -426,6 +432,7 @@ def group_detail(request, selected_industry, neighborhood_code, group_id):
     final_data_3 = final_data(selected_industry, neighborhood_code, '3', group_id)
     final_data_4 = final_data(selected_industry, neighborhood_code, '4', group_id) 
     
+    #1분기~4분기 합친 것 = final
     final = pd.DataFrame({})
     if not final_data_1.empty : 
         final = pd.concat([final, final_data_1], ignore_index=True)
@@ -436,10 +443,7 @@ def group_detail(request, selected_industry, neighborhood_code, group_id):
     if not final_data_4.empty : 
         final = pd.concat([final, final_data_4], ignore_index=True)
     
-        
-    print('final 데이터 확인 모두 합친 것 이거 : \n', final)
-    
-                    
+
     data = Final1.objects.all()
 
     context = {
