@@ -4,7 +4,7 @@ from output import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index),
+    path('', views.index, name='first'),
     path('input/', views.input),
     path('output/', include('output.urls')),
 ]

@@ -9,6 +9,8 @@
 
     <title>SSS</title>
 
+    <script src="https://kit.fontawesome.com/8878cbea7e.js" crossorigin="anonymous"></script>
+
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}"/>
 
     <link rel="stylesheet" href="{% static 'css/group.css' %}"/>
@@ -18,8 +20,10 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@1,9..40,500&family=Goldman&family=Nanum+Gothic&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
 
-
     <div class="header">
+        <div class="icon" onclick="navigateToURL('/')">
+            <i class="fa-solid fa-house fa-2xl"></i>
+        </div>
         <h1>Seoul Startup Spot</h1>
     </div>
 </head>
@@ -37,112 +41,160 @@
 
             <aside>
                 <div class="business-list">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th scope="col">상권명</td>
-                            <th scope="col">월별매출금액</td>
-                            <th scope="col">점포수</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            {% for business_name in business_names %}
-                            {% for business_item in business_list %}
-                            {% if business_name.구상권코드 == business_item.상권코드 %}
-                                        <tr>
-                                            <td>{{ business_name.상권코드명 }}</td>
-                                            <td>{{ business_item.분기당매출금액|div:3|floatformat:0|intcomma }}</td>
-                                            <td>{{ business_item.점포수 }}</td>
-                                        </tr>
-                            {% endif %}
-                            {% endfor %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                    {% if business_names %}
+                        <table>
+                            <thead>
+                            <tr>
+                                <th scope="col">상권명</td>
+                                <th scope="col">월별매출금액</td>
+                                <th scope="col">점포수</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for business_name in business_names %}
+                                {% for business_item in business_list %}
+                                {% if business_name.구상권코드 == business_item.상권코드 %}
+                                            <tr>
+                                                <td>{{ business_name.상권코드명 }}</td>
+                                                <td>{{ business_item.분기당매출금액|div:3|floatformat:0|intcomma }}</td>
+                                                <td>{{ business_item.점포수 }}</td>
+                                            </tr>
+                                {% endif %}
+                                {% endfor %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <h4><i class="fa-solid fa-circle-exclamation"></i> {{ selected_neighborhood }}에는 영업중인 {{ selected_industry_name }} 상권이 없습니다.</h4>
+                        <h4><i class="fa-solid fa-circle-exclamation"></i> 아래 그룹은 업종, 상권 데이터를 기반으로 {{ selected_neighborhood }}에서 {{ selected_industry_name }}을 창업했을 때의 예측 데이터입니다.</h4>
+                    {% endif %}
                 </div>
             </aside>
         </div>
+
+        {% if business_names %}
+        <div class="explanation">
+            <h4><i class="fa-solid fa-circle-exclamation"></i> 목록에 있는 상권은 현재 {{ selected_neighborhood }}에서 영업중인 {{ selected_industry_name }}의 현황입니다.</h4>
+            <h4><i class="fa-solid fa-circle-exclamation"></i> 아래 그룹은 업종, 상권 데이터를 기반으로 {{ selected_neighborhood }}에서 {{ selected_industry_name }}을 창업했을 때의 예측 데이터입니다.</h4>
+        </div>
+        {% endif %}
        
         {% if group_data.0.상권코드 %}
         <div class="group">
-            첫번째 그룹
-            {% for code in group_data.0.상권코드 %}
-            {% for name in group_data_business_names %}
-                {% if code == name.구상권코드 %}
-                    <li>{{name.상권코드명}}</li>
-                {% endif %}
-            {% endfor %}
-            {% endfor %}
-            <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=0 %}" class="detail-button">
-                상세보기
-            </a>
+            <div class="group-details">
+                <strong>첫번째 그룹</strong>
+                <ul class="business-names">
+                    {% for code in group_data.0.상권코드 %}
+                    {% for name in group_data_business_names %}
+                        {% if code == name.구상권코드 %}
+                            <li>{{name.상권코드명}}</li>
+                        {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <button class="detail-button" onclick="redirectToDetailPage(0)">
+                <h4>상세보기</h4>
+            </button>
         </div>
         {% endif %}
 
         {% if group_data.1.상권코드 %}
         <div class="group">
-            두번째 그룹
-            {% for code in group_data.1.상권코드 %}
-            {% for name in group_data_business_names %}
-                {% if code == name.구상권코드 %}
-                    <li> {{name.상권코드명}}</li>
-                {% endif %}
-            {% endfor %}
-            {% endfor %}
-            <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=1 %}" class="detail-button">
-                상세보기
-            </a>
+            <div class="group-details">
+                <strong>두번째 그룹</trong>
+                <ul class="business-names">
+                {% for code in group_data.1.상권코드 %}
+                {% for name in group_data_business_names %}
+                    {% if code == name.구상권코드 %}
+                        <li> {{name.상권코드명}}</li>
+                    {% endif %}
+                {% endfor %}
+                {% endfor %}
+                </ul>
+            </div>
+            <div class="button-container">
+                <button class="detail-button" onclick="redirectToDetailPage(1)">
+                    <h4>상세보기</h4>
+                </button>
+            </div>
         </div>
         {% endif %}
     
         {% if group_data.2.상권코드 %}
         <div class="group">
-            세번째 그룹
-            {% for code in group_data.2.상권코드 %}
-            {% for name in group_data_business_names %}
-                {% if code == name.구상권코드 %}
-                    <li> {{name.상권코드명}}</li>
-                {% endif %}
-            {% endfor %}
-            {% endfor %}
-            <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=2 %}" class="detail-button">
-                상세보기
-            </a>
+            <div class="group-details">
+                <strong>세번째 그룹</strong>
+                <ul class="business-names">
+                {% for code in group_data.2.상권코드 %}
+                {% for name in group_data_business_names %}
+                    {% if code == name.구상권코드 %}
+                        <li> {{name.상권코드명}}</li>
+                    {% endif %}
+                {% endfor %}
+                {% endfor %}
+                </ul>
+            </div>
+            <button class="detail-button" onclick="redirectToDetailPage(2)">
+                <h4>상세보기</h4>
+            </button>
         </div>
         {% endif %}
 
         {% if group_data.3.상권코드 %}
         <div class="group">
-            네번째 그룹
-            {% for code in group_data.3.상권코드 %}
-            {% for name in group_data_business_names %}
-                {% if code == name.구상권코드 %}
-                    <li> {{name.상권코드명}}</li>
-                {% endif %}
-            {% endfor %}
-            {% endfor %}
-            <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=3 %}" class="detail-button">
-                상세보기
-            </a>
+            <div class="group-details">
+                <strong>네번째 그룹</strong>
+                <ul class="business-names">
+                {% for code in group_data.3.상권코드 %}
+                {% for name in group_data_business_names %}
+                    {% if code == name.구상권코드 %}
+                        <li> {{name.상권코드명}}</li>
+                    {% endif %}
+                {% endfor %}
+                {% endfor %}
+                </ul>
+            </div>
+            <button class="detail-button" onclick="redirectToDetailPage(3)">
+                <h4>상세보기</h4>
+            </button>
         </div>
         {% endif %}
 
         {% if group_data.4.상권코드 %}
         <div class="group">
-            다섯번째 그룹
-            {% for code in group_data.4.상권코드 %}
-            {% for name in group_data_business_names %}
-                {% if code == name.구상권코드 %}
-                    <li> {{name.상권코드명}}</li>
-                {% endif %}
-            {% endfor %}
-            {% endfor %}
-            <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=4 %}" class="detail-button">
-                상세보기
-            </a>
+            <div class="group-details">
+                <strong>다섯번째 그룹</strong>
+                <ul class="business-names">
+                {% for code in group_data.4.상권코드 %}
+                {% for name in group_data_business_names %}
+                    {% if code == name.구상권코드 %}
+                        <li> {{name.상권코드명}}</li>
+                    {% endif %}
+                {% endfor %}
+                {% endfor %}
+                </ul>
+            </div>
+            <button class="detail-button" onclick="redirectToDetailPage(4)">
+                <h4>상세보기</h4>
+            </button>
         </div>
         {% endif %}
     </div>
+
+    <script>
+        function navigateToURL(url) {
+            window.location.href = url;
+        }
+
+        function redirectToDetailPage(groupId) {
+            // Django URL 태그를 사용하여 URL을 생성
+            var url = "{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=0 %}".replace('0', groupId);
+            
+            // 새로운 페이지로 이동
+            window.location.href = url;
+        }
+    </script>
 
     <footer></footer>
 
