@@ -28,7 +28,8 @@ def output(request):
         business_names = None
         m = None
 
-        try: 
+        try:
+            
             # 행정동명과 매핑되는 행정동코드 값 가져오기
             if selected_neighborhood == '신사동':
                 if selected_district == '강남구':
@@ -95,7 +96,7 @@ def output(request):
             pass
         
         #상권명 가져오기
-        group_data_business_names = BusinessCode.objects.all()
+        group_data_business_names = BusinessCode.objects.filter(행정동코드=neighborhood_code)
             
         # cluster_group 함수 호출
         group_data = cluster_group(selected_industry, neighborhood_code)
@@ -123,16 +124,12 @@ def output(request):
 
 def cluster_group(selected_industry, neighborhood_code) : 
     
-    # 분기별 상권 데이터 = area
-    #data_from_db = Final_1.objects.all()
-    #area_1 = pd.DataFrame(list(data_from_db.values()))
-    
+    # 분기별 상권 데이터 = area 
     area_list = {'0':Final3, '1':Final3, '2':Final3, '3':Final2, '4':Final2,
                      '5':Final3, '6':Final4, '7':Final4, '8':Final4, '9':Final2}
     area_name = area_list.get(selected_industry)
     data_from_db = area_name.objects.all()
     area_1 = pd.DataFrame(list(data_from_db.values()))
-    
     
     # 분기별 업종 데이터 = category
     category_list = {'0':HANSIC_3, '1':YANGSIC_3, '2':ILSIC_3, '3':ZUNGSIC_2, '4':BUNSIC_2,
@@ -210,9 +207,6 @@ def cluster_group(selected_industry, neighborhood_code) :
         else :
             print("잘못된 값입니다.")
     
-    #data_1 = data_1.sort_values(['cluster']).reset_index(drop=True)
-
-    
     context = {'group' : data_1.to_dict(orient='records')}
     
     return context
@@ -220,14 +214,13 @@ def cluster_group(selected_industry, neighborhood_code) :
 #해당 분기의 상권데이터+업종데이터 가져와서 그룹핑
 def cluster_group_quarter(selected_industry, neighborhood_code, quarter_code) :
     
-    #quarter_code에 맞는 분기의 상권데이터 가져오기
+    # quarter_code에 맞는 분기의 상권데이터 가져오기
     quarter_list = {'1':Final1, '2':Final2, '3':Final3, '4':Final4}
     quarter_name = quarter_list.get(quarter_code)
     data_from_db = quarter_name.objects.all()
     area_1 = pd.DataFrame(list(data_from_db.values()))
     
-    #quarter_code에 맞는 분기의 업종데이터 가져오기
-    #문자열 붙여서 HANSIC_1같이 완성
+    # quarter_code에 맞는 분기의 업종데이터 가져오기
     # 분기별 업종 데이터 = category
     category_list = {'0':'HANSIC', '1':'YANGSIC', '2':'ILSIC', '3':'ZUNGSIC', '4':'BUNSIC',
                      '5':'BBANG', '6':'CAFE', '7':'CHICKEN', '8':'HOF', '9':'FASTFOOD'}
@@ -309,7 +302,6 @@ def cluster_group_quarter(selected_industry, neighborhood_code, quarter_code) :
         else :
             print("잘못된 값입니다.")
     
-    #호출한 함수에서 사용할 수 있도록 데이터프레임 형태로 리턴
     return data_1
      
 #분기별 대표 데이터 생성 함수
@@ -319,13 +311,8 @@ def final_data(selected_industry, neighborhood_code, quarter_code, group_id) :
     data_1 = cluster_group_quarter(selected_industry,neighborhood_code, quarter_code)
     df = pd.DataFrame({})
     if len(data_1.loc[group_id,'상권코드']) == 0:
-        print(quarter_code, '분기 df부터 확인\n', df)
         return df
     else :
-        print(quarter_code, '분기 data_1부터 확인\n', data_1)
-    
-        #data_1 = data_1.loc[[group_id]]
-        
         #해당 분기의 상권데이터 가져오기 + 사용자 입력 행정동 코드만 남기기 = location_1
         quarter_list = {'1':Final1, '2':Final2, '3':Final3, '4':Final4}
         quarter_name = quarter_list.get(quarter_code)
@@ -352,17 +339,11 @@ def final_data(selected_industry, neighborhood_code, quarter_code, group_id) :
         
         # 해당 클러스터에 분류된 상권이 하나도 없을 경우 아예 그룹이 뜨지 않으니 코드에서는 고려하지 않음.(else 문)
         
-        
-        #여기가 문제 
-        
         category_1.drop(['상권코드'], axis=1, inplace=True)
-        
         grouped_category = category_1.groupby('cluster').mean().reset_index()
-        
         
         final = grouped_category[grouped_category['cluster']==data_1.loc[group_id,'cluster']]
         final.drop(['cluster'], axis=1, inplace=True)
-        
         
         for i in range(len(data_1.loc[group_id, '상권코드'])):
             df = pd.concat([df, location_1[location_1['상권코드']==data_1.loc[group_id,'상권코드'][i]]])
@@ -375,16 +356,12 @@ def final_data(selected_industry, neighborhood_code, quarter_code, group_id) :
         else : 
             pass'''
         
-        print('df 확인 : \n', df)
-        
         df.drop(['상권코드'],axis=1, inplace=True)
-
         dff = df.mean(axis=0).to_frame().T
         
         final = pd.concat([final,dff])
         final = final.mean().to_frame().T
 
-        #데이터프레임 형태로 리턴
         return final
 
 #클러스터별 중요 피처 가져오는 함수 - DB문제로 잘 돌아가는지 확인 안 됨...
@@ -455,6 +432,7 @@ def group_detail(request, selected_industry, neighborhood_code, group_id):
     final_data_3 = final_data(selected_industry, neighborhood_code, '3', group_id)
     final_data_4 = final_data(selected_industry, neighborhood_code, '4', group_id) 
     
+    #1분기~4분기 합친 것 = final
     final = pd.DataFrame({})
     if not final_data_1.empty : 
         final = pd.concat([final, final_data_1], ignore_index=True)
@@ -465,10 +443,7 @@ def group_detail(request, selected_industry, neighborhood_code, group_id):
     if not final_data_4.empty : 
         final = pd.concat([final, final_data_4], ignore_index=True)
     
-        
-    print('final 데이터 확인 모두 합친 것 이거 : \n', final)
-    
-                    
+
     data = Final1.objects.all()
 
     context = {
