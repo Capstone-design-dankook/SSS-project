@@ -1,6 +1,6 @@
 body {
     font-family: 'DM Sans', 'Nanum Gothic', sans-serif;
-    background-color: #f2f2f2;
+    background-color: #DADDE2;
     color: #333;
     margin: 0;
 }
@@ -40,7 +40,7 @@ button {
 
 button {
     cursor: pointer;
-    background-color: #3498db;
+    background-color: #628281;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -48,5 +48,5 @@ button {
 }
 
 button:hover {
-    background-color: #2980b9;
+    background-color: #43655A;
 }
