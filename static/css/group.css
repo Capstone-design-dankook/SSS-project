@@ -67,19 +67,16 @@ th, td {
 }
 
 th {
-    background-color: #3498db;
+    background-color: #0056b3;
     color: #fff;
 }
 
 .group {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-    background-color: #3498db;
-    color: #fff;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+    background-color: #fff; /* 하얀색 배경 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    padding: 15px;
+    margin-bottom: 20px; /* 그룹 사이 간격을 조절할 수 있음 */
+    position: relative; /* 상대 위치 지정 */
 }
 
 .explanation {
@@ -106,22 +103,21 @@ th {
 
 /* 각 버튼 스타일 */
 .detail-button {
-    width: 80px;
-    height: 60px;
-    margin: 10px 0;
-    background-color: white;
-    color: black;
+    position: absolute;
+    right: 15px; /* 오른쪽 여백 조절 */
+    bottom: 15px; /* 아래 여백 조절 */
+    background-color: #0056b3;
+    color: #fff;
+    border-radius: 8px;
     border: none;
-    border-radius: 5px;
+    padding: 10px 20px;
     cursor: pointer;
-    margin-right: 5px;
 }
 
 /* 호버 효과 */
 .detail-button:hover {
-    background-color: white; /* 호버 시 배경색 변경 */
+    background-color: #0056b3; /* 호버 시 배경색 변경 */
 }
-
 
 h4 {
     font-size: 14px;
@@ -129,8 +125,4 @@ h4 {
 
 .business-names li {
     margin-bottom: 5px;
-}
-
-.group a:hover {
-    background-color: #2980b9;
 }

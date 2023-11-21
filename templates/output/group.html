@@ -92,6 +92,11 @@
                     {% endfor %}
                     {% endfor %}
                 </ul>
+                {% for important_feature in important_data %}
+                    {% if group_data.0.cluster == important_feature.cluster %}
+                        <strong>{{ important_feature.특징 }}</strong>
+                    {% endif %}
+                {% endfor %}
             </div>
             <button class="detail-button" onclick="redirectToDetailPage(0)">
                 <h4>상세보기</h4>
@@ -112,6 +117,11 @@
                 {% endfor %}
                 {% endfor %}
                 </ul>
+                {% for important_feature in important_data %}
+                    {% if group_data.1.cluster == important_feature.cluster %}
+                        <strong>{{ important_feature.특징 }}</strong>
+                    {% endif %}
+                {% endfor %}
             </div>
             <div class="button-container">
                 <button class="detail-button" onclick="redirectToDetailPage(1)">
@@ -134,6 +144,11 @@
                 {% endfor %}
                 {% endfor %}
                 </ul>
+                {% for important_feature in important_data %}
+                    {% if group_data.2.cluster == important_feature.cluster %}
+                        <strong>{{ important_feature.특징 }}</strong>
+                    {% endif %}
+                {% endfor %}
             </div>
             <button class="detail-button" onclick="redirectToDetailPage(2)">
                 <h4>상세보기</h4>
@@ -154,6 +169,11 @@
                 {% endfor %}
                 {% endfor %}
                 </ul>
+                {% for important_feature in important_data %}
+                    {% if group_data.3.cluster == important_feature.cluster %}
+                        <strong>{{ important_feature.특징 }}</strong>
+                    {% endif %}
+                {% endfor %}
             </div>
             <button class="detail-button" onclick="redirectToDetailPage(3)">
                 <h4>상세보기</h4>
@@ -174,6 +194,11 @@
                 {% endfor %}
                 {% endfor %}
                 </ul>
+                {% for important_feature in important_data %}
+                    {% if group_data.4.cluster == important_feature.cluster %}
+                        <strong>{{ important_feature.특징 }}</strong>
+                    {% endif %}
+                {% endfor %}
             </div>
             <button class="detail-button" onclick="redirectToDetailPage(4)">
                 <h4>상세보기</h4>
