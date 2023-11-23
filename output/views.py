@@ -231,8 +231,7 @@ def cluster_group_quarter(selected_industry, neighborhood_code, quarter_code) :
     model_class = globals()[category_name]
     data_from_db = model_class.objects.all()
     category_1 = pd.DataFrame(list(data_from_db.values()))
-    
-    
+
     category_1.fillna(0,inplace=True)
     category_1_sales = category_1.groupby('cluster')['분기당매출금액'].mean().reset_index()
     category_1_population = category_1.groupby('cluster')['총유동인구수'].mean().reset_index()
@@ -257,7 +256,7 @@ def cluster_group_quarter(selected_industry, neighborhood_code, quarter_code) :
                             round(category_1_population.loc[3,'총유동인구수']/total_1*100.0, 4),
                             round(category_1_population.loc[4,'총유동인구수']/total_1*100.0, 4)]
     
-    data_1['총백분율'] = (data_1['매출백분율']+data_1['유동인구백분율'])/2  
+    data_1['총백분율'] = (data_1['매출백분율']+data_1['유동인구백분율'])/2
     data_1 = data_1[['cluster','총백분율']]
     data_1 = data_1.sort_values('총백분율')
     data_1 = data_1.reset_index(drop=True)
@@ -285,6 +284,8 @@ def cluster_group_quarter(selected_industry, neighborhood_code, quarter_code) :
         location_1.loc[i,'백분율'] = location_1['백분율'].values[i-1] + location_1['백분율'].values[i]
     location_1.loc[len(location_1)-1,'백분율'] = 100.0
     
+    
+    
     #상권 데이터의 백분율이 업종 데이터 클러스터 중 어디에 포함되는지 분류
     for i in range(len(location_1)) :
         value = location_1['백분율'].values[i]
@@ -301,6 +302,7 @@ def cluster_group_quarter(selected_industry, neighborhood_code, quarter_code) :
             data_1.loc[4]['상권코드'].append(location_1['상권코드'].values[i])
         else :
             print("잘못된 값입니다.")
+            
     
     return data_1
      
@@ -309,6 +311,7 @@ def final_data(selected_industry, neighborhood_code, quarter_code, group_id) :
     
     #그룹핑 데이터 가져오기
     data_1 = cluster_group_quarter(selected_industry,neighborhood_code, quarter_code)
+    
     df = pd.DataFrame({})
     if len(data_1.loc[group_id,'상권코드']) == 0:
         return df
@@ -430,7 +433,8 @@ def group_detail(request, selected_industry, neighborhood_code, group_id):
     final_data_1 = final_data(selected_industry, neighborhood_code, '1', group_id)
     final_data_2 = final_data(selected_industry, neighborhood_code, '2', group_id)
     final_data_3 = final_data(selected_industry, neighborhood_code, '3', group_id)
-    final_data_4 = final_data(selected_industry, neighborhood_code, '4', group_id)     
+    final_data_4 = final_data(selected_industry, neighborhood_code, '4', group_id)   
+
     
     #1분기~4분기 합친 것 = final
     final = pd.DataFrame({})
@@ -443,38 +447,20 @@ def group_detail(request, selected_industry, neighborhood_code, group_id):
     if not final_data_4.empty : 
         final = pd.concat([final, final_data_4], ignore_index=True)
 
-    data = Final1.objects.all()
+
+    final = final.mean(axis=0).to_frame().T
+
+    industry_list = { '0': '한식음식점', '1': '양식음식점', '2': '일식음식점', '3': '중식음식점', '4': '분식전문점',
+                              '5': '제과점', '6': '카페', '7': '치킨', '8': '호프-주점', '9': '패스트푸드'}
+    selected_industry_name = industry_list.get(selected_industry, '알 수 없는 업종')
 
     context = {
         'final' : final.to_dict(orient='records'),
-        'data_00_06': data.aggregate(Avg('시간대0006유동인구수'))['시간대0006유동인구수__avg'],
-        'data_06_11': data.aggregate(Avg('시간대0611유동인구수'))['시간대0611유동인구수__avg'],
-        'data_11_14': data.aggregate(Avg('시간대1114유동인구수'))['시간대1114유동인구수__avg'],
-        'data_14_17': data.aggregate(Avg('시간대1417유동인구수'))['시간대1417유동인구수__avg'],
-        'data_17_21': data.aggregate(Avg('시간대1721유동인구수'))['시간대1721유동인구수__avg'],
-        'data_21_24': data.aggregate(Avg('시간대2124유동인구수'))['시간대2124유동인구수__avg'],
-
-        'mon_sale': data.aggregate(Avg('월요일매출금액'))['월요일매출금액__avg'],
-        'tue_sale': data.aggregate(Avg('화요일매출금액'))['화요일매출금액__avg'],
-        'wed_sale': data.aggregate(Avg('수요일매출금액'))['수요일매출금액__avg'],
-        'thu_sale': data.aggregate(Avg('목요일매출금액'))['목요일매출금액__avg'],
-        'fri_sale': data.aggregate(Avg('금요일매출금액'))['금요일매출금액__avg'],
-        'sat_sale': data.aggregate(Avg('토요일매출금액'))['토요일매출금액__avg'],
-        'sun_sale': data.aggregate(Avg('일요일매출금액'))['일요일매출금액__avg'],
-
-        'male_sale': data.aggregate(Avg('남성매출금액'))['남성매출금액__avg'],
-        'female_sale': data.aggregate(Avg('여성매출금액'))['여성매출금액__avg'],
-
-        '10_sale': data.aggregate(Avg('연령대10매출금액'))['연령대10매출금액__avg'],
-        '20_sale': data.aggregate(Avg('연령대20매출금액'))['연령대20매출금액__avg'],
-        '30_sale': data.aggregate(Avg('연령대30매출금액'))['연령대30매출금액__avg'],
-        '40_sale': data.aggregate(Avg('연령대40매출금액'))['연령대40매출금액__avg'],
-        '50_sale': data.aggregate(Avg('연령대50매출금액'))['연령대50매출금액__avg'],
-        '60_sale': data.aggregate(Avg('연령대60이상매출금액'))['연령대60이상매출금액__avg'],
         'final_data_1' : final_data_1.to_dict(orient='records'),
         'final_data_2' : final_data_2.to_dict(orient='records'),
         'final_data_3' : final_data_3.to_dict(orient='records'),
         'final_data_4' : final_data_4.to_dict(orient='records'),
+        'selected_industry' : selected_industry_name,
     }
     
     return render(request, 'output/chart.html', context)

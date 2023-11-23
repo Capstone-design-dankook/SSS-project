@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/input.css' %}"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@1,9..40,500&family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;800&family=Overpass:wght@800&display=swap" rel="stylesheet">
     <title>SSS</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -22,9 +22,11 @@
     {% csrf_token %}
     <div class="container">
 
+      <h4>희망 업종, 지역을 선택해주세요!</h4><br>
+
       <div class="industry_select">
 
-        <label for="industry">업종</label>
+        <label for="industry">업종&nbsp;&nbsp;&nbsp;</label>
         <select name="industry" id="industry">
           <option value="select">=== 선택 ===</option>
           <option value=0>한식음식점</option>
@@ -71,7 +73,7 @@
           <option value="종로구">종로구</option>
           <option value="중구">중구</option>
           <option value="중랑구">중랑구</option>
-        </select><br><br>
+        </select><br>
 
         <label for="neighborhood">행정동</label>
         <select id="neighborhood" name="neighborhood">

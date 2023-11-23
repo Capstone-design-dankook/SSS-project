@@ -1,5 +1,5 @@
 body {
-    font-family: 'DM Sans', 'Nanum Gothic', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f7f7f7;
@@ -7,6 +7,7 @@ body {
 
 .header {
     background-color: #333;
+    font-family: 'Fira Sans Condensed', sans-serif;
     color: white;
     text-align: center;
     padding: 1em;
@@ -28,8 +29,8 @@ body {
 
 /* Style for chart containers */
 canvas {
-    max-width: 100%;
-    height: auto;
+    width: 80%;
+    height: 80px;
     border: 1px solid #ddd;
     border-radius: 8px;
 }
