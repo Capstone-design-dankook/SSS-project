@@ -1,48 +1,97 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #DADDE2;
+    color: black;
     margin: 0;
-    padding: 0;
 }
 
 .header {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 1em 0;
+    font-size: 1.2em;
+    font-family: 'Overpass', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.big-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.small-container {
+    width: 800px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .menu {
-    background-color: #eee;
-    padding: 1em;
+    background-color: #628281;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .menu ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
 }
 
-.menu ul li {
-    display: inline;
-    margin-right: 10px;
+.menu li {
+    flex: 1;
 }
 
 .menu a {
+    display: block;
+    padding: 10px;
+    text-align: center;
     text-decoration: none;
-    color: #333;
-    font-weight: bold;
+    color: #fff;
+    transition: background-color 0.3s;
 }
 
-.sale {
-    background-color: #f0f0f0;
-    padding: 1em;
+.menu a:hover {
+    background-color: #43655A;
 }
 
 .wrapper {
-    margin: 20px;
+    display: flex;
 }
 
-.descript-text {
+h2 {
+    display: inline-block;
+    background-image: linear-gradient(
+        transparent 50%, #ff6 50%);
+        padding-bottom: .25rem;
+}
+
+.text-section {
+    flex: 1;
+    margin-left: 60px;
+    margin-right: 60px;
+    background-color: white;
+    border-radius: 8px;
+    width: 400px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.chart-section {
+    flex: 2;
+    margin-left: 50px;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: bold;
     margin-bottom: 10px;
 }
 
@@ -50,7 +99,8 @@ body {
     margin-bottom: 20px;
 }
 
-canvas {
-    max-width: 100%;
-    height: auto;
+.chart-box canvas {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: white;
 }
