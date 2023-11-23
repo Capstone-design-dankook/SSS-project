@@ -430,7 +430,7 @@ def group_detail(request, selected_industry, neighborhood_code, group_id):
     final_data_1 = final_data(selected_industry, neighborhood_code, '1', group_id)
     final_data_2 = final_data(selected_industry, neighborhood_code, '2', group_id)
     final_data_3 = final_data(selected_industry, neighborhood_code, '3', group_id)
-    final_data_4 = final_data(selected_industry, neighborhood_code, '4', group_id) 
+    final_data_4 = final_data(selected_industry, neighborhood_code, '4', group_id)     
     
     #1분기~4분기 합친 것 = final
     final = pd.DataFrame({})
@@ -442,11 +442,11 @@ def group_detail(request, selected_industry, neighborhood_code, group_id):
         final = pd.concat([final, final_data_3], ignore_index=True)
     if not final_data_4.empty : 
         final = pd.concat([final, final_data_4], ignore_index=True)
-    
 
     data = Final1.objects.all()
 
     context = {
+        'final' : final.to_dict(orient='records'),
         'data_00_06': data.aggregate(Avg('시간대0006유동인구수'))['시간대0006유동인구수__avg'],
         'data_06_11': data.aggregate(Avg('시간대0611유동인구수'))['시간대0611유동인구수__avg'],
         'data_11_14': data.aggregate(Avg('시간대1114유동인구수'))['시간대1114유동인구수__avg'],
