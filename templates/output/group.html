@@ -74,7 +74,7 @@
             <h4><i class="fa-solid fa-circle-exclamation"></i> 아래 그룹은 업종, 상권 데이터를 기반으로 {{ selected_neighborhood }}에서 {{ selected_industry_name }}을 창업했을 때의 예측 데이터입니다.</h4>
         </div>
         {% endif %}
-       
+
         {% if group_data.0.상권코드 %}
         <div class="group">
             <div class="group-details">
@@ -94,16 +94,14 @@
                     {% endif %}
                 {% endfor %}
             </div>
-            <button class="detail-button" onclick="redirectToDetailPage(0)">
-                <h4>상세보기</h4>
-            </button>
+            <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=0 %}">상세보기</a>
         </div>
         {% endif %}
 
         {% if group_data.1.상권코드 %}
         <div class="group">
             <div class="group-details">
-                <strong>두번째 그룹</trong>
+                <strong>두번째 그룹</strong>
                 <ul class="business-names">
                 {% for code in group_data.1.상권코드 %}
                 {% for name in group_data_business_names %}
@@ -119,11 +117,7 @@
                     {% endif %}
                 {% endfor %}
             </div>
-            <div class="button-container">
-                <button class="detail-button" onclick="redirectToDetailPage(1)">
-                    <h4>상세보기</h4>
-                </button>
-            </div>
+                <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=1 %}">상세보기</a>
         </div>
         {% endif %}
     
@@ -146,9 +140,7 @@
                     {% endif %}
                 {% endfor %}
             </div>
-            <button class="detail-button" onclick="redirectToDetailPage(2)">
-                <h4>상세보기</h4>
-            </button>
+            <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=2 %}">상세보기</a>
         </div>
         {% endif %}
 
@@ -171,9 +163,7 @@
                     {% endif %}
                 {% endfor %}
             </div>
-            <button class="detail-button" onclick="redirectToDetailPage(3)">
-                <h4>상세보기</h4>
-            </button>
+            <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=3 %}">상세보기</a>
         </div>
         {% endif %}
 
@@ -196,26 +186,10 @@
                     {% endif %}
                 {% endfor %}
             </div>
-            <button class="detail-button" onclick="redirectToDetailPage(4)">
-                <h4>상세보기</h4>
-            </button>
+            <a href="{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=4 %}">상세보기</a>
         </div>
         {% endif %}
     </div>
-
-    <script>
-        function navigateToURL(url) {
-            window.location.href = url;
-        }
-
-        function redirectToDetailPage(groupId) {
-            // Django URL 태그를 사용하여 URL을 생성
-            var url = "{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=0 %}".replace('0', groupId);
-            
-            // 새로운 페이지로 이동
-            window.location.href = url;
-        }
-    </script>
 
     <footer></footer>
 
