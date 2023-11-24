@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <title>SSS</title>
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
-    <link rel="stylesheet" href="{% static 'css/chart1.css' %}">
+    <link rel="stylesheet" href="{% static 'css/chart.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;800&family=Overpass:wght@800&display=swap" rel="stylesheet">
@@ -23,16 +23,16 @@
     <div class="big-container">
         <nav class="menu">
             <ul>
-                <li><a href="#salesChart">매출금액</a></li>
-                <li><a href="#floatingPopulationChart">유동인구</a></li>
-                <li><a href="#residentialPopulationChart">생활인구</a></li>
-                <li><a href="#attractingFacilitiesChart">집객시설</a></li>
+                <li><a href="{% url 'output:sales' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=group_id %}">매출금액</a></li>
+                <li><a href="{% url 'output:floating' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=group_id %}">유동인구</a></li>
+                <li><a href="{% url 'output:living' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=group_id %}">생활인구</a></li>
+                <li><a href="{% url 'output:facility' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=group_id %}">집객시설</a></li>
             </ul>
         </nav>
 
         <div class="business">
             <p>&nbsp;&nbsp;지역: 서울특별시 {{ selected_district }} {{ selected_neighborhood }}</p>
-            <p>&nbsp;&nbsp;업종: {{ selected_industry }}</p>
+            <p>&nbsp;&nbsp;업종: {{ selected_industry_name }}</p>
             <p>&nbsp;&nbsp;그룹명??? </p>
         </div>
 

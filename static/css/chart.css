@@ -1,87 +1,106 @@
 body {
     font-family: 'Noto Sans KR', sans-serif;
+    background-color: #DADDE2;
+    color: black;
     margin: 0;
-    padding: 0;
-    background-color: #f7f7f7;
 }
 
 .header {
-    background-color: #333;
-    font-family: 'Fira Sans Condensed', sans-serif;
-    color: white;
-    text-align: center;
-    padding: 1em;
+    font-size: 1.2em;
+    font-family: 'Overpass', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
 }
 
-.wrapper {
+.big-container {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 50px auto;
     padding: 20px;
-}
-
-.title {
-    color: #333;
-}
-
-.chart-box {
-    margin-top: 20px;
-}
-
-/* Style for chart containers */
-canvas {
-    width: 80%;
-    height: 80px;
-    border: 1px solid #ddd;
+    background-color: #FFFFFF;
     border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive layout for smaller screens */
-@media (max-width: 600px) {
-    .wrapper {
-        padding: 10px;
-    }
-
-    .chart-box {
-        margin-top: 10px;
-    }
-
-    .content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 4rem 1rem;
-    }
-}
-
-header {
-    background-color: #333;
-    color: white;
+.small-container {
+    width: 800px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .menu {
-    background-color: #444;
+    background-color: #628281;
+    border-radius: 8px;
     overflow: hidden;
 }
 
 .menu ul {
+    list-style: none;
     padding: 0;
     margin: 0;
-    list-style: none;
+    display: flex;
 }
 
 .menu li {
-    float: left;
+    flex: 1;
 }
 
 .menu a {
     display: block;
-    color: white;
+    padding: 10px;
     text-align: center;
-    padding: 14px 16px;
     text-decoration: none;
+    color: #fff;
+    transition: background-color 0.3s;
 }
 
 .menu a:hover {
-    background-color: #555;
+    background-color: #43655A;
 }
 
+.wrapper {
+    display: flex;
+}
+
+h2 {
+    display: inline-block;
+    background-image: linear-gradient(
+        transparent 50%, #ff6 50%);
+        padding-bottom: .25rem;
+}
+
+.text-section {
+    flex: 1;
+    margin-left: 60px;
+    margin-right: 60px;
+    background-color: white;
+    border-radius: 8px;
+    width: 400px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.chart-section {
+    flex: 2;
+    margin-left: 50px;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.chart-box {
+    margin-bottom: 20px;
+}
+
+.chart-box canvas {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}

@@ -532,9 +532,12 @@ def group_detail(request, selected_district, selected_industry, neighborhood_cod
     context = {
         'final' : final.to_dict(orient='records'),
         'final_quarter' : final_quarter.to_dict(orient='records'),
-        'selected_industry' : selected_industry_name,
+        'selected_industry_name' : selected_industry_name,
+        'selected_industry': selected_industry,
         'selected_district' :  selected_district,
         'selected_neighborhood' : selected_neighborhood,
+        'neighborhood_code': neighborhood_code,
+        'group_id': group_id,
         'max_day' : max_day,
         'max_time' : max_time,
         'max_age' : max_age,
