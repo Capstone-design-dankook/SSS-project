@@ -427,7 +427,7 @@ def input_district(request):
         return render(request, 'output/group.html', data)
     
 # 그룹별 상세 페이지
-def group_detail(request, selected_industry, neighborhood_code, group_id):
+def group_detail(request, selected_district, selected_industry, neighborhood_code, group_id):
     
     #대표 데이터 가져오는 함수 호출. 1분기~4분기
     final_data_1 = final_data(selected_industry, neighborhood_code, '1', group_id)
@@ -435,32 +435,111 @@ def group_detail(request, selected_industry, neighborhood_code, group_id):
     final_data_3 = final_data(selected_industry, neighborhood_code, '3', group_id)
     final_data_4 = final_data(selected_industry, neighborhood_code, '4', group_id)   
 
-    
     #1분기~4분기 합친 것 = final
-    final = pd.DataFrame({})
+    final_quarter = pd.DataFrame({})
     if not final_data_1.empty : 
-        final = pd.concat([final, final_data_1], ignore_index=True)
+        final_quarter = pd.concat([final_quarter, final_data_1], ignore_index=True)
     if not final_data_2.empty : 
-        final = pd.concat([final, final_data_2], ignore_index=True)
+        final_quarter = pd.concat([final_quarter, final_data_2], ignore_index=True)
     if not final_data_3.empty : 
-        final = pd.concat([final, final_data_3], ignore_index=True)
+        final_quarter = pd.concat([final_quarter, final_data_3], ignore_index=True)
     if not final_data_4.empty : 
-        final = pd.concat([final, final_data_4], ignore_index=True)
+        final_quarter = pd.concat([final_quarter, final_data_4], ignore_index=True)
+    
 
-
-    final = final.mean(axis=0).to_frame().T
-
+    #업종명 리턴
     industry_list = { '0': '한식음식점', '1': '양식음식점', '2': '일식음식점', '3': '중식음식점', '4': '분식전문점',
                               '5': '제과점', '6': '카페', '7': '치킨', '8': '호프-주점', '9': '패스트푸드'}
     selected_industry_name = industry_list.get(selected_industry, '알 수 없는 업종')
+    
+    #행정동명 리턴
+    selected_neighborhood = DistrictCode.objects.get(행정동코드=neighborhood_code).행정동명
+    
+    #요일 매출 최댓값
+    max_day_value = final_quarter.loc[0,'월요일매출금액']
+    max_day = '월요일'
+    if final_quarter.loc[0,'화요일매출금액']>max_day_value :
+        max_day_value = final_quarter.loc[0,'화요일매출금액']
+        max_day = '화요일'
+    if final_quarter.loc[0,'수요일매출금액']>max_day_value :
+        max_day_value = final_quarter.loc[0,'수요일매출금액']
+        max_day = '수요일'
+    if final_quarter.loc[0,'목요일매출금액']>max_day_value :
+        max_day_value = final_quarter.loc[0,'목요일매출금액']
+        max_day = '목요일'
+    if final_quarter.loc[0,'금요일매출금액']>max_day_value :
+        max_day_value = final_quarter.loc[0,'금요일매출금액']
+        max_day = '금요일'
+    if final_quarter.loc[0,'토요일매출금액']>max_day_value :
+        max_day_value = final_quarter.loc[0,'토요일매출금액']
+        max_day = '토요일'
+    if final_quarter.loc[0,'일요일매출금액']>max_day_value :
+        max_day_value = final_quarter.loc[0,'일요일매출금액']
+        max_day = '일요일'
+        
+    #시간대 매출 최댓값
+    max_time_value = final_quarter.loc[0,'시간대0006매출금액']
+    max_time = '00시~06시'
+    if final_quarter.loc[0,'시간대0611매출금액']>max_time_value :
+        max_time_value = final_quarter.loc[0,'시간대0611매출금액']
+        max_time = '00시~06시'
+    if final_quarter.loc[0,'시간대1114매출금액']>max_time_value :
+        max_time_value = final_quarter.loc[0,'시간대1114매출금액']
+        max_time = '11시~14시'
+    if final_quarter.loc[0,'시간대1417매출금액']>max_time_value :
+        max_time_value = final_quarter.loc[0,'시간대1417매출금액']
+        max_time = '14시~17시'
+    if final_quarter.loc[0,'시간대1721매출금액']>max_time_value :
+        max_time_value = final_quarter.loc[0,'시간대1721매출금액']
+        max_time = '17시~21시'
+    if final_quarter.loc[0,'시간대2124매출금액']>max_time_value :
+        max_time_value = final_quarter.loc[0,'시간대2124매출금액']
+        max_time = '21시~24시'
+        
+    #연령대 매출 최댓값
+    max_age_value = final_quarter.loc[0,'연령대10매출금액']
+    max_age = '10대'
+    if final_quarter.loc[0,'연령대20매출금액']>max_age_value :
+        max_age_value = final_quarter.loc[0,'연령대20매출금액']
+        max_age = '20대'
+    if final_quarter.loc[0,'연령대30매출금액']>max_age_value :
+        max_age_value = final_quarter.loc[0,'연령대30매출금액']
+        max_age = '30대'
+    if final_quarter.loc[0,'연령대40매출금액']>max_age_value :
+        max_age_value = final_quarter.loc[0,'연령대40매출금액']
+        max_age = '40대'
+    if final_quarter.loc[0,'연령대50매출금액']>max_age_value :
+        max_age_value = final_quarter.loc[0,'연령대50매출금액']
+        max_age = '50대'
+    if final_quarter.loc[0,'연령대60이상매출금액']>max_age_value :
+        max_age_value = final_quarter.loc[0,'연령대60이상매출금액']
+        max_age = '60대 이상'
+    
+    # 매출 최저, 최고
+    max_sell = final_quarter.loc[0,'분기당매출금액']
+    min_sell = final_quarter.loc[0,'분기당매출금액']
+    if len(final_quarter)>1 : 
+        for i in range(1,len(final_quarter)) : 
+            if max_sell < final_quarter.loc[i,'분기당매출금액'] :
+                max_sell = final_quarter.loc[i,'분기당매출금액']
+            if min_sell>final_quarter.loc[i,'분기당매출금액'] :
+                min_sell = final_quarter.loc[i,'분기당매출금액']
 
+    
+    #final 평균내서 리턴
+    final = final_quarter.mean(axis=0).to_frame().T
+    
     context = {
         'final' : final.to_dict(orient='records'),
-        'final_data_1' : final_data_1.to_dict(orient='records'),
-        'final_data_2' : final_data_2.to_dict(orient='records'),
-        'final_data_3' : final_data_3.to_dict(orient='records'),
-        'final_data_4' : final_data_4.to_dict(orient='records'),
+        'final_quarter' : final_quarter.to_dict(orient='records'),
         'selected_industry' : selected_industry_name,
+        'selected_district' :  selected_district,
+        'selected_neighborhood' : selected_neighborhood,
+        'max_day' : max_day,
+        'max_time' : max_time,
+        'max_age' : max_age,
+        'max_sell' : max_sell,
+        'min_sell' : min_sell,
     }
     
     return render(request, 'output/chart.html', context)

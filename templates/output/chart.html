@@ -31,9 +31,9 @@
         </nav>
 
         <div class="business">
-            <p>&nbsp;&nbsp;지역: 서울특별시 강남구 논현동</p>
+            <p>&nbsp;&nbsp;지역: 서울특별시 {{ selected_district }} {{ selected_neighborhood }}</p>
             <p>&nbsp;&nbsp;업종: {{ selected_industry }}</p>
-            <p>&nbsp;&nbsp;첫번째 그룹: </p>
+            <p>&nbsp;&nbsp;그룹명??? </p>
         </div>
 
         <div class="small-container">
@@ -43,7 +43,11 @@
             <div class="wrapper">
                 <div class="text-section">
                     <br>
-                    
+                    <p>
+                        최저 : {{ min_sell|div:3|floatformat:0|intcomma }}원<br>
+                        최대 : {{ max_sell|div:3|floatformat:0|intcomma }}원<br>    
+                    </p>
+
                 </div>
                 <div class="chart-section">
                     <div class="chart-box">
@@ -55,7 +59,11 @@
         <br>
         <div class="small-container">
             <br>
-            <h2 class="title">&nbsp;&nbsp;남성 매출이 여성 매출보다 많습니다.</h2>
+            {% if final.0.남성매출금액 > final.0.여성매출금액 %}
+            <h2 class="title">&nbsp;&nbsp; 남성 매출금액이 여성 매출금액 보다 많습니다.</h2>
+            {% else %}
+            <h2 class="title">&nbsp;&nbsp; 여성 매출금액이 남성 매출금액 보다 많습니다.</h2>
+            {% endif %}
             <br>
             <div class="wrapper">
                 <div class="text-section">
@@ -74,8 +82,8 @@
         </div>
         <br>
         <div class="small-container">
-            <br>
-            <h2 class="title">&nbsp;&nbsp;17~21 매출금액이 가장 높습니다.</h2>
+            <br>     
+                <h2 class="title">&nbsp;&nbsp;{{ max_time }} 매출금액이 가장 높습니다.</h2>
             <br>
             <div class="wrapper">
                 <div class="text-section">
@@ -99,7 +107,7 @@
         <br>
         <div class="small-container">
             <br>
-            <h2 class="title">&nbsp;&nbsp;금요일 매출이 가장 높습니다.</h2>
+                <h2 class="title">&nbsp;&nbsp;{{ max_day }} 매출금액이 가장 높습니다.</h2>
             <br>
             <div class="wrapper">
                 <div class="text-section">
@@ -116,7 +124,7 @@
         <br>
         <div class="small-container">
             <br>
-            <h2 class="title">&nbsp;&nbsp;20대 매출이 가장 높습니다.</h2>
+            <h2 class="title">&nbsp;&nbsp;{{ max_age }} 매출이 가장 높습니다.</h2>
             <br>
             <div class="wrapper">
                 <div class="text-section">
@@ -147,7 +155,7 @@
                 labels: ['최저', '추정매출', '최고'],
                 datasets: [{
                     label: '매출 범위',
-                    data: [58000000, 201769188, 330000000],
+                    data: [{{ min_sell|div:3|floatformat:0|intcomma }}, {{ final.0.분기당매출금액|div:3|floatformat:0|intcomma }}, {{ max_sell|div:3|floatformat:0|intcomma }}],
                     backgroundColor: 'skyblue',
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1
@@ -236,7 +244,7 @@
         const ageChart = new Chart(ageCtx, {
             type: 'bar',
             data: {
-                labels: ['10대', '20대', '30대', '440대', '50대', '60대 이상'],
+                labels: ['10대', '20대', '30대', '40대', '50대', '60대 이상'],
                 datasets: [{
                     label: '연령대별 매출 비율',
                     data: [{{ final.0.연령대10매출금액 }}, {{ final.0.연령대20매출금액 }}, {{ final.0.연령대30매출금액 }}, {{ final.0.연령대40매출금액 }}, {{ final.0.연령대50매출금액 }}, {{ final.0.연령대60이상매출금액 }}],
