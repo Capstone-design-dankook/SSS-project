@@ -43,7 +43,7 @@
             <div class="wrapper">
                 <div class="text-section">
                     <br>
-                    추정매출에 대한 설명이 들어갈 자리이다. 어떠한 줄글들을 넣어서 그럴듯하게 설명해야한다.<br>
+                    
                 </div>
                 <div class="chart-section">
                     <div class="chart-box">
@@ -61,7 +61,7 @@
                 <div class="text-section">
                     <br>
                     <p>
-                        남성은 평균적으로 월 {{ fianl.0.남성매출금액|floatformat:0|intcomma }}원을 소비합니다.<br>
+                        남성은 평균적으로 월 {{ final.0.남성매출금액|floatformat:0|intcomma }}원을 소비합니다.<br>
                         여성은 평균적으로 월 {{ final.0.여성매출금액|floatformat:0|intcomma }}원을 소비합니다.
                     </p>
                 </div>
@@ -80,7 +80,14 @@
             <div class="wrapper">
                 <div class="text-section">
                     <br>
-                    추정매출에 대한 설명이 들어갈 자리이다. 어떠한 줄글들을 넣어서 그럴듯하게 설명해야한다.<br>
+                    <p>
+                        00시~06시 : {{ final.0.시간대0006매출금액|floatformat:0|intcomma }}원<br>
+                        06시~11시 : {{ final.0.시간대0611매출금액|floatformat:0|intcomma }}원<br>
+                        11시~14시 : {{ final.0.시간대1114매출금액|floatformat:0|intcomma }}원<br>
+                        14시~17시 : {{ final.0.시간대1417매출금액|floatformat:0|intcomma }}원<br>
+                        17시~21시 : {{ final.0.시간대1721매출금액|floatformat:0|intcomma }}원<br>
+                        21시~24시 : {{ final.0.시간대2124매출금액|floatformat:0|intcomma }}원<br>
+                    </p>
                 </div>
                 <div class="chart-section">
                     <div class="chart-box">

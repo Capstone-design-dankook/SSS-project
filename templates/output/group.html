@@ -201,20 +201,26 @@
             </button>
         </div>
         {% endif %}
+
     </div>
 
     <script>
+
         function navigateToURL(url) {
             window.location.href = url;
         }
 
         function redirectToDetailPage(groupId) {
             // Django URL 태그를 사용하여 URL을 생성
-            var url = "{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=0 %}".replace('0', groupId);
+            var baseUrl = "{% url 'output:group_detail' selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=0 %}" ;
             
+            var url = baseUrl.replace('0', groupId)
+
+
             // 새로운 페이지로 이동
             window.location.href = url;
         }
+
     </script>
 
     <footer></footer>
