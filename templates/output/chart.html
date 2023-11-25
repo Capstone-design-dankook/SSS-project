@@ -31,11 +31,20 @@
         </nav>
 
         <div class="business">
-            <p>&nbsp;&nbsp;지역: 서울특별시 {{ selected_district }} {{ selected_neighborhood }}</p>
-            <p>&nbsp;&nbsp;업종: {{ selected_industry_name }}</p>
-            <p>&nbsp;&nbsp;그룹명??? </p>
+            <p>&nbsp;&nbsp;지역 : 서울특별시 > {{ selected_district }} > {{ selected_neighborhood }}</p>
+            <p>&nbsp;&nbsp;업종 : 요식업 > {{ selected_industry_name }}</p>
+            <p>&nbsp;&nbsp;상권명 : {% for name in business_name %} {{ name }} {% endfor %}( 총 {{ business_name|length }}개 )</p>
         </div>
 
+            <h3> 다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로 분석한
+                그룹명의 예측 데이터입니다.
+            </h3>
+
+        <div class="small-container">
+            <h2 class="title">&nbsp;&nbsp;추정 점포수는  {{final.0.점포수}}개 입니다.</h2>
+            점포수를 추정하는 게 의미가 있을지?
+        </div>
+        <br>
         <div class="small-container">
             <br>
             <h2 class="title">&nbsp;&nbsp;월평균 추정매출은 {{ final.0.분기당매출금액|div:3|floatformat:0|intcomma }}원입니다.</h2>
@@ -44,8 +53,8 @@
                 <div class="text-section">
                     <br>
                     <p>
-                        최저 : {{ min_sell|div:3|floatformat:0|intcomma }}원<br>
-                        최대 : {{ max_sell|div:3|floatformat:0|intcomma }}원<br>    
+                        해당 상권 그룹의 월평균 추정매출은 {{ min_sell|div:3|floatformat:0|intcomma }}원 ~ 
+                        {{ max_sell|div:3|floatformat:0|intcomma }}원 입니다. <br>
                     </p>
 
                 </div>
@@ -54,6 +63,7 @@
                         <canvas id="meanChart"  width="350" height="250"></canvas>
                     </div>
                 </div>
+                <br>
             </div>
         </div>
         <br>
@@ -69,8 +79,8 @@
                 <div class="text-section">
                     <br>
                     <p>
-                        남성은 평균적으로 월 {{ final.0.남성매출금액|floatformat:0|intcomma }}원을 소비합니다.<br>
-                        여성은 평균적으로 월 {{ final.0.여성매출금액|floatformat:0|intcomma }}원을 소비합니다.
+                        남성은 평균적으로 월 {{ final.0.남성매출금액|div:3|floatformat:0|intcomma }}원을 소비합니다.<br>
+                        여성은 평균적으로 월 {{ final.0.여성매출금액|div:3|floatformat:0|intcomma }}원을 소비합니다.
                     </p>
                 </div>
                 <div class="chart-section">
@@ -112,7 +122,13 @@
             <div class="wrapper">
                 <div class="text-section">
                     <br>
-                    추정매출에 대한 설명이 들어갈 자리이다. 어떠한 줄글들을 넣어서 그럴듯하게 설명해야한다.<br>
+                        월요일 : {{ final.0.월요일매출금액|div:3|floatformat:0|intcomma }}원<br>
+                        화요일 : {{ final.0.화요일매출금액|div:3|floatformat:0|intcomma }}원<br>
+                        수요일 : {{ final.0.수요일매출금액|div:3|floatformat:0|intcomma }}원<br>
+                        목요일 : {{ final.0.목요일매출금액|div:3|floatformat:0|intcomma }}원<br>
+                        금요일 : {{ final.0.금요일매출금액|div:3|floatformat:0|intcomma }}원<br>
+                        토요일 : {{ final.0.토요일매출금액|div:3|floatformat:0|intcomma }}원<br>
+                        일요일 : {{ final.0.일요일매출금액|div:3|floatformat:0|intcomma }}원
                 </div>
                 <div class="chart-section">
                     <div class="chart-box">
@@ -130,12 +146,12 @@
                 <div class="text-section">
                     <br>
                     <p>
-                        10대 매출 금액 {{ final.0.연령대10매출금액|floatformat:0|intcomma }}원<br>
-                        20대 매출 금액 {{ final.0.연령대20매출금액|floatformat:0|intcomma }}원<br>
-                        30대 매출 금액 {{ final.0.연령대30매출금액|floatformat:0|intcomma }}원<br>
-                        40대 매출 금액 {{ final.0.연령대40매출금액|floatformat:0|intcomma }}원<br>
-                        50대 매출 금액 {{ final.0.연령대50매출금액|floatformat:0|intcomma }}원<br>
-                        60대 이상 매출 금액 {{ final.0.연령대60이상매출금액|floatformat:0|intcomma }}원
+                        10대 : {{ final.0.연령대10매출금액|floatformat:0|intcomma }}원<br>
+                        20대 : {{ final.0.연령대20매출금액|floatformat:0|intcomma }}원<br>
+                        30대 : {{ final.0.연령대30매출금액|floatformat:0|intcomma }}원<br>
+                        40대 : {{ final.0.연령대40매출금액|floatformat:0|intcomma }}원<br>
+                        50대 : {{ final.0.연령대50매출금액|floatformat:0|intcomma }}원<br>
+                        60대 이상 : {{ final.0.연령대60이상매출금액|floatformat:0|intcomma }}원
                     </p>
                 </div>
                 <div class="chart-section">
@@ -152,10 +168,10 @@
         const meanChart = new Chart(meanCtx, {
             type: 'bar',
             data: {
-                labels: ['최저', '추정매출', '최고'],
+                labels: ['평균 추정매출', '행정동 평균'],
                 datasets: [{
-                    label: '매출 범위',
-                    data: [{{ min_sell|div:3|floatformat:0|intcomma }}, {{ final.0.분기당매출금액|div:3|floatformat:0|intcomma }}, {{ max_sell|div:3|floatformat:0|intcomma }}],
+                    label: '매출 금액',
+                    data: [{{ final.0.분기당매출금액|div:3 }}, {{ district_price|div:3 }}],
                     backgroundColor: 'skyblue',
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1
@@ -170,7 +186,7 @@
                 }
             }
         });
-
+    
         const genderCtx = document.getElementById('genderChart').getContext('2d');
         const genderChart = new Chart(genderCtx, {
             type: 'pie',
@@ -200,7 +216,7 @@
             data: {
                 labels: ['00~06시', '06~11시', '11~14시', '14~17시', '17~21시', '21~24시'],
                 datasets: [{
-                    label: '시간대별 매출금액',
+                    label: '시간대',
                     data: [{{ final.0.시간대0006매출금액 }}, {{ final.0.시간대0611매출금액 }}, {{ final.0.시간대1114매출금액 }}, {{ final.0.시간대1417매출금액 }}, {{ final.0.시간대1721매출금액 }}, {{ final.0.시간대2124매출금액 }}],
                     backgroundColor: 'lightgreen',
                     borderColor: 'rgba(75, 192, 192, 1)',
@@ -223,7 +239,7 @@
             data: {
                 labels: ['월', '화', '수', '목', '금', '토', '일'],
                 datasets: [{
-                    label: '요일별 매출',
+                    label: '요일',
                     data: [{{ final.0.월요일매출금액 }}, {{ final.0.화요일매출금액 }}, {{ final.0.수요일매출금액 }}, {{ final.0.목요일매출금액 }}, {{ final.0.금요일매출금액 }}, {{ final.0.토요일매출금액 }}, {{ final.0.일요일매출금액 }}],
                     backgroundColor: 'skyblue',
                     borderColor: 'rgba(54, 162, 235, 1)',
@@ -246,7 +262,7 @@
             data: {
                 labels: ['10대', '20대', '30대', '40대', '50대', '60대 이상'],
                 datasets: [{
-                    label: '연령대별 매출 비율',
+                    label: '연령대',
                     data: [{{ final.0.연령대10매출금액 }}, {{ final.0.연령대20매출금액 }}, {{ final.0.연령대30매출금액 }}, {{ final.0.연령대40매출금액 }}, {{ final.0.연령대50매출금액 }}, {{ final.0.연령대60이상매출금액 }}],
                     backgroundColor: 'lightpink',
                     borderColor: 'lightpink',

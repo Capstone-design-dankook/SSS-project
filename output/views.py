@@ -432,12 +432,20 @@ def input_district(request):
 # 그룹별 상세 페이지
 def group_detail(request, selected_district, selected_industry, neighborhood_code, group_id):
     
+    #상권명 받아오기
+    include_codes = cluster_group(selected_industry, neighborhood_code)
+    include_code = include_codes['group'][group_id]['상권코드']
+    business_names = BusinessCode.objects.filter(구상권코드__in=include_code)
+    business_name = []
+    for item in business_names :
+        business_name.append(item.상권코드명)
+        
     #대표 데이터 가져오는 함수 호출. 1분기~4분기
     final_data_1 = final_data(selected_industry, neighborhood_code, '1', group_id)
     final_data_2 = final_data(selected_industry, neighborhood_code, '2', group_id)
     final_data_3 = final_data(selected_industry, neighborhood_code, '3', group_id)
     final_data_4 = final_data(selected_industry, neighborhood_code, '4', group_id)   
-
+    
     #1분기~4분기 합친 것 = final
     final_quarter = pd.DataFrame({})
     if not final_data_1.empty : 
@@ -449,75 +457,6 @@ def group_detail(request, selected_district, selected_industry, neighborhood_cod
     if not final_data_4.empty : 
         final_quarter = pd.concat([final_quarter, final_data_4], ignore_index=True)
     
-
-    #업종명 리턴
-    industry_list = { '0': '한식음식점', '1': '양식음식점', '2': '일식음식점', '3': '중식음식점', '4': '분식전문점',
-                              '5': '제과점', '6': '카페', '7': '치킨', '8': '호프-주점', '9': '패스트푸드'}
-    selected_industry_name = industry_list.get(selected_industry, '알 수 없는 업종')
-    
-    #행정동명 리턴
-    selected_neighborhood = DistrictCode.objects.get(행정동코드=neighborhood_code).행정동명
-    
-    #요일 매출 최댓값
-    max_day_value = final_quarter.loc[0,'월요일매출금액']
-    max_day = '월요일'
-    if final_quarter.loc[0,'화요일매출금액']>max_day_value :
-        max_day_value = final_quarter.loc[0,'화요일매출금액']
-        max_day = '화요일'
-    if final_quarter.loc[0,'수요일매출금액']>max_day_value :
-        max_day_value = final_quarter.loc[0,'수요일매출금액']
-        max_day = '수요일'
-    if final_quarter.loc[0,'목요일매출금액']>max_day_value :
-        max_day_value = final_quarter.loc[0,'목요일매출금액']
-        max_day = '목요일'
-    if final_quarter.loc[0,'금요일매출금액']>max_day_value :
-        max_day_value = final_quarter.loc[0,'금요일매출금액']
-        max_day = '금요일'
-    if final_quarter.loc[0,'토요일매출금액']>max_day_value :
-        max_day_value = final_quarter.loc[0,'토요일매출금액']
-        max_day = '토요일'
-    if final_quarter.loc[0,'일요일매출금액']>max_day_value :
-        max_day_value = final_quarter.loc[0,'일요일매출금액']
-        max_day = '일요일'
-        
-    #시간대 매출 최댓값
-    max_time_value = final_quarter.loc[0,'시간대0006매출금액']
-    max_time = '00시~06시'
-    if final_quarter.loc[0,'시간대0611매출금액']>max_time_value :
-        max_time_value = final_quarter.loc[0,'시간대0611매출금액']
-        max_time = '00시~06시'
-    if final_quarter.loc[0,'시간대1114매출금액']>max_time_value :
-        max_time_value = final_quarter.loc[0,'시간대1114매출금액']
-        max_time = '11시~14시'
-    if final_quarter.loc[0,'시간대1417매출금액']>max_time_value :
-        max_time_value = final_quarter.loc[0,'시간대1417매출금액']
-        max_time = '14시~17시'
-    if final_quarter.loc[0,'시간대1721매출금액']>max_time_value :
-        max_time_value = final_quarter.loc[0,'시간대1721매출금액']
-        max_time = '17시~21시'
-    if final_quarter.loc[0,'시간대2124매출금액']>max_time_value :
-        max_time_value = final_quarter.loc[0,'시간대2124매출금액']
-        max_time = '21시~24시'
-        
-    #연령대 매출 최댓값
-    max_age_value = final_quarter.loc[0,'연령대10매출금액']
-    max_age = '10대'
-    if final_quarter.loc[0,'연령대20매출금액']>max_age_value :
-        max_age_value = final_quarter.loc[0,'연령대20매출금액']
-        max_age = '20대'
-    if final_quarter.loc[0,'연령대30매출금액']>max_age_value :
-        max_age_value = final_quarter.loc[0,'연령대30매출금액']
-        max_age = '30대'
-    if final_quarter.loc[0,'연령대40매출금액']>max_age_value :
-        max_age_value = final_quarter.loc[0,'연령대40매출금액']
-        max_age = '40대'
-    if final_quarter.loc[0,'연령대50매출금액']>max_age_value :
-        max_age_value = final_quarter.loc[0,'연령대50매출금액']
-        max_age = '50대'
-    if final_quarter.loc[0,'연령대60이상매출금액']>max_age_value :
-        max_age_value = final_quarter.loc[0,'연령대60이상매출금액']
-        max_age = '60대 이상'
-    
     # 매출 최저, 최고
     max_sell = final_quarter.loc[0,'분기당매출금액']
     min_sell = final_quarter.loc[0,'분기당매출금액']
@@ -528,9 +467,63 @@ def group_detail(request, selected_district, selected_industry, neighborhood_cod
             if min_sell>final_quarter.loc[i,'분기당매출금액'] :
                 min_sell = final_quarter.loc[i,'분기당매출금액']
 
+    #업종명 리턴
+    industry_list = { '0': '한식음식점', '1': '양식음식점', '2': '일식음식점', '3': '중식음식점', '4': '분식전문점',
+                              '5': '제과점', '6': '카페', '7': '치킨', '8': '호프-주점', '9': '패스트푸드'}
+    selected_industry_name = industry_list.get(selected_industry, '알 수 없는 업종')
     
+    #행정동명 리턴
+    selected_neighborhood = DistrictCode.objects.get(행정동코드=neighborhood_code).행정동명
+    
+    #요일 매출 최댓값
+    day_columns = final_quarter.columns[28:35]
+    max_day_name = find_max(final_quarter, day_columns)
+    day_list = {'월요일매출금액' : '월요일', '화요일매출금액':'화요일', '수요일매출금액':'수요일',
+                '목요일매출금액':'목요일','금요일매출금액':'금요일','토요일매출금액':'토요일','일요일매출금액':'일요일'}
+    max_day = day_list.get(max_day_name)
+    
+    #시간대 매출 최댓값
+    time_columns = final_quarter.columns[35:41]
+    max_time_name = find_max(final_quarter, time_columns)
+    time_list = {'시간대0006매출금액':'00시~06시','시간대0611매출금액':'06시~11시','시간대1114매출금액':'11시~14시',
+                 '시간대1417매출금액':'14시~17시','시간대1721매출금액':'17시~21시','시간대2124매출금액':'21시~24시'}
+    max_time = time_list.get(max_time_name)
+    
+    #연령대 매출 최댓값
+    age_columns = final_quarter.columns[43:49]
+    max_age_name = find_max(final_quarter, age_columns)
+    age_list = {'연령대10매출금액':'10대','연령대20매출금액':'20대','연령대30매출금액':'30대',
+                '연령대40매출금액':'40대','연령대50매출금액':'50대','연령대60이상매출금액':'60대이상'}
+    max_age = age_list.get(max_age_name)
+    
+    #유동인구 최댓값
+    flo_popul_columns = final_quarter.columns[83:89]
+    max_flo_popul_name = find_max(final_quarter, flo_popul_columns)
+    flo_popul_list = {'시간대0006유동인구수':'00시~06시', '시간대0611유동인구수':'06시~11시', '시간대1114유동인구수':'11시~14시', 
+                      '시간대1417유동인구수':'14시~17시','시간대1721유동인구수':'17시~21시', '시간대2124유동인구수':'21시~24시'}
+    max_flo_popul = flo_popul_list.get(max_flo_popul_name)
+
     #final 평균내서 리턴
     final = final_quarter.mean(axis=0).to_frame().T
+    
+    #매출단가
+    total_price = final['분기당매출금액']/final['분기당매출건수']
+    week_price = final['주중매출금액']/final['주중매출건수']
+    weekend_price = final['주말매출금액']/final['주말매출건수']
+    
+    #상권 금액
+    location_price = neighborhood_price(neighborhood_code)
+    #업종 금액
+    category_list = {'0':HANSIC_3, '1':YANGSIC_3, '2':ILSIC_3, '3':ZUNGSIC_2, '4':BUNSIC_2,
+                     '5':BBANG_3, '6':CAFE_4, '7':CHICKEN_4, '8':HOF_4, '9':FASTFOOD_2}
+    name = category_list.get(selected_industry)
+    data_from_db = name.objects.all()
+    category_1 = pd.DataFrame(list(data_from_db.values()))
+    category_1.fillna(0,inplace=True)
+    category_price = category_1['분기당매출금액'].mean()
+
+    #행정동 평균 매출
+    district_price = (location_price+category_price)/2
     
     context = {
         'final' : final.to_dict(orient='records'),
@@ -546,6 +539,11 @@ def group_detail(request, selected_district, selected_industry, neighborhood_cod
         'max_age' : max_age,
         'max_sell' : max_sell,
         'min_sell' : min_sell,
+        'business_name' : business_name,
+        'total_price' : total_price,
+        'week_price' : week_price,
+        'weekend_price' : weekend_price,  
+        'district_price' : district_price,      
     }
     
     return render(request, 'output/chart.html', context)
@@ -564,3 +562,21 @@ def get_industry_name(code):
         '9': '패스트푸드',
     }
     return industry_mapping.get(code, '알 수 없는 업종')
+
+def find_max(final_quarter, columns) : 
+    max_value = final_quarter.loc[0, columns[0]]
+    max_value_name = columns[0]
+    
+    for column in columns[1:] :
+        if final_quarter.loc[0, column] > max_value :
+            max_value = final_quarter.loc[0, column]
+            max_value_name = column
+    
+    return max_value_name
+
+#상권 평균 매출 구하는 함수?
+def neighborhood_price(neighborhood_code):
+    filtered_list = Final1.objects.filter(행정동코드=neighborhood_code)
+    total = filtered_list.aggregate(total=models.Sum('분기당매출금액'))['total']
+
+    return total/len(filtered_list)
