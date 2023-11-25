@@ -1,0 +1,566 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>SSS</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/industry.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;800&family=Overpass:wght@800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<header class="header">
+    <h1>Seoul Startup Spot</h1>
+</header>
+
+<nav class="navigation-bar">
+    <ul>
+        <li><a href="#hansic-section">한식음식점</a></li>
+        <li><a href="#yangsic-section">양식음식점</a></li>
+        <li><a href="#ilsic-section">일식음식점</a></li>
+        <li><a href="#zungsic-section">중식음식점</a></li>
+        <li><a href="#bunsic-section">분식음식점</a></li>
+        <li><a href="#bbang-section">제과점</a></li>
+        <li><a href="#cafe-section">카페</a></li>
+        <li><a href="#chicken-section">치킨</a></li>
+        <li><a href="#hof-section">호프-주점</a></li>
+        <li><a href="#fastfood-section">패스트푸드</a></li>
+    </ul>
+</nav>
+<main class="container">
+    <div class="big-container">
+        <div class="tip">
+            업종별로 보이는 특성과 분기별 매출 평균 금액, 중위값을 나타낸 그래프입니다.
+        </div>
+        <div class="small-container" id="hansic-section">
+            <h2 class="title">한식음식점</h2>
+            <div class="wrapper">
+                <div class="chart-section">
+                    <div class="chart-box">
+                        <canvas id="hansicChart"  width="350" height="250"></canvas>
+                    </div>
+                </div>
+                <div class="text-section">
+                    <br>
+                    <p>
+                        &nbsp;&nbsp;매출 금액이 높은 상권은 매출 건수, 총 생활인구 수, 총 직장인구 수가 많고 집객시설이 다양합니다. 그러나 흥미로운 점은 유동인구가 매출과 동일한 양상을 보이지 않는다는 것입니다. 높은 매출을 기록하는 상권은 주로 점심 매출이 두드러지며, 직장인구와 20-30대 생활인구가 중요한 역할을 합니다. 또한 집객시설로는 백화점, 은행, 관공서가 다수 위치하고 있습니다. 반면에 매출이 낮은 상권은 주로 주말 매출이 강조되며, 높은 연령대의 영향이 크게 나타납니다. 집객시설로는 주로 슈퍼마켓이 있습니다. 흥미로운 점은 유동인구가 많은 상권에서도 매출이 높지 않다는 것입니다.    
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="small-container" id="yangsic-section">
+            <h2 class="title">양식음식점</h2>
+            <div class="wrapper">
+                <div class="chart-section">
+                    <div class="chart-box">
+                        <canvas id="yangsicChart" width="350" height="250"></canvas>
+                    </div>
+                </div>
+                <div class="text-section">
+                    <br>
+                    <p>
+                        &nbsp;&nbsp;매출이 높은 상권은 평일과 주말에 따라 다른 특성을 보입니다. 평일 매출이 높은 상권은 주로 20-30대 여성의 소비가 중심이며, 점심 시간대의 매출이 저녁 시간대보다 높습니다. 반면 주말 매출이 높은 상권은 20-30대 남성의 소비가 중심이 되며, 특이하게 21시~24시에서 주목할 만한 매출을 보입니다. 이러한 상권은 직장인구 비율이 높으며 출퇴근 시간대의 유동인구가 활발합니다. 매출이 낮은 상권은 평일과 주말 매출이 균일하며, 점심 시간대의 장사가 주말에 더 중요합니다. 이러한 상권은 20-30대의 소비가 중요하지만 매출이 높은 상권과 다르게 직장인구와는 연관이 적습니다.
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+        <div class="small-container" id="ilsic-section">    
+            <h2 class="title">일식음식점</h2>
+            <div class="wrapper">
+                <div class="chart-section">
+                    <div class="chart-box">
+                        <canvas id="ilsicChart"  width="350" height="250"></canvas>
+                    </div>
+                </div>
+                <div class="text-section">
+                    <br>
+                    <p>
+                        &nbsp;&nbsp;매출이 높은 상권은 평일 매출이 주말보다 우세하며 특히 일요일은 평일의 절반 수준으로 낮습니다. 점심 매출이 저녁보다 높고 21시~24시 매출도 두드러집니다. 주로 20-30대 남성 소비가 중심이 되며, 평일에는 해당 연령대의 남성 생활인구가 중요한 역할을 합니다. 직장인구가 매출에 큰 영향을 미치고 집객시설로는 관공서와 은행이 많습니다. 매출이 낮은 상권은 일주일 내내 매출이 일정하며 점심과 저녁 매출도 비슷합니다. 남성 소비가 약간 높으며, 30대 소비가 높은 편이지만 모든 연령대에서 비교적 매출이 고른 편입니다. 다른 업종과 비교했을 때 10대 생활인구가 많습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="small-container" id="zungsic-section">
+            <h2 class="title">중식음식점</h2>
+            <div class="wrapper">
+                <div class="chart-section">
+                    <div class="chart-box">
+                        <canvas id="zungsicChart"  width="350" height="250"></canvas>
+                    </div>
+                </div>
+                <div class="text-section">
+                    <p>
+                        &nbsp;&nbsp;매출이 높은 상권은 평일과 주말에 따라 다른 특성을 보입니다. 평일 매출이 높은 상권은 점심 시간대의 매출이 저녁 시간대보다 우세하며, 주로 직장인구가 많은 지역에서 20-30대 남성의 소비가 높습니다. 은행이 많이 위치하고 슈퍼마켓은 없다는 특징이 있습니다. 주말 매출이 높은 상권은 평일과는 달리 저녁 매출이 점심보다 높으며, 직장인구와의 연관성이 적습니다. 하지만 평일과 마찬가지로 20-30대 남성이 주요 소비자로 작용합니다. 매출이 낮은 상권의 상우 일주일 내내 매출이 비슷하며, 점심 시간대의 매출이 저녁 시간대보다 높습니다. 60대 여성의 생활인구가 많은 지역에서 40-50대 남성의 소비가 높고, 직장인구의 영향은 거의 없습니다. 집객시설로는 슈퍼마켓이 많은 편입니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="small-container" id="bunsic-section">
+            <h2 class="title">분식음식점</h2>
+            <div class="wrapper">
+                <div class="chart-section">
+                    <div class="chart-box">
+                        <canvas id="bunsicChart"  width="350" height="250"></canvas>
+                    </div>
+                </div>
+                <div class="text-section">
+                    <br>
+                    <p>
+                        &nbsp;&nbsp;매출 금액이 높은 상권일수록 총생활인구수, 총직장인구수, 집객시설수가 높게 나타나지만 유동인구는 비교적 낮게 나타납니다. 공통적으로 점심/저녁 매출이 비슷하게 가장 높게 나타나지만, 그 사이 시간대인 14~17시에도 다른 업종보다 매출금액이 높게 나타나 오후 시간에도 소비하는 사람들이 꽤 있는 것으로 보입니다. 금요일과 토요일 매출이 가장 높으며, 남성보다 여성 생활인구수가 높지만 남성매출금액이 여성매출금액보다 높아 남성이 더 소비를 많이 하는 것으로 볼 수 있습니다. 매출금액이 높은 상권일수록 20-30대 매출금액과 생활인구수가 높게 나타나고, 매출금액이 낮은 상권에서는 30-40대 매출금액과 60대 이상 생활인구수가 높게 나타납니다. 대체로 주중, 주말의 생활인구수가 비슷하거나 주말 생활인구수가 더 적습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="small-container" id="bbang-section">
+            <h2 class="title">제과점</h2>
+            <div class="wrapper">
+                <div class="chart-section">
+                    <div class="chart-box">
+                        <canvas id="bbangChart"  width="350" height="250"></canvas>
+                    </div>
+                </div>
+                <div class="text-section">
+                    <br>
+                    <p>
+                        &nbsp;&nbsp;저녁 시간대인 17~21시 매출금액이 가장 높고, 다음으로 점심 시간대인 11~14시, 그 다음으로 14~17시나 06~11 순으로 매출금액이 높게 나타나는 것을 보아 점심/저녁 시간대뿐만 아니라 오후, 아침 시간에도 소비가 많이 되는 업종임을 알 수 있습니다. 매출금액이 높을수록 총생활인구수, 총직장인구수, 집객시설수, 유동인구수가 높게 나타납니다. 공통적으로 주중 매출이 주말 매출보다 높으며 금요일 매출이 가장 높게 나타나고, 남성 매출금액보다 여성 매출금액이 높아 여성이 해당 업종에서 더 많이 소비하는 것을 알 수 있습니다. 매출금액이 높은 상권에서 20-30대 매출과 생활인구수가 높게 나타나며, 매출금액이 비교적 낮은 상권에서 40대 매출금액이 높게 나타납니다. 또한 매출 한 건당 평균 금액이 높은 상권에서 30대 매출이 가장 높게 나타나, 연령대 30대가 해당 업종에서 더 많은 소비를 하는 것으로 추정할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="small-container" id="cafe-section">
+            <h2 class="title">카페</h2>
+            <div class="wrapper">
+                <div class="chart-section">
+                    <div class="chart-box">
+                        <canvas id="cafeChart"  width="350" height="250"></canvas>
+                    </div>
+                </div>
+                <div class="text-section">
+                    <br>
+                    <p>
+                        &nbsp;&nbsp;저녁 시간대인 17~21시 매출금액이 압도적으로 높고, 다음으로 14~17시, 그 다음으로 11~14시 순으로 매출금액이 높게 나타나 점심 시간보다는 오후, 오후에서 저녁으로 넘어가는 시간대에 많이 소비되는 업종임을 알 수 있습니다. 직장인구수가 가장 높은 상권에서 주중 매출금액이 매우 높게 나온 것으로 보아 회사 밀집 지역에서 잘 될 수 있는 확률이 높은 업종입니다. 대체로 토요일 매출금액이 가장 높고, 월요일 매출금액이 가장 낮습니다. 분기당 매출금액이 가장 높은 상권에서 매출 한 건당 평균 금액이 가장 낮게 나온 것으로 보아 저가형 커피전문점에서 소비가 더 많이 발생하는 것으로 추정할 수 있습니다. 또한 40-50대 매출금액이 가장 높게 나타나는 상권들이 많고, 매출 한 건당 평균 금액이 가장 높은 상권에서 40-50대 매출금액이 가장 높은 것으로 보아 다른 연령대에 비해 40-50대가 해당 업종에서 더 많은 소비를 하는 것으로 추정할 수 있습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="small-container" id="chicken-section">
+            <h2 class="title">치킨</h2>
+            <div class="wrapper">
+                <div class="chart-section">
+                    <div class="chart-box">
+                        <canvas id="chickenChart"  width="350" height="250"></canvas>
+                    </div>
+                </div>
+                <div class="text-section">
+                    <br>
+                    <p>
+                        &nbsp;&nbsp;저녁 시간대인 17~21시 매출 금액이 압도적으로 높고, 다음으로는 14~17시, 다음으로는 점심 시간인 11~14시 순으로 매출이 높게 나타나 점심 시간보다는 오후, 오후에서 저녁으로 넘어가는 때에 많이 소비되는 업종인 것을 알 수 있습니다. 분기당 매출금액이 가장 높은 상권에서 매출 한 건당 평균 금액이 가장 높은 것으로 보아 단가가 높더라도 소비가 많은 업종인 것을 알 수 있습니다. 또한 매출금액이 높은 상권이든, 낮은 상권이든 특정 연령대에 매출금액이 몰려있지 않고 다양하게 분포되어 있습니다. 총생활인구수, 총직장인구수, 집객시설수, 총유동인구수가 많을수록 매출금액이 높아지는 경향이 있지만 다른 업종에 비해 두드러지지는 않습니다. 그리고 매출금액이 여성보다 남성에서 훨씬 높게 나타난 것으로 보아 남성 소비자가 여성 소비자보다 많은 것으로 보입니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="small-container" id="hof-section">
+            <h2 class="title">호프-주점</h2>
+            <div class="wrapper">
+                <div class="chart-section">
+                    <div class="chart-box">
+                        <canvas id="hofChart"  width="350" height="250"></canvas>
+                    </div>
+                </div>
+                <div class="text-section">
+                    <br>
+                    <p>
+                        &nbsp;&nbsp;호프-주점은 매출이 적은 상권과 높은 상권 모두에서 공통적으로 주말의 21시~24시 시간대의 매출이 높고 20-30대 남성이 주요 소비자입니다. 유동인구는 17시~21시에 두드러지게 높았는데 이는 21시~24시의 매출이 높은 점이 영향을 미친 것으로 보입니다. 직장인구와 매출 금액 간에는 상관 관계가 없는 것으로 나타납니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="small-container" id="fastfood-section">
+            <h2 class="title">패스트푸드</h2>
+            <div class="wrapper">
+                <div class="chart-section">
+                    <div class="chart-box">
+                        <canvas id="fastfoodChart"  width="350" height="250"></canvas>
+                    </div>
+                </div>
+                <div class="text-section">
+                    <br>
+                    <p>
+                        &nbsp;&nbsp;분기당 매출 금액이 가장 높은 상권에서 한 건당 매출 금액 평균이 가장 낮고, 반대로 분기당 매출 금액이 가장 낮은 상권에서 한 건당 매출 금액 평균이 가장 높은 것으로 보아 패스트푸드 업종에서 사람들이 고가형 가게보다 저가형 가게에서 소비를 더 많이 하는 것으로 추정할 수 있습니다. 또한 고가형 패스트푸드점의 주 소비층은 40-50대로 높은 연령대이고, 저가형 패스트푸드점의 주 소비층은 20-30대로 젊은 연령대입니다. 점심, 저녁 시간대 매출이 비슷하며 시간대 14~17 매출이 그 다음으로 높은 것으로 보아 오후 시간에도 소비하는 사람들이 꽤 있는 것으로 보입니다. 매출금액이 낮은 요일은 월요일이며, 높은 요일은 토요일입니다. 또한 여성보다 남성의 매출금액이 높은 것으로 보아 남성의 소비가 더 많은 업종입니다. 생활인구수, 집객시설수, 유동인구수, 직장인구수가 많을수록 매출금액이 높아지는 경향을 강하게 보입니다. 
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</main>
+
+    <script>
+        const hansicctx = document.getElementById('hansicChart').getContext('2d');
+        const hansicChart = new Chart(hansicctx, {
+            type: 'bar',
+            data: {
+                labels: ['1분기', '2분기', '3분기', '4분기'],
+                datasets: [{
+                    label: '한식 매출 평균',
+                    data: [543032646.094198, 738037800.3249146, 718885575.4939704, 787368089.5260524],
+                    backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        hansicChart.data.datasets.push({
+            label: '한식 매출 중위값',
+            type: 'line',
+            data: [209337312.66666666, 278187494.6666667, 260439313.66666666, 282098414.0],
+            fill: false,
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 2,
+            pointRadius: 5,
+            pointHoverRadius: 8
+        });
+
+        hansicChart.update();
+
+        const yangsicctx = document.getElementById('yangsicChart').getContext('2d');
+        const yangsicChart = new Chart(yangsicctx, {
+            type: 'bar',
+            data: {
+                labels: ['1분기', '2분기', '3분기', '4분기'],
+                datasets: [{
+                    label: '양식 매출 평균',
+                    data: [213372917.94569758, 281724639.93149537, 279042832.0802005, 296620279.15455306],
+                    backgroundColor: 'rgba(75, 192, 192, 0.7)', // Bar chart color
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Add a line chart on the same canvas
+        yangsicChart.data.datasets.push({
+            label: '양식 매출 중위값',
+            type: 'line',
+            data: [50909097.0, 69422232.0, 67998631.0, 71351578.0],
+            fill: false,
+            borderColor: 'rgba(255, 99, 132, 1)', // Line chart color
+            borderWidth: 2,
+            pointRadius: 5,
+            pointHoverRadius: 8
+        });
+
+        yangsicChart.update();
+
+        const ilsicctx = document.getElementById('ilsicChart').getContext('2d');
+        const ilsicChart = new Chart(ilsicctx, {
+            type: 'bar',
+            data: {
+                labels: ['1분기', '2분기', '3분기', '4분기'],
+                datasets: [{
+                    label: '일식 매출 평균',
+                    data: [163159830.9397163, 208213566.40070924, 201190882.42269504, 217966493.01843974],
+                    backgroundColor: 'rgba(75, 192, 192, 0.7)', // Bar chart color
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Add a line chart on the same canvas
+        ilsicChart.data.datasets.push({
+            label: '일식 매출 중위값',
+            type: 'line',
+            data: [50954303.166666664, 68194582.83333333, 61474507.166666664, 66400527.166666664],
+            fill: false,
+            borderColor: 'rgba(255, 99, 132, 1)', // Line chart color
+            borderWidth: 2,
+            pointRadius: 5,
+            pointHoverRadius: 8
+        });
+
+        ilsicChart.update();
+
+        const zungsicctx = document.getElementById('zungsicChart').getContext('2d');
+        const zungsicChart = new Chart(zungsicctx, {
+            type: 'bar',
+            data: {
+                labels: ['1분기', '2분기', '3분기', '4분기'],
+                datasets: [{
+                    label: '중식 매출 평균',
+                    data: [94593087.657444, 117517555.92226614, 118991057.87132192, 130096910.48221344],
+                    backgroundColor: 'rgba(75, 192, 192, 0.7)', // Bar chart color
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Add a line chart on the same canvas
+        zungsicChart.data.datasets.push({
+            label: '중식 매출 중위값',
+            type: 'line',
+            data: [37831740.666666664, 40309811.666666664, 40417179.333333336, 44398541.666666664],
+            fill: false,
+            borderColor: 'rgba(255, 99, 132, 1)', // Line chart color
+            borderWidth: 2,
+            pointRadius: 5,
+            pointHoverRadius: 8
+        });
+
+        zungsicChart.update();
+
+        const bunsicctx = document.getElementById('bunsicChart').getContext('2d');
+        const bunsicChart = new Chart(bunsicctx, {
+            type: 'bar',
+            data: {
+                labels: ['1분기', '2분기', '3분기', '4분기'],
+                datasets: [{
+                    label: '분식 매출 평균',
+                    data: [132318145.38689868, 165294062.43261686, 167144433.48891163, 176355795.4124872],
+                    backgroundColor: 'rgba(75, 192, 192, 0.7)', // Bar chart color
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Add a line chart on the same canvas
+        bunsicChart.data.datasets.push({
+            label: '분식 매출 중위값',
+            type: 'line',
+            data: [40009246.666666664, 49506268.666666664, 47411597.0, 49173624.0],
+            fill: false,
+            borderColor: 'rgba(255, 99, 132, 1)', // Line chart color
+            borderWidth: 2,
+            pointRadius: 5,
+            pointHoverRadius: 8
+        });
+
+        bunsicChart.update();
+
+        const bbangctx = document.getElementById('bbangChart').getContext('2d');
+        const bbangChart = new Chart(bbangctx, {
+            type: 'bar',
+            data: {
+                labels: ['1분기', '2분기', '3분기', '4분기'],
+                datasets: [{
+                    label: '제과점 매출 평균',
+                    data: [140060105.86812046, 150393102.62149534, 147281859.16718587, 149185246.7549325],
+                    backgroundColor: 'rgba(75, 192, 192, 0.7)', // Bar chart color
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Add a line chart on the same canvas
+        bbangChart.data.datasets.push({
+            label: '제과점 매출 중위값',
+            type: 'line',
+            data: [71738795.16666667, 74919809.0, 72258805.33333333, 73663484.0],
+            fill: false,
+            borderColor: 'rgba(255, 99, 132, 1)', // Line chart color
+            borderWidth: 2,
+            pointRadius: 5,
+            pointHoverRadius: 8
+        });
+
+        bbangChart.update();
+
+        const cafectx = document.getElementById('cafeChart').getContext('2d');
+        const cafeChart = new Chart(cafectx, {
+            type: 'bar',
+            data: {
+                labels: ['1분기', '2분기', '3분기', '4분기'],
+                datasets: [{
+                    label: '카페 매출 평균',
+                    data: [181929745.73484135, 233658486.1398052, 234727641.3845429, 229936344.73986804],
+                    backgroundColor: 'rgba(75, 192, 192, 0.7)', // Bar chart color
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Add a line chart on the same canvas
+        cafeChart.data.datasets.push({
+            label: '카페 매출 중위값',
+            type: 'line',
+            data: [40191452.666666664, 50506340.0, 48987037.666666664, 48096822.0],
+            fill: false,
+            borderColor: 'rgba(255, 99, 132, 1)', // Line chart color
+            borderWidth: 2,
+            pointRadius: 5,
+            pointHoverRadius: 8
+        });
+
+        cafeChart.update();
+
+        const chickenctx = document.getElementById('chickenChart').getContext('2d');
+        const chickenChart = new Chart(chickenctx, {
+            type: 'bar',
+            data: {
+                labels: ['1분기', '2분기', '3분기', '4분기'],
+                datasets: [{
+                    label: '치킨 매출 평균',
+                    data: [38579259.67901234, 60119090.09739369, 58524447.77137631, 57947183.16278007],
+                    backgroundColor: 'rgba(75, 192, 192, 0.7)', // Bar chart color
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Add a line chart on the same canvas
+        chickenChart.data.datasets.push({
+            label: '치킨 매출 중위값',
+            type: 'line',
+            data: [22259240.333333332, 29025003.333333332, 28702861.333333332, 27393256.333333332],
+            fill: false,
+            borderColor: 'rgba(255, 99, 132, 1)', // Line chart color
+            borderWidth: 2,
+            pointRadius: 5,
+            pointHoverRadius: 8
+        });
+
+        chickenChart.update();
+
+        const hofctx = document.getElementById('hofChart').getContext('2d');
+        const hofChart = new Chart(hofctx, {
+            type: 'bar',
+            data: {
+                labels: ['1분기', '2분기', '3분기', '4분기'],
+                datasets: [{
+                    label: '호프-주점 매출 평균',
+                    data: [105099980.69954531, 199370487.19517314, 191696155.46169987, 190193042.37705493],
+                    backgroundColor: 'rgba(75, 192, 192, 0.7)', // Bar chart color
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Add a line chart on the same canvas
+        hofChart.data.datasets.push({
+            label: '호프-주점 매출 중위값',
+            type: 'line',
+            data: [30518433.333333332, 56548385.666666664, 55956702.666666664, 52460346.333333336],
+            fill: false,
+            borderColor: 'rgba(255, 99, 132, 1)', // Line chart color
+            borderWidth: 2,
+            pointRadius: 5,
+            pointHoverRadius: 8
+        });
+
+        hofChart.update();
+
+        const fastfoodctx = document.getElementById('fastfoodChart').getContext('2d');
+        const fastfoodChart = new Chart(fastfoodctx, {
+            type: 'bar',
+            data: {
+                labels: ['1분기', '2분기', '3분기', '4분기'],
+                datasets: [{
+                    label: '패스트푸드 매출 평균',
+                    data: [72506417.97331062, 83037370.0028393, 85264716.49460535, 83009945.82566723],
+                    backgroundColor: 'rgba(75, 192, 192, 0.7)', // Bar chart color
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Add a line chart on the same canvas
+        fastfoodChart.data.datasets.push({
+            label: '패스트푸드 매출 중위값',
+            type: 'line',
+            data: [27602461.0, 26506981.666666668, 26371413.333333332, 28230733.333333332],
+            fill: false,
+            borderColor: 'rgba(255, 99, 132, 1)', // Line chart color
+            borderWidth: 2,
+            pointRadius: 5,
+            pointHoverRadius: 8
+        });
+
+        fastfoodChart.update();
+    </script>
+</body>
+</html>

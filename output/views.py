@@ -8,6 +8,9 @@ import pandas as pd
 def index(request):
     return render(request, 'output/index.html')
 
+def industry(request):
+    return render(request, 'output/industry.html')
+
 # 사용자 업종, 행정동 입력 페이지
 def input(request):
     return render(request, 'output/input.html')

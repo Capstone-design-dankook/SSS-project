@@ -1,0 +1,127 @@
+/* Reset some default styles */
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Set background color for the entire page */
+  body {
+    margin: 0;
+    background-color: #DADDE2;
+    font-family: 'Noto Sans KR', sans-serif; /* Use Noto Sans KR font */
+  }
+  
+  /* Style the header section */
+  .header {
+    background-color: #43655A;
+    padding: 15px;
+    text-align: center;
+    color: #DADDE2;
+    font-size: 24px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  
+  /* Style the big-container */
+  .big-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    padding-top: 80px;
+    flex: 1;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Style the tip section */
+  .tip {
+    background-color: #628281;
+    color: #DADDE2;
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+  
+  /* Style the small-container */
+  .small-container {
+    background-color: #889FA5;
+    color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+  
+  /* Style the title */
+  .title {
+    color: #43655A;
+  }
+  
+  /* Style the text-section */
+  .text-section {
+    margin-bottom: 15px;
+  }
+
+  .chart-section {
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Style the chart-box */
+  .chart-box {
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  /* Style canvas elements within chart-box */
+  canvas {
+    width: 100%;
+    height: auto;
+    border: 1px solid #DADDE2;
+    border-radius: 5px;
+  }
+  
+  /* Add spacing between elements within wrapper */
+  .wrapper > * {
+    margin-bottom: 10px;
+  }
+
+  /* 네비게이션 바 스타일링 */
+.navigation-bar {
+  background-color: #43655A;
+  padding: 10px;
+  margin-left: 20px;
+}
+
+.navigation-bar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.navigation-bar li {
+  margin: 0 10px;
+}
+
+.navigation-bar a {
+  text-decoration: none;
+  color: #DADDE2;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* 부드러운 스크롤 효과 */
+html {
+  scroll-behavior: smooth;
+}
+
+  
