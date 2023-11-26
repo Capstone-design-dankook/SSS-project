@@ -72,11 +72,11 @@ th {
 }
 
 .group {
-    background-color: #fff; /* 하얀색 배경 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 15px;
-    margin-bottom: 20px; /* 그룹 사이 간격을 조절할 수 있음 */
-    position: relative; /* 상대 위치 지정 */
+    margin-bottom: 20px;
+    position: relative;
 }
 
 .explanation {
