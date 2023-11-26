@@ -43,13 +43,13 @@
         <br>
         <div class="small-container">
             <br>
-            <h2 class="title">&nbsp;&nbsp;평균 집객시설 수는 {{ final.0.집객시설수|div:3|floatformat:0|intcomma }}명입니다.</h2>
+            <h2 class="title">&nbsp;&nbsp;평균 집객시설 수는 {{ final.0.집객시설수|div:3|floatformat:0|intcomma }}개 입니다.</h2>
             <br>
             <div class="wrapper">
                 <div class="text-section">
                     <br>
                     <p>
-                        해당 상권 그룹의 평균 집객시설 수는 {{ fianl.0.집객시설수|div:3|floatformat:0|intcomma }}개,
+                        해당 상권 그룹의 평균 집객시설 수는 {{ final.0.집객시설수|div:3|floatformat:0|intcomma }}개,
                         {{ selected_neighborhood }}의 평균 집객시설 수는 {{ district_facility|div:3|floatformat:0|intcomma }}개 입니다. 
                     </p>
                 </div>
@@ -59,7 +59,29 @@
                     </div>
                 </div>
             </div>
-
+        </div>
+        <br>
+        <div class="small-container">
+            <br>
+            {% if max_facility == "관공서" or max_facility == "대학교" %}
+                <h2 class="title">&nbsp;&nbsp;해당 상권 그룹에는 {{ max_facility }}가 가장 많습니다. </h2>
+            {% else %}
+                <h2 class="title">&nbsp;&nbsp;해당 상권 그룹에는 {{ max_facility }}이 가장 많습니다. </h2>
+            {% endif %}
+            <br>
+            <div class="wrapper">
+                <div class="text-section">
+                    <br>
+                    <p>
+                        집객시설 해석
+                    </p>
+                </div>
+                <div class="chart-section">
+                    <div class="chart-box">
+                        <canvas id="facilityMaxChart" width="350" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
         <br>
     </div>
@@ -75,8 +97,8 @@
                 datasets:[{
                     label: '유동인구수',
                     data: [{{ final.0.집객시설수|div:3 }}, {{ district_facility|div:3 }}],
-                    backgroundColor: 'lightgreen',
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'lightpink',
+                    borderColor: 'lightpink',
                     borderWidth: 1
                 }]
             },
@@ -89,6 +111,31 @@
                 }
             }
         });
+
+        const facilityMaxCtx = document.getElementById('facilityMaxChart').getContext('2d');
+        const facilityMaxChart = new Chart(facilityMaxCtx,{
+            type:'bar',
+            data:{
+                labels:[ '관공서', '은행', '대학교', '백화점', '슈퍼마켓', '의료시설', '교육시설', '여가시설', '교통시설'],
+                datasets:[{
+                    label: '집객시설 수',
+                    data: [{{ final.0.관공서수|div:3 }}, {{ final.0.은행수|div:3 }}, {{ final.0.대학교수|div:3 }}, {{ final.0.백화점수|div:3 }}, 
+                    {{ final.0.슈퍼마켓수|div:3 }}, {{ final.0.의료시설수|div:3 }}, {{ final.0.교육시설수|div:3 }}, {{ final.0.여가시설수|div:3 }},{{ final.0.교통시설수|div:3 }}],
+                    backgroundColor: 'mediumpurple',
+                    borderColor: 'mediumpurple',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
     </script>
 
 </body>

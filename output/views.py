@@ -655,6 +655,15 @@ def group_detail_facility(request, selected_district, selected_industry, neighbo
     
     district_facility = neighborhood_facility(neighborhood_code, selected_industry)
     
+    #교통시설 최댓값
+    facility_columns = final_quarter.columns[74:83]
+    max_facility_name = find_max(final_quarter, facility_columns)
+    floating_time_list = {'관공서수':'관공서', '은행수':'은행', '대학교수':'대학교', '백화점수':'백화점', '슈퍼마켓수':'슈퍼마켓', '의료시설수':'의료시설',
+                          '교육시설수':'교육시설','여가시설수':'여가시설', '교통시설수':'교통시설'}
+    max_facility = floating_time_list.get(max_facility_name)
+    
+    print('집객시설 열 번호 확인 : ', final.columns[73:83])
+    
     
     context = {
         'final' : final.to_dict(orient='records'),
@@ -667,6 +676,7 @@ def group_detail_facility(request, selected_district, selected_industry, neighbo
         'group_id': group_id,
         'business_name' : business_name,  
         'district_facility' : district_facility,   
+        'max_facility' : max_facility,
     }
     
     return render(request, 'output/facility.html', context)
@@ -729,6 +739,7 @@ def neighborhood_floating(neighborhood_code, selected_industry):
 
     return (location_floating+category_floating)/2
 
+#행정동 평균 집객시설수
 def neighborhood_facility(neighborhood_code, selected_industry):
     filtered_list = Final1.objects.filter(행정동코드=neighborhood_code)
     total = filtered_list.aggregate(total=models.Sum('집객시설수'))['total']
