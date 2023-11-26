@@ -36,12 +36,10 @@
             <p>&nbsp;&nbsp;상권명 : {% for name in business_name %} {{ name }} {% endfor %}( 총 {{ business_name|length }}개 )</p>
         </div>
 
-            <h3> 다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로 분석한
-                그룹명의 예측 데이터입니다.
-            </h3>
+        <h3> 다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로 분석한<br> 그룹명의 예측 데이터입니다.</h3>
 
         <div class="small-container">
-            <h2 class="title">&nbsp;&nbsp;추정 점포수는  {{final.0.점포수}}개 입니다.</h2>
+            <h2 class="title">&nbsp;&nbsp;추정 점포수는  {{final.0.점포수|floatformat:2}}개 입니다.</h2>
             점포수를 추정하는 게 의미가 있을지?
         </div>
         <br>

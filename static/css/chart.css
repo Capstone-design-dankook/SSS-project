@@ -71,6 +71,10 @@ h2 {
         padding-bottom: .25rem;
 }
 
+h3 {
+    text-align: center;
+}
+
 .text-section {
     flex: 1;
     margin-left: 60px;
