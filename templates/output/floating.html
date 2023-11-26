@@ -1,0 +1,141 @@
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>SSS</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/chart.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;800&family=Overpass:wght@800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="header">
+    <h1>Seoul Startup Spot</h1>
+
+</div>
+
+    <div class="big-container">
+        <nav class="menu">
+            <ul>
+                <li><a href="{% url 'output:sales' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=group_id %}">매출금액</a></li>
+                <li><a href="{% url 'output:floating' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=group_id %}">유동인구</a></li>
+                <li><a href="{% url 'output:living' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=group_id %}">생활인구</a></li>
+                <li><a href="{% url 'output:facility' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=group_id %}">집객시설</a></li>
+            </ul>
+        </nav>
+
+        <div class="business">
+            <p>&nbsp;&nbsp;지역 : 서울특별시 > {{ selected_district }} > {{ selected_neighborhood }}</p>
+            <p>&nbsp;&nbsp;업종 : 요식업 > {{ selected_industry_name }}</p>
+            <p>&nbsp;&nbsp;상권명 : {% for name in business_name %} {{ name }} {% endfor %}( 총 {{ business_name|length }}개 )</p>
+        </div>
+
+            <h3> 다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로 분석한
+                그룹명의 예측 데이터입니다.
+            </h3>
+
+        <br>
+        <div class="small-container">
+            <br>
+            <h2 class="title">&nbsp;&nbsp;월평균 유동인구 수는 {{ final.0.총유동인구수|div:3|floatformat:0|intcomma }}명입니다.</h2>
+            <br>
+            <div class="wrapper">
+                <div class="text-section">
+                    <br>
+                    <p>
+                        해당 상권 그룹의 월평균 유동인구는 {{ min_floating|div:3|floatformat:0|intcomma }}명 ~ {{ max_floating|div:3|floatformat:0|intcomma }}명 입니다. 
+                    </p>
+                </div>
+                <div class="chart-section">
+                    <div class="chart-box">
+                        <canvas id="floatingMeanChart" width="350" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <br>
+        <div class="small-container">
+            <br>     
+                <h2 class="title">&nbsp;&nbsp;{{ max_floating_time }} 유동인구가 가장 많습니다.</h2>
+            <br>
+            <div class="wrapper">
+                <div class="text-section">
+                    <br>
+                    <p>
+                        00시~06시 : {{ final.0.시간대0006유동인구수|div:3|floatformat:0|intcomma }}명<br>
+                        06시~11시 : {{ final.0.시간대0611유동인구수|div:3|floatformat:0|intcomma }}명<br>
+                        11시~14시 : {{ final.0.시간대1114유동인구수|div:3|floatformat:0|intcomma }}명<br>
+                        14시~17시 : {{ final.0.시간대1417유동인구수|div:3|floatformat:0|intcomma }}명<br>
+                        17시~21시 : {{ final.0.시간대1721유동인구수|div:3|floatformat:0|intcomma }}명<br>
+                        21시~24시 : {{ final.0.시간대2124유동인구수|div:3|floatformat:0|intcomma }}명<br>
+                    </p>
+                </div>
+                <div class="chart-section">
+                    <div class="chart-box">
+                        <canvas id="timeChart"  width="350" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+
+
+
+    <script>
+        const floatingMeanCtx = document.getElementById('floatingMeanChart').getContext('2d');
+        const floatingMeanChart = new Chart(floatingMeanCtx,{
+            type:'bar',
+            data:{
+                labels:[ '평균', '행정동' ],
+                datasets:[{
+                    label: '유동인구수',
+                    data: [{{ final.0.총유동인구수|div:3 }}, {{ district_floating|div:3 }}],
+                    backgroundColor: 'lightgreen',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const timeCtx = document.getElementById('timeChart').getContext('2d');
+        const timeChart = new Chart(timeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['00~06시', '06~11시', '11~14시', '14~17시', '17~21시', '21~24시'],
+                datasets: [{
+                    label: '유동인구',
+                    data: [{{ final.0.시간대0006유동인구수|div:3 }}, {{ final.0.시간대0611유동인구수|div:3 }}, {{ final.0.시간대1114유동인구수|div:3 }}, {{ final.0.시간대1417유동인구수|div:3 }}, {{ final.0.시간대1721유동인구수|div:3 }}, {{ final.0.시간대2124유동인구수|div:3 }}],
+                    backgroundColor: 'skyblue',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
