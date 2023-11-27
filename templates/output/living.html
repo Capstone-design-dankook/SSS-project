@@ -38,19 +38,21 @@
 
             <h3> 다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로 분석한
                 <br>그룹명의 예측 데이터입니다.
+                <br> 생활인구란 특정 지역, 특정 시점에 존재하는 모든 인구를 말합니다. 해당 지역에 주소지를 둔 사람은 물론 
+                일시적으로 서울을 찾은 사람까지 포함하여 ????? 매출을 발생시키는 잠재 고객에 해당합니다.<br>
             </h3>
 
         <br>
         <div class="small-container">
             <br>
-            <h2 class="title">&nbsp;&nbsp;월평균 추정매출은 {{ final.0.분기당매출금액|div:3|floatformat:0|intcomma }}원 입니다.</h2>
+            <h2 class="title">&nbsp;&nbsp;월평균 생활인구수는 {{ final.0.총생활인구수|div:3|floatformat:0|intcomma }}원 입니다.</h2>
             <br>
             <div class="wrapper">
                 <div class="text-section">
                     <br>
                     <p>
-                        해당 상권 그룹의 월 평균 추정 매출금액은 최소 {{ min_sell|div:3|floatformat:0|intcomma }}원 ~ 
-                        최대 {{ max_sell|div:3|floatformat:0|intcomma }}원 입니다. <br>
+                        해당 상권 그룹의 월 평균 추정 생활인구수는 최소 {{ min_living|div:3|floatformat:0|intcomma }}명 ~ 
+                        최대 {{ max_living|div:3|floatformat:0|intcomma }}명 입니다. <br>
                     </p>
                 </div>
                 <div class="chart-section">
@@ -62,44 +64,20 @@
             </div>
         </div>
         <br>
+
         <div class="small-container">
             <br>
-            {% if week_price > weekend_price %}
-            <h2 class="title">&nbsp;&nbsp; 주중에 더 고가의 음식을 소비합니다.</h2>
+            {% if final.0.남성생활인구수 > final.0.여성생활인구수 %}
+            <h2 class="title">&nbsp;&nbsp; 남성 생활인구가 여성 생활인구 보다 많습니다.</h2>
             {% else %}
-            <h2 class="title">&nbsp;&nbsp; 주말에 더 고가의 음식을 소비합니다.</h2>
+            <h2 class="title">&nbsp;&nbsp; 여성 생활인구가 남성 생활인구 보다 많습니다.</h2>
             {% endif %}
             <br>
             <div class="wrapper">
                 <div class="text-section">
                     <br>
                     <p>
-                        해당 상권 그룹의 한 건당 매출 금액은 주중 {{ week_price|div:3|floatformat:0|intcomma }}원, 주말 {{ weekend_price|div:3|floatformat:0|intcomma }}원, 평균 {{ total_price|div:3|floatformat:0|intcomma }}원 입니다. <br>
-                    </p>
-                </div>
-                <div class="chart-section">
-                    <div class="chart-box">
-                        <canvas id="unitPriceChart"  width="350" height="250"></canvas>
-                    </div>
-                </div>
-                <br>
-            </div>
-        </div>
-        <br>
-        <div class="small-container">
-            <br>
-            {% if final.0.남성매출금액 > final.0.여성매출금액 %}
-            <h2 class="title">&nbsp;&nbsp; 남성 매출금액이 여성 매출금액 보다 많습니다.</h2>
-            {% else %}
-            <h2 class="title">&nbsp;&nbsp; 여성 매출금액이 남성 매출금액 보다 많습니다.</h2>
-            {% endif %}
-            <br>
-            <div class="wrapper">
-                <div class="text-section">
-                    <br>
-                    <p>
-                        남성은 평균적으로 월 {{ final.0.남성매출금액|div:3|floatformat:0|intcomma }}원을 소비합니다.<br>
-                        여성은 평균적으로 월 {{ final.0.여성매출금액|div:3|floatformat:0|intcomma }}원을 소비합니다.
+                       성별 생활인구 설명
                     </p>
                 </div>
                 <div class="chart-section">
@@ -112,23 +90,23 @@
         <br>
         <div class="small-container">
             <br>     
-                <h2 class="title">&nbsp;&nbsp;{{ max_time }} 매출금액이 가장 높습니다.</h2>
+                <h2 class="title">&nbsp;&nbsp;{{ max_living_time }} 생활인구가 가장 많습니다.</h2>
             <br>
             <div class="wrapper">
                 <div class="text-section">
                     <br>
                     <p>
-                        00시~06시 : {{ final.0.시간대0006매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        06시~11시 : {{ final.0.시간대0611매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        11시~14시 : {{ final.0.시간대1114매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        14시~17시 : {{ final.0.시간대1417매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        17시~21시 : {{ final.0.시간대1721매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        21시~24시 : {{ final.0.시간대2124매출금액|div:3|floatformat:0|intcomma }}원<br>
+                        00시~06시 : {{ final.0.시간대0006생활인구수|div:3|floatformat:0|intcomma }}명<br>
+                        06시~11시 : {{ final.0.시간대0611생활인구수|div:3|floatformat:0|intcomma }}명<br>
+                        11시~14시 : {{ final.0.시간대1114생활인구수|div:3|floatformat:0|intcomma }}명<br>
+                        14시~17시 : {{ final.0.시간대1417생활인구수|div:3|floatformat:0|intcomma }}명<br>
+                        17시~21시 : {{ final.0.시간대1721생활인구수|div:3|floatformat:0|intcomma }}명<br>
+                        21시~24시 : {{ final.0.시간대2124생활인구수|div:3|floatformat:0|intcomma }}명<br>
                     </p>
                 </div>
                 <div class="chart-section">
                     <div class="chart-box">
-                        <canvas id="populationChart"  width="350" height="250"></canvas>
+                        <canvas id="timeChart"  width="350" height="250"></canvas>
                     </div>
                 </div>
             </div>
@@ -136,22 +114,22 @@
         <br>
         <div class="small-container">
             <br>
-                <h2 class="title">&nbsp;&nbsp;{{ max_day }} 매출금액이 가장 높습니다.</h2>
+                <h2 class="title">&nbsp;&nbsp;{{ max_living_day }} 생활인구가 가장 많습니다.</h2>
             <br>
             <div class="wrapper">
                 <div class="text-section">
                     <br>
-                        월요일 : {{ final.0.월요일매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        화요일 : {{ final.0.화요일매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        수요일 : {{ final.0.수요일매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        목요일 : {{ final.0.목요일매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        금요일 : {{ final.0.금요일매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        토요일 : {{ final.0.토요일매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        일요일 : {{ final.0.일요일매출금액|div:3|floatformat:0|intcomma }}원
+                        월요일 : {{ final.0.월요일생활인구수|div:3|floatformat:0|intcomma }}원<br>
+                        화요일 : {{ final.0.화요일생활인구수|div:3|floatformat:0|intcomma }}원<br>
+                        수요일 : {{ final.0.수요일생활인구수|div:3|floatformat:0|intcomma }}원<br>
+                        목요일 : {{ final.0.목요일생활인구수|div:3|floatformat:0|intcomma }}원<br>
+                        금요일 : {{ final.0.금요일생활인구수|div:3|floatformat:0|intcomma }}원<br>
+                        토요일 : {{ final.0.토요일생활인구수|div:3|floatformat:0|intcomma }}원<br>
+                        일요일 : {{ final.0.일요일생활인구수|div:3|floatformat:0|intcomma }}원
                 </div>
                 <div class="chart-section">
                     <div class="chart-box">
-                        <canvas id="saleChart"  width="350" height="250"></canvas>
+                        <canvas id="dayChart"  width="350" height="250"></canvas>
                     </div>
                 </div>
             </div>
@@ -159,18 +137,18 @@
         <br>
         <div class="small-container">
             <br>
-            <h2 class="title">&nbsp;&nbsp;{{ max_age }} 매출이 가장 높습니다.</h2>
+            <h2 class="title">&nbsp;&nbsp;{{ max_living_age }} 생활인구가 가장 많습니다.</h2>
             <br>
             <div class="wrapper">
                 <div class="text-section">
                     <br>
                     <p>
-                        10대 : {{ final.0.연령대10매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        20대 : {{ final.0.연령대20매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        30대 : {{ final.0.연령대30매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        40대 : {{ final.0.연령대40매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        50대 : {{ final.0.연령대50매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        60대 이상 : {{ final.0.연령대60이상매출금액|div:3|floatformat:0|intcomma }}원
+                        10대 : {{ final.0.연령대10생활인구수|div:3|floatformat:0|intcomma }}원<br>
+                        20대 : {{ final.0.연령대20생활인구수|div:3|floatformat:0|intcomma }}원<br>
+                        30대 : {{ final.0.연령대30생활인구수|div:3|floatformat:0|intcomma }}원<br>
+                        40대 : {{ final.0.연령대40생활인구수|div:3|floatformat:0|intcomma }}원<br>
+                        50대 : {{ final.0.연령대50생활인구수|div:3|floatformat:0|intcomma }}원<br>
+                        60대 이상 : {{ final.0.연령대60이상생활인구수|div:3|floatformat:0|intcomma }}원
                     </p>
                 </div>
                 <div class="chart-section">
@@ -182,38 +160,17 @@
         </div>
     </div>
 
+
+
     <script>
         const meanCtx = document.getElementById('meanChart').getContext('2d');
         const meanChart = new Chart(meanCtx, {
             type: 'bar',
             data: {
-                labels: ['평균 추정매출', '행정동 평균'],
+                labels: ['그룹 평균', '행정동 평균'],
                 datasets: [{
-                    label: '매출 금액',
-                    data: [{{ final.0.분기당매출금액|div:3 }}, {{ district_price|div:3 }}],
-                    backgroundColor: '#00A0FF',
-                    borderColor: '#006BD1',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    
-        const unitPriceCtx = document.getElementById('unitPriceChart').getContext('2d');
-        const unitPriceChart = new Chart(unitPriceCtx, {
-            type: 'bar',
-            data: {
-                labels: ['주중', '주말', '평균'],
-                datasets: [{
-                    label: '한 건당 평균 매출 금액',
-                    data: [{{ week_price|div:3 }}, {{ weekend_price|div:3 }}, {{ total_price|div:3 }}],
+                    label: '생활인구 수',
+                    data: [{{ final.0.총생활인구수|div:3 }}, {{ district_living|div:3 }}],
                     backgroundColor: '#00A0FF',
                     borderColor: '#006BD1',
                     borderWidth: 1
@@ -235,8 +192,8 @@
             data: {
                 labels: ['남성', '여성'],
                 datasets: [{
-                    label: '남성/여성 매출비율',
-                    data: [{{ final.0.남성매출금액|div:3 }}, {{ final.0.여성매출금액|div:3 }}],
+                    label: '생활인구 수',
+                    data: [{{ final.0.남성생활인구수|div:3 }}, {{ final.0.여성생활인구수|div:3 }}],
                     backgroundColor: ['#006BD1', '#FF0000'],
                     borderColor: 'white',
                     borderWidth: 1
@@ -252,14 +209,14 @@
             }
         });
 
-        const populationCtx = document.getElementById('populationChart').getContext('2d');
-        const populationChart = new Chart(populationCtx, {
+        const timeCtx = document.getElementById('timeChart').getContext('2d');
+        const timeChart = new Chart(timeCtx, {
             type: 'bar',
             data: {
                 labels: ['00~06시', '06~11시', '11~14시', '14~17시', '17~21시', '21~24시'],
                 datasets: [{
                     label: '시간대',
-                    data: [{{ final.0.시간대0006매출금액|div:3 }}, {{ final.0.시간대0611매출금액|div:3 }}, {{ final.0.시간대1114매출금액|div:3 }}, {{ final.0.시간대1417매출금액|div:3 }}, {{ final.0.시간대1721매출금액|div:3 }}, {{ final.0.시간대2124매출금액|div:3 }}],
+                    data: [{{ final.0.시간대0006생활인구수|div:3 }}, {{ final.0.시간대0611생활인구수|div:3 }}, {{ final.0.시간대1114생활인구수|div:3 }}, {{ final.0.시간대1417생활인구수|div:3 }}, {{ final.0.시간대1721생활인구수|div:3 }}, {{ final.0.시간대2124생활인구수|div:3 }}],
                     backgroundColor: '#50EF66',
                     borderColor: '#00BF39',
                     borderWidth: 1
@@ -275,14 +232,14 @@
             }
         });
 
-        const saleCtx = document.getElementById('saleChart').getContext('2d');
-        const saleChart = new Chart(saleCtx, {
+        const dayCtx = document.getElementById('dayChart').getContext('2d');
+        const dayChart = new Chart(dayCtx, {
             type: 'bar',
             data: {
                 labels: ['월', '화', '수', '목', '금', '토', '일'],
                 datasets: [{
                     label: '요일',
-                    data: [{{ final.0.월요일매출금액|div:3 }}, {{ final.0.화요일매출금액|div:3 }}, {{ final.0.수요일매출금액|div:3 }}, {{ final.0.목요일매출금액|div:3 }}, {{ final.0.금요일매출금액|div:3 }}, {{ final.0.토요일매출금액|div:3 }}, {{ final.0.일요일매출금액|div:3 }}],
+                    data: [{{ final.0.월요일생활인구수|div:3 }}, {{ final.0.화요일생활인구수|div:3 }}, {{ final.0.수요일생활인구수|div:3 }}, {{ final.0.목요일생활인구수|div:3 }}, {{ final.0.금요일생활인구수|div:3 }}, {{ final.0.토요일생활인구수|div:3 }}, {{ final.0.일요일생활인구수|div:3 }}],
                     backgroundColor: '#5AB7D4',
                     borderColor: '#487E91',
                     borderWidth: 1
@@ -305,7 +262,7 @@
                 labels: ['10대', '20대', '30대', '40대', '50대', '60대 이상'],
                 datasets: [{
                     label: '연령대',
-                    data: [{{ final.0.연령대10매출금액|div:3 }}, {{ final.0.연령대20매출금액|div:3 }}, {{ final.0.연령대30매출금액|div:3 }}, {{ final.0.연령대40매출금액|div:3 }}, {{ final.0.연령대50매출금액|div:3 }}, {{ final.0.연령대60이상매출금액|div:3 }}],
+                    data: [{{ final.0.연령대10생활인구수|div:3 }}, {{ final.0.연령대20생활인구수|div:3 }}, {{ final.0.연령대30생활인구수|div:3 }}, {{ final.0.연령대40생활인구수|div:3 }}, {{ final.0.연령대50생활인구수|div:3 }}, {{ final.0.연령대60이상생활인구수|div:3 }}],
                     backgroundColor: '#FF889D',
                     borderColor: '#FF5159',
                     borderWidth: 1

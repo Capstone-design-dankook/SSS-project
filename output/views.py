@@ -430,7 +430,7 @@ def input_district(request):
         return render(request, 'output/group.html', data)
     
 # 그룹별 상세 페이지
-def group_detail(request, selected_district, selected_industry, neighborhood_code, group_id):
+def group_detail_sales(request, selected_district, selected_industry, neighborhood_code, group_id):
     
     #상권명 받아오기
     include_codes = cluster_group(selected_industry, neighborhood_code)
@@ -591,11 +591,23 @@ def group_detail_floating(request, selected_district, selected_industry, neighbo
                       '시간대1417유동인구수':'14시~17시','시간대1721유동인구수':'17시~21시', '시간대2124유동인구수':'21시~24시'}
     max_floating_time = floating_time_list.get(max_floating_time_name)
 
-    #final 평균내서 리턴
-    final = final_quarter.mean(axis=0).to_frame().T
+    #직장인구
+    district_job = neighborhood_job(neighborhood_code, selected_industry)
+    
+    # 직장인구 최저, 최고
+    max_job = final_quarter.loc[0,'총직장인구수']
+    min_job = final_quarter.loc[0,'총직장인구수']
+    if len(final_quarter)>1 :
+        for i in range(1,len(final_quarter)) :
+            if max_job < final_quarter.loc[i,'총직장인구수'] :
+                max_job = final_quarter.loc[i,'총직장인구수']
+            if min_job>final_quarter.loc[i,'총직장인구수'] :
+                min_job = final_quarter.loc[i,'총직장인구수']
     
     district_floating = neighborhood_floating(neighborhood_code, selected_industry)
-    
+                    
+    #final 평균내서 리턴
+    final = final_quarter.mean(axis=0).to_frame().T
     
     context = {
         'final' : final.to_dict(orient='records'),
@@ -609,8 +621,11 @@ def group_detail_floating(request, selected_district, selected_industry, neighbo
         'max_floating' : max_floating,
         'min_floating' : min_floating,
         'max_floating_time' : max_floating_time,
+        'max_job' : max_job,
+        'min_job' : min_job,
         'business_name' : business_name,  
-        'district_floating' : district_floating,   
+        'district_floating' : district_floating,  
+        'district_job' : district_job, 
     }
     
     return render(request, 'output/floating.html', context)
@@ -680,6 +695,98 @@ def group_detail_facility(request, selected_district, selected_industry, neighbo
     }
     
     return render(request, 'output/facility.html', context)
+
+def group_detail_living(request, selected_district, selected_industry, neighborhood_code, group_id):
+    
+    #상권명 받아오기
+    include_codes = cluster_group(selected_industry, neighborhood_code)
+    include_code = include_codes['group'][group_id]['상권코드']
+    business_names = BusinessCode.objects.filter(구상권코드__in=include_code)
+    business_name = []
+    for item in business_names :
+        business_name.append(item.상권코드명)
+        
+    #대표 데이터 가져오는 함수 호출. 1분기~4분기
+    final_data_1 = final_data(selected_industry, neighborhood_code, '1', group_id)
+    final_data_2 = final_data(selected_industry, neighborhood_code, '2', group_id)
+    final_data_3 = final_data(selected_industry, neighborhood_code, '3', group_id)
+    final_data_4 = final_data(selected_industry, neighborhood_code, '4', group_id)   
+    
+    #1분기~4분기 합친 것 = final
+    final_quarter = pd.DataFrame({})
+    if not final_data_1.empty : 
+        final_quarter = pd.concat([final_quarter, final_data_1], ignore_index=True)
+    if not final_data_2.empty : 
+        final_quarter = pd.concat([final_quarter, final_data_2], ignore_index=True)
+    if not final_data_3.empty : 
+        final_quarter = pd.concat([final_quarter, final_data_3], ignore_index=True)
+    if not final_data_4.empty : 
+        final_quarter = pd.concat([final_quarter, final_data_4], ignore_index=True)
+    
+    # 생활인구 최저, 최고
+    max_living = final_quarter.loc[0,'총생활인구수']  #51열
+    min_living = final_quarter.loc[0,'총생활인구수']
+    if len(final_quarter)>1 :
+        for i in range(1,len(final_quarter)) :
+            if max_living < final_quarter.loc[i,'총생활인구수'] :
+                max_living = final_quarter.loc[i,'총생활인구수']
+            if min_living>final_quarter.loc[i,'총생활인구수'] :
+                min_living = final_quarter.loc[i,'총생활인구수']
+
+    #업종명 리턴
+    industry_list = { '0': '한식음식점', '1': '양식음식점', '2': '일식음식점', '3': '중식음식점', '4': '분식전문점',
+                              '5': '제과점', '6': '카페', '7': '치킨', '8': '호프-주점', '9': '패스트푸드'}
+    selected_industry_name = industry_list.get(selected_industry, '알 수 없는 업종')
+    
+    #행정동명 리턴
+    selected_neighborhood = DistrictCode.objects.get(행정동코드=neighborhood_code).행정동명
+    
+    #연령대 생활인구 최댓값
+    living_age_columns = final_quarter.columns[54:60]
+    max_living_age_name = find_max(final_quarter, living_age_columns)
+    living_age_list = {'연령대10생활인구수':'10대','연령대20생활인구수':'20대','연령대30생활인구수':'30대',
+                '연령대40생활인구수':'40대','연령대50생활인구수':'50대','연령대60이상생활인구수':'60대이상'}
+    max_living_age = living_age_list.get(max_living_age_name)
+    
+    #시간대 생활인구 최댓값
+    living_time_columns = final_quarter.columns[60:66]
+    max_living_time_name = find_max(final_quarter, living_time_columns)
+    living_time_list = {'시간대0006생활인구수':'00시~06시','시간대0611생활인구수':'06시~11시','시간대1114생활인구수':'11시~14시',
+                 '시간대1417생활인구수':'14시~17시','시간대1721생활인구수':'17시~21시','시간대2124생활인구수':'21시~24시'}
+    max_living_time = living_time_list.get(max_living_time_name)
+    
+    #요일 생활인구 최댓값
+    living_day_columns = final_quarter.columns[66:73]
+    max_living_day_name = find_max(final_quarter, living_day_columns)
+    living_day_list = {'월요일생활인구수' : '월요일', '화요일생활인구수':'화요일', '수요일생활인구수':'수요일',
+                '목요일생활인구수':'목요일','금요일생활인구수':'금요일','토요일생활인구수':'토요일','일요일생활인구수':'일요일'}
+    max_living_day = living_day_list.get(max_living_day_name)
+    
+    #행정동 평균 생활인구수
+    district_living = neighborhood_living(neighborhood_code,selected_industry)
+
+    #final 평균내서 리턴
+    final = final_quarter.mean(axis=0).to_frame().T
+    
+    context = {
+        'final' : final.to_dict(orient='records'),
+        'final_quarter' : final_quarter.to_dict(orient='records'),
+        'selected_industry_name' : selected_industry_name,
+        'selected_industry': selected_industry,
+        'selected_district' :  selected_district,
+        'selected_neighborhood' : selected_neighborhood,
+        'neighborhood_code': neighborhood_code,
+        'group_id': group_id,
+        'max_living_day' : max_living_day,
+        'max_living_time' : max_living_time,
+        'max_living_age' : max_living_age,
+        'max_living' : max_living,
+        'min_living' : min_living,
+        'business_name' : business_name,
+        'district_living' : district_living,
+    }
+    
+    return render(request, 'output/living.html', context)
 
 def get_industry_name(code):
     industry_mapping = {
@@ -754,3 +861,36 @@ def neighborhood_facility(neighborhood_code, selected_industry):
     category_facility = category_1['집객시설수'].mean()
 
     return (location_facility+category_facility)/2
+
+#행정동 평균 생활인구수
+def neighborhood_living(neighborhood_code, selected_industry):
+    filtered_list = Final1.objects.filter(행정동코드=neighborhood_code)
+    total = filtered_list.aggregate(total=models.Sum('총생활인구수'))['total']
+    location_living = total/len(filtered_list)
+    
+    category_list = {'0':HANSIC_3, '1':YANGSIC_3, '2':ILSIC_3, '3':ZUNGSIC_2, '4':BUNSIC_2,
+                     '5':BBANG_3, '6':CAFE_4, '7':CHICKEN_4, '8':HOF_4, '9':FASTFOOD_2}
+    name = category_list.get(selected_industry)
+    data_from_db = name.objects.all()
+    category_1 = pd.DataFrame(list(data_from_db.values()))
+    category_1.fillna(0,inplace=True)
+    category_living = category_1['총생활인구수'].mean()
+
+    return (location_living+category_living)/2
+
+#행정동 평균 직장인구수
+def neighborhood_job(neighborhood_code, selected_industry):
+    filtered_list = Final1.objects.filter(행정동코드=neighborhood_code)
+    total = filtered_list.aggregate(total=models.Sum('총직장인구수'))['total']
+    location_job = total/len(filtered_list)
+    
+    category_list = {'0':HANSIC_3, '1':YANGSIC_3, '2':ILSIC_3, '3':ZUNGSIC_2, '4':BUNSIC_2,
+                     '5':BBANG_3, '6':CAFE_4, '7':CHICKEN_4, '8':HOF_4, '9':FASTFOOD_2}
+    name = category_list.get(selected_industry)
+    data_from_db = name.objects.all()
+    category_1 = pd.DataFrame(list(data_from_db.values()))
+    category_1.fillna(0,inplace=True)
+    category_job = category_1['총직장인구수'].mean()
+
+    return (location_job+category_job)/2
+
