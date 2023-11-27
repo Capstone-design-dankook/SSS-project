@@ -16,7 +16,7 @@
     text-align: center;
     color: black;
     margin-bottom: 20px;
-    font-size: 22px;
+    font-size: 30px;
   }
 
   a {
@@ -58,24 +58,31 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
+
+  h4 {
+    font-size: 18px;
+  }
   
   .tip {
     background-color: #628281;
-    color: #DADDE2;
+    color: white;
     padding: 15px;
     margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
   .small-container {
-    background-color: #889FA5;
-    color: white;
+    background-color: white;
+    color: black;
     padding: 20px;
     margin-bottom: 40px;
     border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
   .title {
-    color: white;
+    color: black;
   }
   
   .text-section {
