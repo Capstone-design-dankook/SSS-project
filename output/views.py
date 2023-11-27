@@ -8,6 +8,9 @@ import pandas as pd
 def index(request):
     return render(request, 'output/index.html')
 
+def intro(request):
+    return render(request, 'output/intro.html')
+
 def industry(request):
     return render(request, 'output/industry.html')
 

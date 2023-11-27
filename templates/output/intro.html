@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>SSS</title>
+    <script src="https://kit.fontawesome.com/8878cbea7e.js" crossorigin="anonymous"></script>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/industry.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@800&family=Noto+Sans+KR:wght@300;400;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<header class="header">
+    <h1>T R I P L E &nbsp;&nbsp;S</h1>
+</header>
+
+<div class="container">
+        <div class="big-container">
+            <div class="tip">
+                <h4>상권 분석에 앞서 데이터에 대해 알아보세요!</h4>
+                
+                <div class="input">
+                    <a href="/input"><i class="fa-solid fa-arrow-right"></i>&nbsp;상권 분석 보러 가기</a>
+                </div>
+            </div>
+
+            <div class="tip">
+                <h4>10가지 요식업종의 매출 TIP을 알아보세요!</h4>
+                상권 분석 서비스에서 10가지 업종을 분석하여 매출이 높은 상권에서 공통적으로 보이는 특징, 업종별로 두드러지는 특성에 대해 정리하여 분기별 매출 평균 금액, 중위값을 나타낸 그래프와 함께 보여드립니다. 희망하는 업종에서의 매출에 중요한 요인들이 어떤 것들이 있는지 살펴보세요!
+                <div class="input">
+                    <a href="/industry"><i class="fa-solid fa-arrow-right"><br></i>&nbsp;업종별 분석 보러 가기</a>
+                </div>
+            </div>
+        </div>
+</body>
+</html>
