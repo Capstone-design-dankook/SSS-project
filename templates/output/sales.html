@@ -65,16 +65,21 @@
         <div class="small-container">
             <br>
             {% if week_price > weekend_price %}
-            <h2 class="title">&nbsp;&nbsp; 주중에 더 고가의 음식을 소비합니다.</h2>
+            <h2 class="title">&nbsp;&nbsp; 주중 한 건당 매출금액이 더 높습니다.</h2>
             {% else %}
-            <h2 class="title">&nbsp;&nbsp; 주말에 더 고가의 음식을 소비합니다.</h2>
+            <h2 class="title">&nbsp;&nbsp; 주말 한 건당 매출금액이 더 높습니다.</h2>
             {% endif %}
             <br>
             <div class="wrapper">
                 <div class="text-section">
                     <br>
                     <p>
-                        해당 상권 그룹의 한 건당 매출 금액은 주중 {{ week_price|div:3|floatformat:0|intcomma }}원, 주말 {{ weekend_price|div:3|floatformat:0|intcomma }}원, 평균 {{ total_price|div:3|floatformat:0|intcomma }}원 입니다. <br>
+                        해당 상권 그룹의 한 건당 매출 금액은 주중 {{ week_price|div:3|floatformat:0|intcomma }}원, 주말 {{ weekend_price|div:3|floatformat:0|intcomma }}원 입니다.<br>
+                        {% if week_price > weekend_price %}
+                        주중 한 건당 매출금액이 더 높더라도, 주중이 주말보다 전체 매출금액이 높지 않을 수 있습니다. 아래 요일별 매출금액을 함께 살펴보세요!
+                        {% else %}
+                        주말 한 건당 매출금액이 더 높더라도, 주말이 주중보다 전체 매출금액이 높지 않을 수 있습니다. 아래 요일별 매출금액을 함께 살펴보세요!
+                        {% endif %}
                     </p>
                 </div>
                 <div class="chart-section">
@@ -98,8 +103,39 @@
                 <div class="text-section">
                     <br>
                     <p>
-                        남성은 평균적으로 월 {{ final.0.남성매출금액|div:3|floatformat:0|intcomma }}원을 소비합니다.<br>
-                        여성은 평균적으로 월 {{ final.0.여성매출금액|div:3|floatformat:0|intcomma }}원을 소비합니다.
+                        {% with total_sales=final.0.남성매출금액|add:final.0.여성매출금액 %}
+                        {% with female_percentage=final.0.여성매출금액|div:total_sales|mul:100 %}
+                            여성 매출금액은 전체 매출의 {{ female_percentage|floatformat:1 }}%, 
+                        {% with male_percentage=final.0.남성매출금액|div:total_sales|mul:100 %}
+                            남성 매출금액은 전체 매출의 {{ male_percentage|floatformat:1 }}%를 차지합니다.
+
+                            {% if female_percentage > male_percentage %}
+                            {% with fsub=female_percentage|sub:male_percentage %}
+                            {% if fsub < 5 %}
+                                <br>여성 매출금액이 남성 매출금액보다 높지만, 그 차이는 크지 않아 여성과 남성의 소비가 비슷한 것으로 보입니다.
+                            {% elif 5 < fsub and fsub < 10 %}
+                                <br>여성 매출금액이 남성 매출금액보다 높아, 여성이 남성보다 소비가 많은 것으로 보입니다.
+                            {% else %}
+                                <br>여성 매출금액이 남성 매출금액보다 월등히 높아, 여성이 남성보다 훨씬 소비가 많은 것으로 보입니다.
+                            {% endif %}
+                            {% endwith %}
+                            {% endif %}
+
+                            {% if female_percentage < male_percentage %}
+                            {% with msub=male_percentage|sub:female_percentage %}
+                            {% if msub < 5 %}
+                                <br>남성 매출금액이 여성 매출금액보다 높지만, 그 차이는 크지 않아 여성과 남성의 소비가 비슷한 것으로 보입니다.
+                            {% elif 5 < msub and msub < 10 %}
+                                <br>남성 매출금액이 여성 매출금액보다 높아, 남성이 여성보다 소비가 많은 것으로 보입니다.
+                            {% else %}
+                                <br>남성 매출금액이 여성 매출금액보다 월등히 높아, 남성이 여성보다 훨씬 소비가 많은 것으로 보입니다.
+                            {% endif %}
+                            {% endwith %}
+                            {% endif %}
+                            
+                        {% endwith %}
+                        {% endwith %}
+                        {% endwith %}
                     </p>
                 </div>
                 <div class="chart-section">
@@ -113,22 +149,14 @@
         <div class="small-container">
             <br>     
                 <h2 class="title">&nbsp;&nbsp;{{ max_time }} 매출금액이 가장 높습니다.</h2>
-            <br>
+            <br><br>
             <div class="wrapper">
-                <div class="text-section">
-                    <br>
-                    <p>
-                        00시~06시 : {{ final.0.시간대0006매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        06시~11시 : {{ final.0.시간대0611매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        11시~14시 : {{ final.0.시간대1114매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        14시~17시 : {{ final.0.시간대1417매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        17시~21시 : {{ final.0.시간대1721매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        21시~24시 : {{ final.0.시간대2124매출금액|div:3|floatformat:0|intcomma }}원<br>
-                    </p>
+                <div class="chart-section">
+                    <canvas id="timesalesChart" width="350" height="250"></canvas>
                 </div>
                 <div class="chart-section">
                     <div class="chart-box">
-                        <canvas id="populationChart"  width="350" height="250"></canvas>
+                        <canvas id="populationChart" width="350" height="250"></canvas>
                     </div>
                 </div>
             </div>
@@ -137,21 +165,14 @@
         <div class="small-container">
             <br>
                 <h2 class="title">&nbsp;&nbsp;{{ max_day }} 매출금액이 가장 높습니다.</h2>
-            <br>
+            <br><br>
             <div class="wrapper">
-                <div class="text-section">
-                    <br>
-                        월요일 : {{ final.0.월요일매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        화요일 : {{ final.0.화요일매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        수요일 : {{ final.0.수요일매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        목요일 : {{ final.0.목요일매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        금요일 : {{ final.0.금요일매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        토요일 : {{ final.0.토요일매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        일요일 : {{ final.0.일요일매출금액|div:3|floatformat:0|intcomma }}원
+                <div class="chart-section">
+                    <canvas id="daysalesChart" width="350" height="250"></canvas>
                 </div>
                 <div class="chart-section">
                     <div class="chart-box">
-                        <canvas id="saleChart"  width="350" height="250"></canvas>
+                        <canvas id="saleChart" width="350" height="250"></canvas>
                     </div>
                 </div>
             </div>
@@ -160,18 +181,10 @@
         <div class="small-container">
             <br>
             <h2 class="title">&nbsp;&nbsp;{{ max_age }} 매출이 가장 높습니다.</h2>
-            <br>
+            <br><br>
             <div class="wrapper">
-                <div class="text-section">
-                    <br>
-                    <p>
-                        10대 : {{ final.0.연령대10매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        20대 : {{ final.0.연령대20매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        30대 : {{ final.0.연령대30매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        40대 : {{ final.0.연령대40매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        50대 : {{ final.0.연령대50매출금액|div:3|floatformat:0|intcomma }}원<br>
-                        60대 이상 : {{ final.0.연령대60이상매출금액|div:3|floatformat:0|intcomma }}원
-                    </p>
+                <div class="chart-section">
+                    <canvas id="agesalesChart"  width="350" height="250"></canvas>
                 </div>
                 <div class="chart-section">
                     <div class="chart-box">
@@ -252,6 +265,36 @@
             }
         });
 
+        const timesalesCtx = document.getElementById('timesalesChart').getContext('2d');
+        const timesalesChart = new Chart(timesalesCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['00~06시', '06~11시', '11~14시', '14~17시', '17~21시', '21~24시'],
+                datasets: [{
+                    label: '시간대별 매출비율',
+                    data: [{{ final.0.시간대0006매출금액|div:3 }}, {{ final.0.시간대0611매출금액|div:3 }}, {{ final.0.시간대1114매출금액|div:3 }}, {{ final.0.시간대1417매출금액|div:3 }}, {{ final.0.시간대1721매출금액|div:3 }}, {{ final.0.시간대2124매출금액|div:3 }}],
+                    backgroundColor: [
+                    '#FFB6C1', // LightPink
+                    '#87CEEB', // SkyBlue
+                    '#98FB98', // PaleGreen
+                    '#FFD700', // Gold
+                    '#FFA07A', // LightSalmon
+                    '#FF69B4'  // HotPink
+                ],
+                    borderColor: 'white',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
         const populationCtx = document.getElementById('populationChart').getContext('2d');
         const populationChart = new Chart(populationCtx, {
             type: 'bar',
@@ -275,6 +318,37 @@
             }
         });
 
+        const daysalesCtx = document.getElementById('daysalesChart').getContext('2d');
+        const daysalesChart = new Chart(daysalesCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['월', '화', '수', '목', '금', '토', '일'],
+                datasets: [{
+                    label: '요일',
+                    data: [{{ final.0.월요일매출금액|div:3 }}, {{ final.0.화요일매출금액|div:3 }}, {{ final.0.수요일매출금액|div:3 }}, {{ final.0.목요일매출금액|div:3 }}, {{ final.0.금요일매출금액|div:3 }}, {{ final.0.토요일매출금액|div:3 }}, {{ final.0.일요일매출금액|div:3 }}],
+                    backgroundColor: [
+                    '#FFB6C1', // LightPink
+                    '#87CEEB', // SkyBlue
+                    '#98FB98', // PaleGreen
+                    '#FFD700', // Gold
+                    '#FFA07A', // LightSalmon
+                    '#FF69B4',  // HotPink
+                    '#00FA9A'  // MediumSpringGreen
+                ],
+                    borderColor: 'white',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
         const saleCtx = document.getElementById('saleChart').getContext('2d');
         const saleChart = new Chart(saleCtx, {
             type: 'bar',
@@ -283,8 +357,38 @@
                 datasets: [{
                     label: '요일',
                     data: [{{ final.0.월요일매출금액|div:3 }}, {{ final.0.화요일매출금액|div:3 }}, {{ final.0.수요일매출금액|div:3 }}, {{ final.0.목요일매출금액|div:3 }}, {{ final.0.금요일매출금액|div:3 }}, {{ final.0.토요일매출금액|div:3 }}, {{ final.0.일요일매출금액|div:3 }}],
-                    backgroundColor: '#5AB7D4',
-                    borderColor: '#487E91',
+                    backgroundColor: 'skyblue',
+                    borderColor: 'white',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const agesalesCtx = document.getElementById('agesalesChart').getContext('2d');
+        const agesalesChart = new Chart(agesalesCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['10대', '20대', '30대', '40대', '50대', '60대 이상'],
+                datasets: [{
+                    label: '연령대별 매출',
+                    data: [{{ final.0.연령대10매출금액|div:3 }}, {{ final.0.연령대20매출금액|div:3 }}, {{ final.0.연령대30매출금액|div:3 }}, {{ final.0.연령대40매출금액|div:3 }}, {{ final.0.연령대50매출금액|div:3 }}, {{ final.0.연령대60이상매출금액|div:3 }}],
+                    backgroundColor: [
+                    '#FFB6C1', // LightPink
+                    '#87CEEB', // SkyBlue
+                    '#98FB98', // PaleGreen
+                    '#FFD700', // Gold
+                    '#FFA07A', // LightSalmon
+                    '#FF69B4'  // HotPink
+                ],
+                    borderColor: 'white',
                     borderWidth: 1
                 }]
             },
@@ -307,7 +411,7 @@
                     label: '연령대',
                     data: [{{ final.0.연령대10매출금액|div:3 }}, {{ final.0.연령대20매출금액|div:3 }}, {{ final.0.연령대30매출금액|div:3 }}, {{ final.0.연령대40매출금액|div:3 }}, {{ final.0.연령대50매출금액|div:3 }}, {{ final.0.연령대60이상매출금액|div:3 }}],
                     backgroundColor: '#FF889D',
-                    borderColor: '#FF5159',
+                    borderColor: 'white',
                     borderWidth: 1
                 }]
             },
