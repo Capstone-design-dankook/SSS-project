@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <title>SSS</title>
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <script src="https://kit.fontawesome.com/8878cbea7e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'css/chart.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,9 +39,9 @@
 
             <h3> 다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로 분석한
                 <br>그룹명의 예측 데이터입니다.
-                <br> 생활인구란 특정 지역, 특정 시점에 존재하는 모든 인구를 말합니다. 해당 지역에 주소지를 둔 사람은 물론 
-                일시적으로 서울을 찾은 사람까지 포함하여 ????? 매출을 발생시키는 잠재 고객에 해당합니다.<br>
             </h3>
+
+            <br><i class="fa-solid fa-circle-exclamation" style="color: #ffd642;"></i> 생활인구란 특정 지역, 특정 시점에 존재하는 모든 인구를 말합니다. 해당 지역에 주소지를 둔 사람은 물론 일시적으로 서울을 찾아 매출을 발생시키는 잠재 고객에 해당합니다.<br>
 
         <br>
         <div class="small-container">
@@ -93,16 +94,8 @@
                 <h2 class="title">&nbsp;&nbsp;{{ max_living_time }} 생활인구가 가장 많습니다.</h2>
             <br>
             <div class="wrapper">
-                <div class="text-section">
-                    <br>
-                    <p>
-                        00시~06시 : {{ final.0.시간대0006생활인구수|div:3|floatformat:0|intcomma }}명<br>
-                        06시~11시 : {{ final.0.시간대0611생활인구수|div:3|floatformat:0|intcomma }}명<br>
-                        11시~14시 : {{ final.0.시간대1114생활인구수|div:3|floatformat:0|intcomma }}명<br>
-                        14시~17시 : {{ final.0.시간대1417생활인구수|div:3|floatformat:0|intcomma }}명<br>
-                        17시~21시 : {{ final.0.시간대1721생활인구수|div:3|floatformat:0|intcomma }}명<br>
-                        21시~24시 : {{ final.0.시간대2124생활인구수|div:3|floatformat:0|intcomma }}명<br>
-                    </p>
+                <div class="chart-section">
+                    <canvas id="timelivingChart"  width="350" height="250"></canvas>
                 </div>
                 <div class="chart-section">
                     <div class="chart-box">
@@ -117,15 +110,8 @@
                 <h2 class="title">&nbsp;&nbsp;{{ max_living_day }} 생활인구가 가장 많습니다.</h2>
             <br>
             <div class="wrapper">
-                <div class="text-section">
-                    <br>
-                        월요일 : {{ final.0.월요일생활인구수|div:3|floatformat:0|intcomma }}원<br>
-                        화요일 : {{ final.0.화요일생활인구수|div:3|floatformat:0|intcomma }}원<br>
-                        수요일 : {{ final.0.수요일생활인구수|div:3|floatformat:0|intcomma }}원<br>
-                        목요일 : {{ final.0.목요일생활인구수|div:3|floatformat:0|intcomma }}원<br>
-                        금요일 : {{ final.0.금요일생활인구수|div:3|floatformat:0|intcomma }}원<br>
-                        토요일 : {{ final.0.토요일생활인구수|div:3|floatformat:0|intcomma }}원<br>
-                        일요일 : {{ final.0.일요일생활인구수|div:3|floatformat:0|intcomma }}원
+                <div class="chart-section">
+                    <canvas id="daylivingChart"  width="350" height="250"></canvas>
                 </div>
                 <div class="chart-section">
                     <div class="chart-box">
@@ -140,16 +126,8 @@
             <h2 class="title">&nbsp;&nbsp;{{ max_living_age }} 생활인구가 가장 많습니다.</h2>
             <br>
             <div class="wrapper">
-                <div class="text-section">
-                    <br>
-                    <p>
-                        10대 : {{ final.0.연령대10생활인구수|div:3|floatformat:0|intcomma }}원<br>
-                        20대 : {{ final.0.연령대20생활인구수|div:3|floatformat:0|intcomma }}원<br>
-                        30대 : {{ final.0.연령대30생활인구수|div:3|floatformat:0|intcomma }}원<br>
-                        40대 : {{ final.0.연령대40생활인구수|div:3|floatformat:0|intcomma }}원<br>
-                        50대 : {{ final.0.연령대50생활인구수|div:3|floatformat:0|intcomma }}원<br>
-                        60대 이상 : {{ final.0.연령대60이상생활인구수|div:3|floatformat:0|intcomma }}원
-                    </p>
+                <div class="chart-section">
+                    <canvas id="agelivingChart"  width="350" height="250"></canvas>
                 </div>
                 <div class="chart-section">
                     <div class="chart-box">
@@ -209,6 +187,29 @@
             }
         });
 
+        const timelivingCtx = document.getElementById('timelivingChart').getContext('2d');
+        const timelivingChart = new Chart(timelivingCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['00~06시', '06~11시', '11~14시', '14~17시', '17~21시', '21~24시'],
+                datasets: [{
+                    label: '시간대별 생활인구 비율',
+                    data: [{{ final.0.시간대0006생활인구수|div:3 }}, {{ final.0.시간대0611생활인구수|div:3 }}, {{ final.0.시간대1114생활인구수|div:3 }}, {{ final.0.시간대1417생활인구수|div:3 }}, {{ final.0.시간대1721생활인구수|div:3 }}, {{ final.0.시간대2124생활인구수|div:3 }}],
+                    backgroundColor: '#50EF66',
+                    borderColor: '#00BF39',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
         const timeCtx = document.getElementById('timeChart').getContext('2d');
         const timeChart = new Chart(timeCtx, {
             type: 'bar',
@@ -255,6 +256,52 @@
             }
         });
 
+        const daylivingCtx = document.getElementById('daylivingChart').getContext('2d');
+        const daylivingChart = new Chart(daylivingCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['월', '화', '수', '목', '금', '토', '일'],
+                datasets: [{
+                    label: '요일',
+                    data: [{{ final.0.월요일생활인구수|div:3 }}, {{ final.0.화요일생활인구수|div:3 }}, {{ final.0.수요일생활인구수|div:3 }}, {{ final.0.목요일생활인구수|div:3 }}, {{ final.0.금요일생활인구수|div:3 }}, {{ final.0.토요일생활인구수|div:3 }}, {{ final.0.일요일생활인구수|div:3 }}],
+                    backgroundColor: '#5AB7D4',
+                    borderColor: '#487E91',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const agelivingCtx = document.getElementById('agelivingChart').getContext('2d');
+        const agelivingChart = new Chart(agelivingCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['10대', '20대', '30대', '40대', '50대', '60대 이상'],
+                datasets: [{
+                    label: '연령대',
+                    data: [{{ final.0.연령대10생활인구수|div:3 }}, {{ final.0.연령대20생활인구수|div:3 }}, {{ final.0.연령대30생활인구수|div:3 }}, {{ final.0.연령대40생활인구수|div:3 }}, {{ final.0.연령대50생활인구수|div:3 }}, {{ final.0.연령대60이상생활인구수|div:3 }}],
+                    backgroundColor: '#FF889D',
+                    borderColor: '#FF5159',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
         const ageCtx = document.getElementById('ageChart').getContext('2d');
         const ageChart = new Chart(ageCtx, {
             type: 'bar',
@@ -279,5 +326,8 @@
         });
     </script>
 
+    <footer></footer>
+
 </body>
+
 </html>

@@ -17,6 +17,7 @@ body {
 .big-container {
     max-width: 800px;
     margin: auto;
+    margin-bottom: 80px;
     padding: 20px;
     background-color: #FFFFFF;
     border-radius: 8px;
@@ -107,4 +108,15 @@ h3 {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     background-color: white;
+}
+
+.footer {
+    bottom: 0;
+    width: 100%;
+    background-color: #628281;
+    color: #fff;
+    font-size: 20px;
+    font-family: 'Kanit', sans-serif;
+    text-align: center;
+    padding: 10px 0;
 }
