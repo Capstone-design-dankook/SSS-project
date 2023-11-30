@@ -745,21 +745,21 @@ def group_detail_living(request, selected_district, selected_industry, neighborh
     selected_neighborhood = DistrictCode.objects.get(행정동코드=neighborhood_code).행정동명
     
     #연령대 생활인구 최댓값
-    living_age_columns = final_quarter.columns[54:60]
+    living_age_columns = final_quarter.columns[53:59]
     max_living_age_name = find_max(final_quarter, living_age_columns)
     living_age_list = {'연령대10생활인구수':'10대','연령대20생활인구수':'20대','연령대30생활인구수':'30대',
                 '연령대40생활인구수':'40대','연령대50생활인구수':'50대','연령대60이상생활인구수':'60대이상'}
     max_living_age = living_age_list.get(max_living_age_name)
     
     #시간대 생활인구 최댓값
-    living_time_columns = final_quarter.columns[60:66]
+    living_time_columns = final_quarter.columns[59:65]
     max_living_time_name = find_max(final_quarter, living_time_columns)
     living_time_list = {'시간대0006생활인구수':'00시~06시','시간대0611생활인구수':'06시~11시','시간대1114생활인구수':'11시~14시',
                  '시간대1417생활인구수':'14시~17시','시간대1721생활인구수':'17시~21시','시간대2124생활인구수':'21시~24시'}
     max_living_time = living_time_list.get(max_living_time_name)
     
     #요일 생활인구 최댓값
-    living_day_columns = final_quarter.columns[66:73]
+    living_day_columns = final_quarter.columns[65:72]
     max_living_day_name = find_max(final_quarter, living_day_columns)
     living_day_list = {'월요일생활인구수' : '월요일', '화요일생활인구수':'화요일', '수요일생활인구수':'수요일',
                 '목요일생활인구수':'목요일','금요일생활인구수':'금요일','토요일생활인구수':'토요일','일요일생활인구수':'일요일'}
