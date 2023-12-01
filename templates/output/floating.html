@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <title>SSS</title>
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <script src="https://kit.fontawesome.com/8878cbea7e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'css/chart.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,7 +40,7 @@
                 <br>그룹명의 예측 데이터입니다.
             </h3>
 
-        <br>
+            <br><h4><i class="fa-solid fa-circle-exclamation" style="color: #ffd642;"></i> 유동인구는 상권 중심 좌표를 기준으로 반경 500m 내의 시간대별 대중교통 이용 승객수를 반영한 수치입니다.</h4>
         <div class="small-container">
             <br>
             <h2 class="title">&nbsp;&nbsp;월평균 유동인구 수는 {{ final.0.총유동인구수|div:3|floatformat:0|intcomma }}명입니다.</h2>
