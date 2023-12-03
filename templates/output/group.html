@@ -7,11 +7,11 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>SSS</title>
+    <title>TRIPLE S</title>
 
     <script src="https://kit.fontawesome.com/8878cbea7e.js" crossorigin="anonymous"></script>
 
-    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}"/>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/logo.png' %}"/>
 
     <link rel="stylesheet" href="{% static 'css/group.css' %}"/>
 
@@ -49,6 +49,7 @@
                             </tr>
                             </thead>
                             <tbody>
+                                <h4><i class="fa-solid fa-circle-exclamation"></i> 목록에 있는 상권은 현재 {{ selected_neighborhood }}에서 영업중인 {{ selected_industry_name }}의 현황입니다.</h4>
                                 {% for business_name in business_names %}
                                 {% for business_item in business_list %}
                                 {% if business_name.구상권코드 == business_item.상권코드 %}
@@ -72,15 +73,15 @@
 
         {% if business_names %}
         <div class="explanation">
-            <h4><i class="fa-solid fa-circle-exclamation"></i> 목록에 있는 상권은 현재 {{ selected_neighborhood }}에서 영업중인 {{ selected_industry_name }}의 현황입니다.</h4>
-            <h4><i class="fa-solid fa-circle-exclamation"></i> 아래 그룹은 업종, 상권 데이터를 기반으로 {{ selected_neighborhood }}에서 {{ selected_industry_name }}을 창업했을 때의 예측 데이터입니다.</h4>
+            <h4><i class="fa-solid fa-circle-exclamation"></i> 아래 상권 그룹은 {{ selected_neighborhood }}에서 {{ selected_industry_name }}을 창업했을 때의 예측 데이터입니다. 
+                따라서 현재 영업중인 점포가 없는 상권에 대한 예측 데이터도 제공됩니다. </h4>
         </div>
         {% endif %}
 
         {% if group_data.0.상권코드 %}
         <div class="group">
             <div class="group-details">
-                <strong>첫번째 그룹</strong>
+                <strong>상권 그룹 (총 {{group_data.0.상권코드|length}}개)</strong>
                 <ul class="business-names">
                     {% for code in group_data.0.상권코드 %}
                     {% for name in group_data_business_names %}
@@ -92,7 +93,7 @@
                 </ul>
                 {% for important_feature in important_data %}
                     {% if group_data.0.cluster == important_feature.cluster %}
-                        <strong>{{ important_feature.특징 }}</strong>
+                        <strong>&nbsp&nbsp&nbsp&nbsp&nbsp{{ important_feature.특징 }}</strong>
                     {% endif %}
                 {% endfor %}
             </div>
@@ -103,7 +104,7 @@
         {% if group_data.1.상권코드 %}
         <div class="group">
             <div class="group-details">
-                <strong>두번째 그룹</strong>
+                <strong>상권 그룹 (총 {{group_data.1.상권코드|length}}개)</strong>
                 <ul class="business-names">
                 {% for code in group_data.1.상권코드 %}
                 {% for name in group_data_business_names %}
@@ -115,7 +116,7 @@
                 </ul>
                 {% for important_feature in important_data %}
                     {% if group_data.1.cluster == important_feature.cluster %}
-                        <strong>{{ important_feature.특징 }}</strong>
+                        <strong>&nbsp&nbsp&nbsp&nbsp&nbsp{{ important_feature.특징 }}</strong>
                     {% endif %}
                 {% endfor %}
             </div>
@@ -126,7 +127,7 @@
         {% if group_data.2.상권코드 %}
         <div class="group">
             <div class="group-details">
-                <strong>세번째 그룹</strong>
+                <strong>상권 그룹 (총 {{group_data.2.상권코드|length}}개)</strong>
                 <ul class="business-names">
                 {% for code in group_data.2.상권코드 %}
                 {% for name in group_data_business_names %}
@@ -138,7 +139,7 @@
                 </ul>
                 {% for important_feature in important_data %}
                     {% if group_data.2.cluster == important_feature.cluster %}
-                        <strong>{{ important_feature.특징 }}</strong>
+                        <strong>&nbsp&nbsp&nbsp&nbsp&nbsp{{ important_feature.특징 }}</strong>
                     {% endif %}
                 {% endfor %}
             </div>
@@ -149,7 +150,7 @@
         {% if group_data.3.상권코드 %}
         <div class="group">
             <div class="group-details">
-                <strong>네번째 그룹</strong>
+                <strong>상권 그룹 (총 {{group_data.3.상권코드|length}}개)</strong>
                 <ul class="business-names">
                 {% for code in group_data.3.상권코드 %}
                 {% for name in group_data_business_names %}
@@ -161,7 +162,7 @@
                 </ul>
                 {% for important_feature in important_data %}
                     {% if group_data.3.cluster == important_feature.cluster %}
-                        <strong>{{ important_feature.특징 }}</strong>
+                        <strong>&nbsp&nbsp&nbsp&nbsp&nbsp{{ important_feature.특징 }}</strong>
                     {% endif %}
                 {% endfor %}
             </div>
@@ -172,7 +173,7 @@
         {% if group_data.4.상권코드 %}
         <div class="group">
             <div class="group-details">
-                <strong>다섯번째 그룹</strong>
+                <strong>상권 그룹 (총 {{group_data.4.상권코드|length}}개)</strong>
                 <ul class="business-names">
                 {% for code in group_data.4.상권코드 %}
                 {% for name in group_data_business_names %}
@@ -184,7 +185,7 @@
                 </ul>
                 {% for important_feature in important_data %}
                     {% if group_data.4.cluster == important_feature.cluster %}
-                        <strong>{{ important_feature.특징 }}</strong>
+                        <strong>&nbsp&nbsp&nbsp&nbsp&nbsp{{ important_feature.특징 }}</strong>
                     {% endif %}
                 {% endfor %}
             </div>

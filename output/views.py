@@ -517,7 +517,17 @@ def group_detail_sales(request, selected_district, selected_industry, neighborho
     #행정동 평균 매출
     district_price = neighborhood_price(neighborhood_code,selected_industry)
     
-    
+    #지도 띄우기
+    business_locations = BusinessLocation.objects.filter(상권코드__in=include_code)
+    # folium 지도 띄우기
+    m = folium.Map(location=[business_locations[0].y, business_locations[0].x], zoom_start=14)
+    # 지도에 좌표 넣고 마커 표시하기
+    for business_location in business_locations:
+        folium.Marker(
+            location=[business_location.y, business_location.x],
+            popup=business_location.상권코드명,
+        ).add_to(m)
+  
     context = {
         'final' : final.to_dict(orient='records'),
         'final_quarter' : final_quarter.to_dict(orient='records'),
@@ -537,7 +547,8 @@ def group_detail_sales(request, selected_district, selected_industry, neighborho
         'total_price' : total_price,
         'week_price' : week_price,
         'weekend_price' : weekend_price,  
-        'district_price' : district_price,      
+        'district_price' : district_price,  
+        'map': m._repr_html_() if m else None,    
     }
     
     return render(request, 'output/sales.html', context)
@@ -612,6 +623,17 @@ def group_detail_floating(request, selected_district, selected_industry, neighbo
     #final 평균내서 리턴
     final = final_quarter.mean(axis=0).to_frame().T
     
+    #지도 띄우기
+    business_locations = BusinessLocation.objects.filter(상권코드__in=include_code)
+    # folium 지도 띄우기
+    m = folium.Map(location=[business_locations[0].y, business_locations[0].x], zoom_start=14)
+    # 지도에 좌표 넣고 마커 표시하기
+    for business_location in business_locations:
+        folium.Marker(
+            location=[business_location.y, business_location.x],
+            popup=business_location.상권코드명,
+        ).add_to(m) 
+     
     context = {
         'final' : final.to_dict(orient='records'),
         'final_quarter' : final_quarter.to_dict(orient='records'),
@@ -629,6 +651,7 @@ def group_detail_floating(request, selected_district, selected_industry, neighbo
         'business_name' : business_name,  
         'district_floating' : district_floating,  
         'district_job' : district_job, 
+        'map': m._repr_html_() if m else None, 
     }
     
     return render(request, 'output/floating.html', context)
@@ -680,8 +703,16 @@ def group_detail_facility(request, selected_district, selected_industry, neighbo
                           '교육시설수':'교육시설','여가시설수':'여가시설', '교통시설수':'교통시설'}
     max_facility = floating_time_list.get(max_facility_name)
     
-    print('집객시설 열 번호 확인 : ', final.columns[73:83])
-    
+    #지도 띄우기
+    business_locations = BusinessLocation.objects.filter(상권코드__in=include_code)
+    # folium 지도 띄우기
+    m = folium.Map(location=[business_locations[0].y, business_locations[0].x], zoom_start=14)
+    # 지도에 좌표 넣고 마커 표시하기
+    for business_location in business_locations:
+        folium.Marker(
+            location=[business_location.y, business_location.x],
+            popup=business_location.상권코드명,
+        ).add_to(m) 
     
     context = {
         'final' : final.to_dict(orient='records'),
@@ -695,6 +726,7 @@ def group_detail_facility(request, selected_district, selected_industry, neighbo
         'business_name' : business_name,  
         'district_facility' : district_facility,   
         'max_facility' : max_facility,
+        'map': m._repr_html_() if m else None,
     }
     
     return render(request, 'output/facility.html', context)
@@ -771,6 +803,17 @@ def group_detail_living(request, selected_district, selected_industry, neighborh
     #final 평균내서 리턴
     final = final_quarter.mean(axis=0).to_frame().T
     
+    #지도 띄우기
+    business_locations = BusinessLocation.objects.filter(상권코드__in=include_code)
+    # folium 지도 띄우기
+    m = folium.Map(location=[business_locations[0].y, business_locations[0].x], zoom_start=14)
+    # 지도에 좌표 넣고 마커 표시하기
+    for business_location in business_locations:
+        folium.Marker(
+            location=[business_location.y, business_location.x],
+            popup=business_location.상권코드명,
+        ).add_to(m)
+    
     context = {
         'final' : final.to_dict(orient='records'),
         'final_quarter' : final_quarter.to_dict(orient='records'),
@@ -787,6 +830,7 @@ def group_detail_living(request, selected_district, selected_industry, neighborh
         'min_living' : min_living,
         'business_name' : business_name,
         'district_living' : district_living,
+        'map': m._repr_html_() if m else None,   
     }
     
     return render(request, 'output/living.html', context)
