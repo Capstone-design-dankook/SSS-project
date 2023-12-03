@@ -12,11 +12,7 @@
   
   .header {
     padding: 15px 0;
-    font-family: 'Kanit', sans-serif;
     text-align: center;
-    color: black;
-    margin-bottom: 20px;
-    font-size: 30px;
   }
 
   a {
@@ -34,6 +30,12 @@
     max-width: 1000px; /* 조정 가능한 최대 너비 */
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 80px;
+  }
+
+  .back {
+    color: black;
+    font-size: 15px;
   }
 
   main {
@@ -76,7 +78,7 @@
   .small-container {
     background-color: white;
     color: black;
-    padding: 20px;
+    padding: 10px;
     margin-bottom: 40px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -145,4 +147,14 @@ html {
   scroll-behavior: smooth;
 }
 
+.footer {
+  bottom: 0;
+  width: 100%;
+  background-color: #628281;
+  color: #fff;
+  font-size: 20px;
+  font-family: 'Kanit', sans-serif;
+  text-align: center;
+  padding: 10px 0;
+}
   

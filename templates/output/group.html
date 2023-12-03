@@ -20,15 +20,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@800&family=Noto+Sans+KR:wght@300;400;800&display=swap" rel="stylesheet">
 
     <div class="header">
-        <h1><img src="{%static 'images/Blue and Green Simple Architect Logo.png' %}"></h1>
+        <h1><a href="/"><img src="{%static 'images/Blue and Green Simple Architect Logo.png' %}"></a></h1>
     </div>
 </head>
 
 <body>
     <div class="container">
         <div class="district-name">
-            {{ selected_district }} {{ selected_neighborhood }} {{ selected_industry_name }}
+            <a href="/input" class="back"><i class="fa-solid fa-chevron-left fa-lg" style="color: #000000;"></i></a>
+            &nbsp;{{ selected_district }} {{ selected_neighborhood }} {{ selected_industry_name }}
         </div>
+        
 
         <div class="block">
             <main>
@@ -94,7 +96,7 @@
                     {% endif %}
                 {% endfor %}
             </div>
-            <a href="{% url 'output:sales' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=0 %}">상세보기</a>
+            <a href="{% url 'output:sales' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=0 %}" class="details">상세보기</a>
         </div>
         {% endif %}
 
@@ -117,7 +119,7 @@
                     {% endif %}
                 {% endfor %}
             </div>
-                <a href="{% url 'output:sales' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=1 %}">상세보기</a>
+                <a href="{% url 'output:sales' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=1 %}" class="details">상세보기</a>
         </div>
         {% endif %}
     
@@ -140,7 +142,7 @@
                     {% endif %}
                 {% endfor %}
             </div>
-            <a href="{% url 'output:sales' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=2 %}">상세보기</a>
+            <a href="{% url 'output:sales' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=2 %}" class="details">상세보기</a>
         </div>
         {% endif %}
 
@@ -163,7 +165,7 @@
                     {% endif %}
                 {% endfor %}
             </div>
-            <a href="{% url 'output:sales' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=3 %}">상세보기</a>
+            <a href="{% url 'output:sales' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=3 %}" class="details">상세보기</a>
         </div>
         {% endif %}
 
@@ -186,13 +188,15 @@
                     {% endif %}
                 {% endfor %}
             </div>
-            <a href="{% url 'output:sales' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=4 %}">상세보기</a>
+            <a href="{% url 'output:sales' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=4 %}" class="details">상세보기</a>
         </div>
         {% endif %}
 
     </div>
 
-    <footer></footer>
+    <footer class="footer">
+        Triple S
+    </footer>
 
 </body>
 </html>
