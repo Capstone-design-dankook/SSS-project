@@ -6,7 +6,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>SSS</title>
+    <title>TRIPLE S</title>
     <link rel="shortcut icon" type="image/png" href="{% static 'images/logo.png' %}">
     <link rel="stylesheet" href="{% static 'css/chart.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,22 +24,28 @@
         <nav class="menu">
             <ul>
                 <li><a href="{% url 'output:sales' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=group_id %}">매출금액</a></li>
-                <li><a href="{% url 'output:floating' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=group_id %}">유동인구</a></li>
+                <li><a href="{% url 'output:floating' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=group_id %}">유동인구/직장인구</a></li>
                 <li><a href="{% url 'output:living' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=group_id %}">생활인구</a></li>
                 <li><a href="{% url 'output:facility' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=group_id %}">집객시설</a></li>
             </ul>
         </nav>
-
-        <div class="business">
-            <p>&nbsp;&nbsp;지역 : 서울특별시 > {{ selected_district }} > {{ selected_neighborhood }}</p>
-            <p>&nbsp;&nbsp;업종 : 요식업 > {{ selected_industry_name }}</p>
-            <p>&nbsp;&nbsp;상권명 : {% for name in business_name %} {{ name }} {% endfor %}( 총 {{ business_name|length }}개 )</p>
+        <div class="medium-container">
+            <div class="wrapper">
+                <div class="text-box">
+                    <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;지역 : 서울특별시 > {{ selected_district }} > {{ selected_neighborhood }}</strong></p>
+                    <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;업종 : 요식업 > {{ selected_industry_name }}</strong></p>
+                    <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;상권명 : {% for name in business_name %} {{ name }} {% endfor %}(총 {{ business_name|length }}개)</strong></p>
+                </div>
+                <div class="map-box">
+                    <main>
+                        {{ map|safe }}
+                    </main>
+                </div>
+            </div>
         </div>
-
-            <h3> 다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로 분석한
-                <br>그룹명의 예측 데이터입니다.
-            </h3>
-
+        <h3> 다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로 분석한
+            <br>상권 그룹의 예측 데이터입니다.
+        </h3>
         <br>
         <div class="small-container">
             <br>
