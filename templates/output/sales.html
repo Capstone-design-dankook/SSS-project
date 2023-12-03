@@ -204,8 +204,8 @@
                 datasets: [{
                     label: '매출 금액',
                     data: [{{ final.0.분기당매출금액|div:3 }}, {{ district_price|div:3 }}],
-                    backgroundColor: '#00A0FF',
-                    borderColor: '#006BD1',
+                    backgroundColor: '#4aa8d8',
+                    borderColor: 'white',
                     borderWidth: 1
                 }]
             },
@@ -227,8 +227,8 @@
                 datasets: [{
                     label: '한 건당 평균 매출 금액',
                     data: [{{ week_price|div:3 }}, {{ weekend_price|div:3 }}, {{ total_price|div:3 }}],
-                    backgroundColor: '#00A0FF',
-                    borderColor: '#006BD1',
+                    backgroundColor: '#b0e0e6',
+                    borderColor: 'white',
                     borderWidth: 1
                 }]
             },
@@ -250,7 +250,7 @@
                 datasets: [{
                     label: '남성/여성 매출비율',
                     data: [{{ final.0.남성매출금액|div:3 }}, {{ final.0.여성매출금액|div:3 }}],
-                    backgroundColor: ['#006BD1', '#FF0000'],
+                    backgroundColor: ['#ffd400', '#a374db'],
                     borderColor: 'white',
                     borderWidth: 1
                 }]
@@ -274,12 +274,12 @@
                     label: '시간대별 매출비율',
                     data: [{{ final.0.시간대0006매출금액|div:3 }}, {{ final.0.시간대0611매출금액|div:3 }}, {{ final.0.시간대1114매출금액|div:3 }}, {{ final.0.시간대1417매출금액|div:3 }}, {{ final.0.시간대1721매출금액|div:3 }}, {{ final.0.시간대2124매출금액|div:3 }}],
                     backgroundColor: [
-                    '#FFB6C1', // LightPink
-                    '#87CEEB', // SkyBlue
-                    '#98FB98', // PaleGreen
-                    '#FFD700', // Gold
-                    '#FFA07A', // LightSalmon
-                    '#FF69B4'  // HotPink
+                    '#d6efbb', 
+                    '#c2e799',
+                    '#aedf77',
+                    '#9ad756',
+                    '#8ac14d',
+                    '#7bac44'
                 ],
                     borderColor: 'white',
                     borderWidth: 1
@@ -303,8 +303,8 @@
                 datasets: [{
                     label: '시간대',
                     data: [{{ final.0.시간대0006매출금액|div:3 }}, {{ final.0.시간대0611매출금액|div:3 }}, {{ final.0.시간대1114매출금액|div:3 }}, {{ final.0.시간대1417매출금액|div:3 }}, {{ final.0.시간대1721매출금액|div:3 }}, {{ final.0.시간대2124매출금액|div:3 }}],
-                    backgroundColor: '#50EF66',
-                    borderColor: '#00BF39',
+                    backgroundColor: '#8ac14d',
+                    borderColor: '#7bac44',
                     borderWidth: 1
                 }]
             },
@@ -327,13 +327,13 @@
                     label: '요일',
                     data: [{{ final.0.월요일매출금액|div:3 }}, {{ final.0.화요일매출금액|div:3 }}, {{ final.0.수요일매출금액|div:3 }}, {{ final.0.목요일매출금액|div:3 }}, {{ final.0.금요일매출금액|div:3 }}, {{ final.0.토요일매출금액|div:3 }}, {{ final.0.일요일매출금액|div:3 }}],
                     backgroundColor: [
-                    '#FFB6C1', // LightPink
-                    '#87CEEB', // SkyBlue
-                    '#98FB98', // PaleGreen
-                    '#FFD700', // Gold
-                    '#FFA07A', // LightSalmon
-                    '#FF69B4',  // HotPink
-                    '#00FA9A'  // MediumSpringGreen
+                    '#f0f8ff', // LightPink
+                    '#e6f4fa', // SkyBlue
+                    '#cce8f4', // PaleGreen
+                    '#b2ddef', // Gold
+                    '#96d2ea', // LightSalmon
+                    '#76c7e4',  // HotPink
+                    '#50bcdf'  // MediumSpringGreen
                 ],
                     borderColor: 'white',
                     borderWidth: 1
@@ -380,13 +380,13 @@
                 datasets: [{
                     label: '연령대별 매출',
                     data: [{{ final.0.연령대10매출금액|div:3 }}, {{ final.0.연령대20매출금액|div:3 }}, {{ final.0.연령대30매출금액|div:3 }}, {{ final.0.연령대40매출금액|div:3 }}, {{ final.0.연령대50매출금액|div:3 }}, {{ final.0.연령대60이상매출금액|div:3 }}],
-                    backgroundColor: [
-                    '#FFB6C1', // LightPink
-                    '#87CEEB', // SkyBlue
-                    '#98FB98', // PaleGreen
-                    '#FFD700', // Gold
-                    '#FFA07A', // LightSalmon
-                    '#FF69B4'  // HotPink
+                    backgroundColor: [                    
+                    '#fcecec', 
+                    '#f9dada',
+                    '#f9caca',
+                    '#f9baba', 
+                    '#f9aaaa', 
+                    '#f99a9a'
                 ],
                     borderColor: 'white',
                     borderWidth: 1
@@ -410,7 +410,7 @@
                 datasets: [{
                     label: '연령대',
                     data: [{{ final.0.연령대10매출금액|div:3 }}, {{ final.0.연령대20매출금액|div:3 }}, {{ final.0.연령대30매출금액|div:3 }}, {{ final.0.연령대40매출금액|div:3 }}, {{ final.0.연령대50매출금액|div:3 }}, {{ final.0.연령대60이상매출금액|div:3 }}],
-                    backgroundColor: '#FF889D',
+                    backgroundColor: '#ffaaaa',
                     borderColor: 'white',
                     borderWidth: 1
                 }]
