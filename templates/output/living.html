@@ -45,7 +45,7 @@
         <br>
         <div class="small-container">
             <br>
-            <h2 class="title">&nbsp;&nbsp;월평균 생활인구수는 {{ final.0.총생활인구수|div:3|floatformat:0|intcomma }}원 입니다.</h2>
+            <h2 class="title">&nbsp;&nbsp;월평균 생활인구수는 {{ final.0.총생활인구수|div:3|floatformat:0|intcomma }}명 입니다.</h2>
             <br>
             <div class="wrapper">
                 <div class="text-section">
@@ -147,8 +147,8 @@
                 datasets: [{
                     label: '생활인구 수',
                     data: [{{ final.0.총생활인구수|div:3 }}, {{ district_living|div:3 }}],
-                    backgroundColor: '#00A0FF',
-                    borderColor: '#006BD1',
+                    backgroundColor: '#4aa8d8',
+                    borderColor: 'white',
                     borderWidth: 1
                 }]
             },
@@ -170,7 +170,7 @@
                 datasets: [{
                     label: '생활인구 수',
                     data: [{{ final.0.남성생활인구수|div:3 }}, {{ final.0.여성생활인구수|div:3 }}],
-                    backgroundColor: ['#006BD1', '#FF0000'],
+                    backgroundColor: ['#ffd400', '#a374db'],
                     borderColor: 'white',
                     borderWidth: 1
                 }]
@@ -193,8 +193,15 @@
                 datasets: [{
                     label: '시간대별 생활인구 비율',
                     data: [{{ final.0.시간대0006생활인구수|div:3 }}, {{ final.0.시간대0611생활인구수|div:3 }}, {{ final.0.시간대1114생활인구수|div:3 }}, {{ final.0.시간대1417생활인구수|div:3 }}, {{ final.0.시간대1721생활인구수|div:3 }}, {{ final.0.시간대2124생활인구수|div:3 }}],
-                    backgroundColor: '#50EF66',
-                    borderColor: '#00BF39',
+                    backgroundColor: [
+                    '#d6efbb', 
+                    '#c2e799',
+                    '#aedf77',
+                    '#9ad756',
+                    '#8ac14d',
+                    '#7bac44'
+                ],
+                    borderColor: 'white',
                     borderWidth: 1
                 }]
             },
@@ -216,8 +223,8 @@
                 datasets: [{
                     label: '시간대',
                     data: [{{ final.0.시간대0006생활인구수|div:3 }}, {{ final.0.시간대0611생활인구수|div:3 }}, {{ final.0.시간대1114생활인구수|div:3 }}, {{ final.0.시간대1417생활인구수|div:3 }}, {{ final.0.시간대1721생활인구수|div:3 }}, {{ final.0.시간대2124생활인구수|div:3 }}],
-                    backgroundColor: '#50EF66',
-                    borderColor: '#00BF39',
+                    backgroundColor: '#8ac14d',
+                    borderColor: '#7bac44',
                     borderWidth: 1
                 }]
             },
@@ -239,8 +246,8 @@
                 datasets: [{
                     label: '요일',
                     data: [{{ final.0.월요일생활인구수|div:3 }}, {{ final.0.화요일생활인구수|div:3 }}, {{ final.0.수요일생활인구수|div:3 }}, {{ final.0.목요일생활인구수|div:3 }}, {{ final.0.금요일생활인구수|div:3 }}, {{ final.0.토요일생활인구수|div:3 }}, {{ final.0.일요일생활인구수|div:3 }}],
-                    backgroundColor: '#5AB7D4',
-                    borderColor: '#487E91',
+                    backgroundColor: 'skyblue',
+                    borderColor: 'white',
                     borderWidth: 1
                 }]
             },
@@ -262,8 +269,16 @@
                 datasets: [{
                     label: '요일',
                     data: [{{ final.0.월요일생활인구수|div:3 }}, {{ final.0.화요일생활인구수|div:3 }}, {{ final.0.수요일생활인구수|div:3 }}, {{ final.0.목요일생활인구수|div:3 }}, {{ final.0.금요일생활인구수|div:3 }}, {{ final.0.토요일생활인구수|div:3 }}, {{ final.0.일요일생활인구수|div:3 }}],
-                    backgroundColor: '#5AB7D4',
-                    borderColor: '#487E91',
+                    backgroundColor: [
+                    '#f0f8ff', // LightPink
+                    '#e6f4fa', // SkyBlue
+                    '#cce8f4', // PaleGreen
+                    '#b2ddef', // Gold
+                    '#96d2ea', // LightSalmon
+                    '#76c7e4',  // HotPink
+                    '#50bcdf'  // MediumSpringGreen
+                ],
+                    borderColor: 'white',
                     borderWidth: 1
                 }]
             },
@@ -285,8 +300,15 @@
                 datasets: [{
                     label: '연령대',
                     data: [{{ final.0.연령대10생활인구수|div:3 }}, {{ final.0.연령대20생활인구수|div:3 }}, {{ final.0.연령대30생활인구수|div:3 }}, {{ final.0.연령대40생활인구수|div:3 }}, {{ final.0.연령대50생활인구수|div:3 }}, {{ final.0.연령대60이상생활인구수|div:3 }}],
-                    backgroundColor: '#FF889D',
-                    borderColor: '#FF5159',
+                    backgroundColor: [                    
+                    '#fcecec', 
+                    '#f9dada',
+                    '#f9caca',
+                    '#f9baba', 
+                    '#f9aaaa', 
+                    '#f99a9a'
+                ],
+                    borderColor: 'white',
                     borderWidth: 1
                 }]
             },
@@ -308,8 +330,8 @@
                 datasets: [{
                     label: '연령대',
                     data: [{{ final.0.연령대10생활인구수|div:3 }}, {{ final.0.연령대20생활인구수|div:3 }}, {{ final.0.연령대30생활인구수|div:3 }}, {{ final.0.연령대40생활인구수|div:3 }}, {{ final.0.연령대50생활인구수|div:3 }}, {{ final.0.연령대60이상생활인구수|div:3 }}],
-                    backgroundColor: '#FF889D',
-                    borderColor: '#FF5159',
+                    backgroundColor: '#ffaaaa',
+                    borderColor: 'white',
                     borderWidth: 1
                 }]
             },
