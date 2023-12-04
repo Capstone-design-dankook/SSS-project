@@ -87,9 +87,15 @@
                 <div class="text-section">
                     <br>
                     <div class="text-box">
+                        {% if final.0.남성생활인구수 > final.0.여성생활인구수 %}
                         <p>
-                            말말말
+                            남성이 여성보다 생활인구수가 높습니다. 
                         </p>
+                        {% else %}
+                        <p>
+                            여성이 남성보다 생활인구수가 많습니다. 
+                        </p>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="chart-section">
