@@ -33,7 +33,6 @@
         <div class="medium-container">
             <h3><i class="fa-solid fa-bullhorn fa-lg" style="color: #FFFFFF;"></i> &nbsp;다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로 분석한 <br>선택 상권 그룹의 "예측 데이터"입니다.
             </h3>
-            
             <div class="wrapper">
                 <div class="business-box">
                     <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;지역 : 서울특별시 > {{ selected_district }} > {{ selected_neighborhood }}</strong></p>
@@ -107,11 +106,13 @@
             <br>
             <div class="wrapper">
                 <div class="chart-section">
+                    <br>
                     <div class="chart-box">
                         <canvas id="timelivingChart"  width="350" height="250"></canvas>
                     </div>
                 </div>
                 <div class="chart-section">
+                    <br>
                     <div class="chart-box">
                         <canvas id="timeChart"  width="350" height="250"></canvas>
                     </div>
@@ -125,11 +126,13 @@
             <br>
             <div class="wrapper">
                 <div class="chart-section">
+                    <br>
                     <div class="chart-box">
                         <canvas id="daylivingChart"  width="350" height="250"></canvas>
                     </div>
                 </div>
                 <div class="chart-section">
+                    <br>
                     <div class="chart-box">
                         <canvas id="dayChart"  width="350" height="250"></canvas>
                     </div>
@@ -143,11 +146,13 @@
             <br>
             <div class="wrapper">
                 <div class="chart-section">
+                    <br>
                     <div class="chart-box">
                         <canvas id="agelivingChart"  width="350" height="250"></canvas>
                     </div>
                 </div>
                 <div class="chart-section">
+                    <br>
                     <div class="chart-box">
                         <canvas id="ageChart"  width="350" height="250"></canvas>
                     </div>
@@ -231,6 +236,12 @@
                     y: {
                         beginAtZero: true
                     }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '시간대별 생활인구 비율'
+                    }
                 }
             }
         });
@@ -254,6 +265,12 @@
                     y: {
                         beginAtZero: true
                     }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '시간대별 생활인구 수'
+                    }
                 }
             }
         });
@@ -276,6 +293,12 @@
                 scales: {
                     y: {
                         beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '요일별 생활인구 비율'
                     }
                 }
             }
@@ -308,6 +331,12 @@
                     y: {
                         beginAtZero: true
                     }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '요일별 생활인구 수'
+                    }
                 }
             }
         });
@@ -338,6 +367,12 @@
                     y: {
                         beginAtZero: true
                     }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '연령대별 생활인구 비율'
+                    }
                 }
             }
         });
@@ -360,6 +395,12 @@
                 scales: {
                     y: {
                         beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '연령대별 생활인구 수'
                     }
                 }
             }

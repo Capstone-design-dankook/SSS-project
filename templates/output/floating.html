@@ -60,7 +60,7 @@
                     <br>
                     <div class="text-box">
                         <p>
-                            해당 상권 그룹의 월평균 유동인구는 <br>최소 {{ min_floating|div:3|floatformat:0|intcomma }}명 ~ 최대 {{ max_floating|div:3|floatformat:0|intcomma }}명 입니다. 
+                            선택 상권 그룹의 월평균 유동인구는 <br>최소 {{ min_floating|div:3|floatformat:0|intcomma }}명 ~ 최대 {{ max_floating|div:3|floatformat:0|intcomma }}명 입니다. 
                         </p>
                     </div>
                 </div>
@@ -100,11 +100,21 @@
                     <br>
                     <div class="text-box">
                         <p>
-                            {% if final.0.총직장인구수|div:3 > district_job|div:3 %}
+                            {% with diff_job=district_job|sub:final.0.총직장인구수|abs%}
+                            {% with similar=district_job|mul:0.05 %}
+                            {% if diff_job < similar %}
+                                {% if final.0.총직장인구수|div:3 > district_job|div:3 %}
+                                    선택 상권그룹은 {{ selected_neighborhood }} 평균과 직장인구수가 비슷하지만 행정동에 비해 조금 더 많은 편입니다.
+                                {% else %}
+                                    선택 상권그룹은 {{ selected_neighborhood }} 평균과 직장인구수가 비슷하지만 행정동에 비해 조금 더 적은 편입니다.
+                                {% endif%}
+                            {% elif final.0.총직장인구수|div:3 > district_job|div:3 %}
                                 선택 상권 그룹은 직장인구수가 {{ selected_neighborhood }} 평균에 비해 많은 편입니다.
                             {% else %}
                                 선택 상권 그룹은 직장인구수가 {{ selected_neighborhood }} 평균에 비해 적은 편입니다.
                             {% endif%}
+                            {% endwith %}
+                            {% endwith %}
                         </p>
                     </div>
                 </div>
@@ -168,6 +178,12 @@
                     y: {
                         beginAtZero: true
                     }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '시간대별 유동인구 비율'
+                    }
                 }
             }
         });
@@ -190,6 +206,12 @@
                 scales: {
                     y: {
                         beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '시간대별 유동인구 수'
                     }
                 }
             }
