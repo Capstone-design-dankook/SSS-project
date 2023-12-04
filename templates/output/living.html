@@ -87,15 +87,16 @@
                 <div class="text-section">
                     <br>
                     <div class="text-box">
-                        {% if final.0.남성생활인구수 > final.0.여성생활인구수 %}
                         <p>
-                            남성이 여성보다 생활인구수가 높습니다. 
+                            {% with total_sales=final.0.남성생활인구수|add:final.0.여성생활인구수 %}
+                            {% with female_percentage=final.0.여성생활인구수|div:total_sales|mul:100 %}
+                                여성 생활인구수는 전체 생활인구수의 {{ female_percentage|floatformat:1 }}%,<br> 
+                            {% with male_percentage=final.0.남성생활인구수|div:total_sales|mul:100 %}
+                                남성 생활인구수는 전체 생활인구수의 {{ male_percentage|floatformat:1 }}%를 차지합니다.
+                            {% endwith %}
+                            {% endwith %}
+                            {% endwith %}
                         </p>
-                        {% else %}
-                        <p>
-                            여성이 남성보다 생활인구수가 많습니다. 
-                        </p>
-                        {% endif %}
                     </div>
                 </div>
                 <div class="chart-section">
