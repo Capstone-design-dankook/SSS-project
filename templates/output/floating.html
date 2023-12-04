@@ -30,11 +30,11 @@
             </ul>
         </nav>
         <br>
-        <h3><i class="fa-solid fa-bullhorn fa-lg" style="color: #000000;"></i> &nbsp;&nbsp;다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로 분석한 <br>선택 상권 그룹의 "예측 데이터"입니다.
-        </h3>
         <div class="medium-container">
+            <h3><i class="fa-solid fa-bullhorn fa-lg" style="color: #FFFFFF;"></i> &nbsp;다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로 분석한 <br>선택 상권 그룹의 "예측 데이터"입니다.
+            </h3>
             <div class="wrapper">
-                <div class="text-box">
+                <div class="business-box">
                     <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;지역 : 서울특별시 > {{ selected_district }} > {{ selected_neighborhood }}</strong></p>
                     <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;업종 : 요식업 > {{ selected_industry_name }}</strong></p>
                     <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;상권명 : {% for name in business_name %} {{ name }} {% endfor %}(총 {{ business_name|length }}개)</strong></p>
@@ -48,7 +48,7 @@
         </div>
         <div class="summary-container">
             <i class="fa-solid fa-circle-exclamation" style="color: #ffd642;"></i> 
-            유동인구란 일정 기간 동안 한 지역을 오고 간 사람의 수를 말합니다. 단순히 많은 유동인구가 큰 매출로 이어지는 것이 아니기 때문에 매출과 연관지어 흐르는 유동인구가 많은 지역인지, 소비자로 이어지는 유동인구인지, 판단하는 것이 중요합니다. 
+            유동인구란 일정 기간 동안 한 지역을 오고 간 사람의 수를 말합니다. 단순히 많은 유동인구가 큰 매출로 <br>이어지는 것이 아니기 때문에 매출과 연관지어 흐르는 유동인구가 많은 지역인지, 소비자로 이어지는 유동인구인지, <br>판단하는 것이 중요합니다. 
         </div>
         <br>
         <div class="small-container">

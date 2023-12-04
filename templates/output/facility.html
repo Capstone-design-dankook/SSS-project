@@ -30,12 +30,11 @@
             </ul>
         </nav>
         <br>
-        <i class="fa-solid fa-circle-exclamation" style="color: #ffd642;"></i> 
-            집객시설 데이터가 상권분석에 어떤 관련이 있는지? 왜 이 지표를 넣었는지?
-        <br>
         <div class="medium-container">
+            <h3><i class="fa-solid fa-bullhorn fa-lg" style="color: #FFFFFF;"></i> &nbsp;다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로 분석한 <br>선택 상권 그룹의 "예측 데이터"입니다.
+            </h3>
             <div class="wrapper">
-                <div class="text-box">
+                <div class="business-box">
                     <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;지역 : 서울특별시 > {{ selected_district }} > {{ selected_neighborhood }}</strong></p>
                     <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;업종 : 요식업 > {{ selected_industry_name }}</strong></p>
                     <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;상권명 : {% for name in business_name %} {{ name }} {% endfor %}(총 {{ business_name|length }}개)</strong></p>
@@ -47,8 +46,12 @@
                 </div>
             </div>
         </div>
-        <h3><i class="fa-solid fa-bullhorn fa-lg" style="color: #000000;"></i> &nbsp;&nbsp;다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로 분석한 <br>선택 상권 그룹의 "예측 데이터"입니다.
-        </h3>
+
+        <div class="summary-container">
+        <i class="fa-solid fa-circle-exclamation" style="color: #ffd642;"></i> 
+            다양한 집객시설이 있는 상권은 사람들을 끌어들여 소비자들이 더 많은 시간을 보내며 지출할 가능성이 높아져 상권의 활성화와 소비자 유치에 영향을 줄 수 있습니다.
+        </div>
+
         <br>
         <div class="small-container">
             <br>
