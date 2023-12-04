@@ -30,8 +30,8 @@
             </ul>
         </nav>
         <br>
-        <i class="fa-solid fa-circle-exclamation" style="color: #ffd642;"></i> 
-            유동인구란 일정 기간 동안 한 지역을 오고 간 사람의 수를 말합니다. 단순히 많은 유동인구가 큰 매출로 이어지는 것이 아니기 때문에 매출과 연관지어 흐르는 유동인구가 많은 지역인지, 소비자로 이어지는 유동인구인지, 판단하는 것이 중요합니다. 
+        <h3><i class="fa-solid fa-bullhorn fa-lg" style="color: #000000;"></i> &nbsp;&nbsp;다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로 분석한 <br>선택 상권 그룹의 "예측 데이터"입니다.
+        </h3>
         <div class="medium-container">
             <div class="wrapper">
                 <div class="text-box">
@@ -46,8 +46,10 @@
                 </div>
             </div>
         </div>
-        <h3><i class="fa-solid fa-bullhorn fa-lg" style="color: #000000;"></i> &nbsp;&nbsp;다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로 분석한 <br>선택 상권 그룹의 "예측 데이터"입니다.
-        </h3>
+        <div class="medium-container">
+            <i class="fa-solid fa-circle-exclamation" style="color: #ffd642;"></i> 
+            유동인구란 일정 기간 동안 한 지역을 오고 간 사람의 수를 말합니다. 단순히 많은 유동인구가 큰 매출로 이어지는 것이 아니기 때문에 매출과 연관지어 흐르는 유동인구가 많은 지역인지, 소비자로 이어지는 유동인구인지, 판단하는 것이 중요합니다. 
+        </div>
         <br>
         <div class="small-container">
             <br>
@@ -58,7 +60,7 @@
                     <br>
                     <div class="text-box">
                         <p>
-                            해당 상권 그룹의 월평균 유동인구는 <br>최소 {{ min_floating|div:3|floatformat:0|intcomma }}명 ~ 최대 {{ max_floating|div:3|floatformat:0|intcomma }}명 입니다. 
+                            선택 상권 그룹의 월평균 유동인구는 <br>최소 {{ min_floating|div:3|floatformat:0|intcomma }}명 ~ 최대 {{ max_floating|div:3|floatformat:0|intcomma }}명 입니다. 
                         </p>
                     </div>
                 </div>
@@ -98,11 +100,21 @@
                     <br>
                     <div class="text-box">
                         <p>
-                            {% if final.0.총직장인구수|div:3 > district_job|div:3 %}
+                            {% with diff_job=district_job|sub:final.0.총직장인구수|abs%}
+                            {% with similar=district_job|mul:0.05 %}
+                            {% if diff_job < similar %}
+                                {% if final.0.총직장인구수|div:3 > district_job|div:3 %}
+                                    선택 상권그룹은 {{ selected_neighborhood }} 평균과 직장인구수가 비슷하지만 행정동에 비해 조금 더 많은 편입니다.
+                                {% else %}
+                                    선택 상권그룹은 {{ selected_neighborhood }} 평균과 직장인구수가 비슷하지만 행정동에 비해 조금 더 적은 편입니다.
+                                {% endif%}
+                            {% elif final.0.총직장인구수|div:3 > district_job|div:3 %}
                                 선택 상권 그룹은 직장인구수가 {{ selected_neighborhood }} 평균에 비해 많은 편입니다.
                             {% else %}
                                 선택 상권 그룹은 직장인구수가 {{ selected_neighborhood }} 평균에 비해 적은 편입니다.
                             {% endif%}
+                            {% endwith %}
+                            {% endwith %}
                         </p>
                     </div>
                 </div>
@@ -166,6 +178,12 @@
                     y: {
                         beginAtZero: true
                     }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '시간대별 유동인구 비율'
+                    }
                 }
             }
         });
@@ -188,6 +206,12 @@
                 scales: {
                     y: {
                         beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '시간대별 유동인구 수'
                     }
                 }
             }

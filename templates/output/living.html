@@ -33,7 +33,7 @@
         <div class="medium-container">
             <div class="main-intro">
                 <i class="fa-solid fa-circle-exclamation" style="color: #ffd642;"></i> 
-                생활인구란 특정 지역, 특정 시점에 존재하는 모든 인구를 말합니다. 해당 지역에 주소지를 둔 사람은 물론 일시적으로 서울을 찾은 인구가 모두 해당됩니다. 생활 인구가 소비자로 이어질 수 있도록 마케팅 전략을 세워야합니다.
+                생활인구란 특정 지역, 특정 시점에 존재하는 모든 인구를 말합니다. 해당 지역에 주소지를 둔 사람은 물론 일시적으로 서울을 찾은 인구가 모두 포함됩니다. 생활 인구가 소비자로 이어질 수 있도록 마케팅 전략을 세워야합니다.
             </div>
             <div class="wrapper">
                 <div class="text-box">
@@ -106,11 +106,13 @@
             <br>
             <div class="wrapper">
                 <div class="chart-section">
+                    <br>
                     <div class="chart-box">
                         <canvas id="timelivingChart"  width="350" height="250"></canvas>
                     </div>
                 </div>
                 <div class="chart-section">
+                    <br>
                     <div class="chart-box">
                         <canvas id="timeChart"  width="350" height="250"></canvas>
                     </div>
@@ -124,11 +126,13 @@
             <br>
             <div class="wrapper">
                 <div class="chart-section">
+                    <br>
                     <div class="chart-box">
                         <canvas id="daylivingChart"  width="350" height="250"></canvas>
                     </div>
                 </div>
                 <div class="chart-section">
+                    <br>
                     <div class="chart-box">
                         <canvas id="dayChart"  width="350" height="250"></canvas>
                     </div>
@@ -142,11 +146,13 @@
             <br>
             <div class="wrapper">
                 <div class="chart-section">
+                    <br>
                     <div class="chart-box">
                         <canvas id="agelivingChart"  width="350" height="250"></canvas>
                     </div>
                 </div>
                 <div class="chart-section">
+                    <br>
                     <div class="chart-box">
                         <canvas id="ageChart"  width="350" height="250"></canvas>
                     </div>
@@ -230,6 +236,12 @@
                     y: {
                         beginAtZero: true
                     }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '시간대별 생활인구 비율'
+                    }
                 }
             }
         });
@@ -253,6 +265,12 @@
                     y: {
                         beginAtZero: true
                     }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '시간대별 생활인구 수'
+                    }
                 }
             }
         });
@@ -275,6 +293,12 @@
                 scales: {
                     y: {
                         beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '요일별 생활인구 비율'
                     }
                 }
             }
@@ -307,6 +331,12 @@
                     y: {
                         beginAtZero: true
                     }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '요일별 생활인구 수'
+                    }
                 }
             }
         });
@@ -337,6 +367,12 @@
                     y: {
                         beginAtZero: true
                     }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '연령대별 생활인구 비율'
+                    }
                 }
             }
         });
@@ -359,6 +395,12 @@
                 scales: {
                     y: {
                         beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '연령대별 생활인구 수'
                     }
                 }
             }

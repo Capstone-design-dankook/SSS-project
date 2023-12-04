@@ -269,7 +269,7 @@
             data: {
                 labels: ['남성', '여성'],
                 datasets: [{
-                    label: '남성/여성 매출비율',
+                    label: '성별 매출비율',
                     data: [{{ final.0.남성매출금액|div:3 }}, {{ final.0.여성매출금액|div:3 }}],
                     backgroundColor: ['#ffd400', '#a374db'],
                     borderColor: 'white',
@@ -281,6 +281,12 @@
                 scales: {
                     y: {
                         beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '성별 매출 비율'
                     }
                 }
             }
@@ -312,6 +318,12 @@
                     y: {
                         beginAtZero: true
                     }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '시간대별 매출 비율'
+                    }
                 }
             }
         });
@@ -334,6 +346,12 @@
                 scales: {
                     y: {
                         beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '시간대별 매출 금액'
                     }
                 }
             }
@@ -366,6 +384,12 @@
                     y: {
                         beginAtZero: true
                     }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '요일별 매출 비율'
+                    }
                 }
             }
         });
@@ -388,6 +412,12 @@
                 scales: {
                     y: {
                         beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '요일별 매출 금액'
                     }
                 }
             }
@@ -419,6 +449,12 @@
                     y: {
                         beginAtZero: true
                     }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '연령대별 매출 비율'
+                    }
                 }
             }
         });
@@ -441,6 +477,12 @@
                 scales: {
                     y: {
                         beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '연령대별 매출 금액'
                     }
                 }
             }
