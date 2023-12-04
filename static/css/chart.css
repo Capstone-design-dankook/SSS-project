@@ -35,8 +35,15 @@ h4 {
 
 .medium-container {
     width: 800px;
-    background-color: #FFFFFF;
+    background-color: white;
     border-radius: 5px;
+}
+
+.summary-container{
+    width: 760px;
+    background-color: white;
+    border-radius: 5px;
+    margin-left: 25px;
 }
 
 .menu {
@@ -99,7 +106,7 @@ h3 {
 
 .text-box {
     flex: 1;
-    margin-left: 50px;
+    margin-left: 20px;
     background-color: white;
     border-radius: 8px;
     width: 340px;
@@ -111,7 +118,7 @@ h3 {
 
 .map-box {
     flex: 1;
-    margin-right: 50px;
+    margin-right: 20px;
     background-color: #B1BDC5;
     width: 400px;
     height: 300px;
@@ -146,6 +153,7 @@ h3 {
     height: 50px;
     background-color: white;
     color: black;
+
 }
 
 .chart-section {
