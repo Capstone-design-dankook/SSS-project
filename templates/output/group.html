@@ -49,7 +49,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <h4><i class="fa-solid fa-circle-exclamation"></i> 목록에 있는 상권은 현재 {{ selected_neighborhood }}에서 영업중인 {{ selected_industry_name }}의 현황입니다.</h4>
+                                <h4><i class="fa-solid fa-circle-exclamation"></i> 목록에 있는 상권은 현재 {{ selected_neighborhood }}에서 영업 중인 {{ selected_industry_name }}의 현황입니다.</h4>
                                 {% for business_name in business_names %}
                                 {% for business_item in business_list %}
                                 {% if business_name.구상권코드 == business_item.상권코드 %}
@@ -64,19 +64,16 @@
                             </tbody>
                         </table>
                     {% else %}
-                        <h4><i class="fa-solid fa-circle-exclamation"></i> {{ selected_neighborhood }}에는 영업중인 {{ selected_industry_name }} 상권이 없습니다.</h4>
-                        <h4><i class="fa-solid fa-circle-exclamation"></i> 아래 그룹은 업종, 상권 데이터를 기반으로 {{ selected_neighborhood }}에서 {{ selected_industry_name }}을 창업했을 때의 예측 데이터입니다.</h4>
+                        <h4><i class="fa-solid fa-circle-exclamation"></i> {{ selected_neighborhood }}에는 현재 영업 중인 {{ selected_industry_name }} 상권이 없습니다.</h4>
                     {% endif %}
                 </div>
             </aside>
         </div>
 
-        {% if business_names %}
         <div class="explanation">
             <h4><i class="fa-solid fa-circle-exclamation"></i> 아래 상권 그룹은 {{ selected_neighborhood }}에서 {{ selected_industry_name }}을 창업했을 때의 예측 데이터입니다. 
-                따라서 현재 영업중인 점포가 없는 상권에 대한 예측 데이터도 제공됩니다. </h4>
+                따라서 현재 영업 중인 점포가 없는 상권에 대한 예측 데이터도 제공됩니다. </h4>
         </div>
-        {% endif %}
 
         {% if group_data.0.상권코드 %}
         <div class="group">
