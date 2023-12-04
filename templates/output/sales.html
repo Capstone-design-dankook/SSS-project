@@ -30,12 +30,14 @@
                 <li><a href="{% url 'output:facility' selected_district=selected_district selected_industry=selected_industry neighborhood_code=neighborhood_code group_id=group_id %}">집객시설</a></li>
             </ul>
         </nav>
+        <p><strong>&nbsp;&nbsp;지역 : 서울특별시 > {{ selected_district }} > {{ selected_neighborhood }}&nbsp;&nbsp;업종 : 요식업 > {{ selected_industry_name }}</strong></p>
+        <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;상권명 : {% for name in business_name %} {{ name }} {% endfor %}(총 {{ business_name|length }}개)</strong></p>
+        
         <div class="medium-container">
             <div class="wrapper">
                 <div class="text-box">
-                    <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;지역 : 서울특별시 > {{ selected_district }} > {{ selected_neighborhood }}</strong></p>
-                    <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;업종 : 요식업 > {{ selected_industry_name }}</strong></p>
-                    <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;상권명 : {% for name in business_name %} {{ name }} {% endfor %}(총 {{ business_name|length }}개)</strong></p>
+                    <h3><i class="fa-solid fa-bullhorn fa-lg" style="color: #000000;"></i> &nbsp;&nbsp;다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로 분석한 <br>선택 상권 그룹의 "예측 데이터"입니다.
+                    </h3>
                 </div>
                 <div class="map-box">
                     <main>
@@ -44,8 +46,8 @@
                 </div>
             </div>
         </div>
-        <h3><i class="fa-solid fa-bullhorn fa-lg" style="color: #000000;"></i> &nbsp;&nbsp;다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로 분석한 <br>선택 상권 그룹의 "예측 데이터"입니다.
-        </h3>
+
+        
         <br>
         <div class="small-container">
             <br>
