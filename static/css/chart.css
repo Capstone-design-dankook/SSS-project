@@ -106,7 +106,7 @@ h3 {
 
 .text-box {
     flex: 1;
-    margin-left: 50px;
+    margin-left: 20px;
     background-color: white;
     border-radius: 8px;
     width: 340px;
@@ -118,7 +118,7 @@ h3 {
 
 .map-box {
     flex: 1;
-    margin-right: 50px;
+    margin-right: 20px;
     background-color: #B1BDC5;
     width: 400px;
     height: 300px;
