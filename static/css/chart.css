@@ -82,13 +82,24 @@ h2 {
 
 h3 {
     text-align: center;
+    color: white;
+}
 
+.business-box {
+    flex: 1;
+    margin-left: 50px;
+    background-color: #B1BDC5;
+    border-radius: 8px;
+    width: 340px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .text-box {
     flex: 1;
-    margin-left: 15px;
-    margin-right: 10px;
+    margin-left: 50px;
     background-color: white;
     border-radius: 8px;
     width: 340px;
@@ -100,9 +111,8 @@ h3 {
 
 .map-box {
     flex: 1;
-    margin-left: 5px;
-    margin-right: 10px;
-    background-color: white;
+    margin-right: 50px;
+    background-color: #B1BDC5;
     width: 400px;
     height: 300px;
     display: flex;
@@ -112,8 +122,10 @@ h3 {
 
 .medium-container {
     width: 800px;
-    background-color: #FFFFFF;
+    background-color: #B1BDC5;
     border-radius: 5px;
+    padding-top: 5px;
+    margin-bottom: 20px;
 }
 
 .text-section {
@@ -131,10 +143,9 @@ h3 {
 
 .main-intro {
     width: 800px;
-    height: 200;
-    background-color: #FFFFFF;
-    margin-left: 15px;
-    margin-right: 50px;
+    height: 50px;
+    background-color: white;
+    color: black;
 }
 
 .chart-section {
