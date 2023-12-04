@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-bullhorn fa-lg" style="color: #000000;"></i> 다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;분석한 상권 그룹의 "예측 데이터"입니다.
+        <h3><i class="fa-solid fa-bullhorn fa-lg" style="color: #000000;"></i> &nbsp;&nbsp;다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로 분석한 <br>선택 상권 그룹의 "예측 데이터"입니다.
         </h3>
         <br>
         <div class="small-container">
@@ -54,10 +54,12 @@
             <div class="wrapper">
                 <div class="text-section">
                     <br>
-                    <p>
-                        해당 상권 그룹의 월 평균 추정 매출금액은 최소 {{ min_sell|div:3|floatformat:0|intcomma }}원 ~ 
-                        최대 {{ max_sell|div:3|floatformat:0|intcomma }}원 입니다. <br>
-                    </p>
+                    <div class="text-box">
+                        <p>
+                            선택 상권 그룹의 월 평균 추정 매출금액은 <br>최소 {{ min_sell|div:3|floatformat:0|intcomma }}원 ~ 
+                            최대 {{ max_sell|div:3|floatformat:0|intcomma }}원 입니다. <br>
+                        </p>
+                    </div>
                 </div>
                 <div class="chart-section">
                     <div class="chart-box">
@@ -79,14 +81,16 @@
             <div class="wrapper">
                 <div class="text-section">
                     <br>
-                    <p>
-                        해당 상권 그룹의 한 건당 매출 금액은 주중 {{ week_price|div:3|floatformat:0|intcomma }}원, 주말 {{ weekend_price|div:3|floatformat:0|intcomma }}원 입니다.<br>
-                        {% if week_price > weekend_price %}
-                        주중 한 건당 매출금액이 더 높더라도, 주중이 주말보다 전체 매출금액이 높지 않을 수 있습니다. 아래 요일별 매출금액을 함께 살펴보세요!
-                        {% else %}
-                        주말 한 건당 매출금액이 더 높더라도, 주말이 주중보다 전체 매출금액이 높지 않을 수 있습니다. 아래 요일별 매출금액을 함께 살펴보세요!
-                        {% endif %}
-                    </p>
+                    <div class="text-box">
+                        <p>
+                            선택 상권 그룹의 한 건당 매출 금액은 <br>주중 {{ week_price|div:3|floatformat:0|intcomma }}원, 주말 {{ weekend_price|div:3|floatformat:0|intcomma }}원 입니다.<br>
+                            {% if week_price > weekend_price %}
+                            주중 한 건당 매출금액이 더 높더라도, 주중이 <br>주말보다 전체 매출금액이 높지 않을 수 있습니다. <br>아래 요일별 매출금액을 함께 살펴보세요!
+                            {% else %}
+                            주말 한 건당 매출금액이 더 높더라도, 주말이 <br>주중보다 전체 매출금액이 높지 않을 수 있습니다. <br>아래 요일별 매출금액을 함께 살펴보세요!
+                            {% endif %}
+                        </p>
+                    </div>
                 </div>
                 <div class="chart-section">
                     <div class="chart-box">
@@ -107,42 +111,44 @@
             <br>
             <div class="wrapper">
                 <div class="text-section">
-                    <br>
-                    <p>
-                        {% with total_sales=final.0.남성매출금액|add:final.0.여성매출금액 %}
-                        {% with female_percentage=final.0.여성매출금액|div:total_sales|mul:100 %}
-                            여성 매출금액은 전체 매출의 {{ female_percentage|floatformat:1 }}%, 
-                        {% with male_percentage=final.0.남성매출금액|div:total_sales|mul:100 %}
-                            남성 매출금액은 전체 매출의 {{ male_percentage|floatformat:1 }}%를 차지합니다.
+                    <div class="text-box">
+                        <br>
+                        <p>
+                            {% with total_sales=final.0.남성매출금액|add:final.0.여성매출금액 %}
+                            {% with female_percentage=final.0.여성매출금액|div:total_sales|mul:100 %}
+                                여성 매출금액은 전체 매출의 {{ female_percentage|floatformat:1 }}%,<br> 
+                            {% with male_percentage=final.0.남성매출금액|div:total_sales|mul:100 %}
+                                남성 매출금액은 전체 매출의 {{ male_percentage|floatformat:1 }}%를 차지합니다.
 
-                            {% if female_percentage > male_percentage %}
-                            {% with fsub=female_percentage|sub:male_percentage %}
-                            {% if fsub < 5 %}
-                                <br>여성 매출금액이 남성 매출금액보다 높지만, 그 차이는 크지 않아 여성과 남성의 소비가 비슷한 것으로 보입니다.
-                            {% elif 5 < fsub and fsub < 10 %}
-                                <br>여성 매출금액이 남성 매출금액보다 높아, 여성이 남성보다 소비가 많은 것으로 보입니다.
-                            {% else %}
-                                <br>여성 매출금액이 남성 매출금액보다 월등히 높아, 여성이 남성보다 훨씬 소비가 많은 것으로 보입니다.
-                            {% endif %}
-                            {% endwith %}
-                            {% endif %}
+                                {% if female_percentage > male_percentage %}
+                                {% with fsub=female_percentage|sub:male_percentage %}
+                                {% if fsub < 5 %}
+                                    <br>여성 매출금액이 남성 매출금액보다 높지만,<br> 그 차이는 크지 않아 여성과 남성의 소비가 비슷한 것으로 보입니다.
+                                {% elif 5 < fsub and fsub < 10 %}
+                                    <br>여성 매출금액이 남성 매출금액보다 높아,<br> 여성이 남성보다 소비가 많은 것으로 보입니다.
+                                {% else %}
+                                    <br>여성 매출금액이 남성 매출금액보다 월등히 높아,<br> 여성이 남성보다 훨씬 소비가 많은 것으로 보입니다.
+                                {% endif %}
+                                {% endwith %}
+                                {% endif %}
 
-                            {% if female_percentage < male_percentage %}
-                            {% with msub=male_percentage|sub:female_percentage %}
-                            {% if msub < 5 %}
-                                <br>남성 매출금액이 여성 매출금액보다 높지만, 그 차이는 크지 않아 여성과 남성의 소비가 비슷한 것으로 보입니다.
-                            {% elif 5 < msub and msub < 10 %}
-                                <br>남성 매출금액이 여성 매출금액보다 높아, 남성이 여성보다 소비가 많은 것으로 보입니다.
-                            {% else %}
-                                <br>남성 매출금액이 여성 매출금액보다 월등히 높아, 남성이 여성보다 훨씬 소비가 많은 것으로 보입니다.
-                            {% endif %}
+                                {% if female_percentage < male_percentage %}
+                                {% with msub=male_percentage|sub:female_percentage %}
+                                {% if msub < 5 %}
+                                    <br>남성 매출금액이 여성 매출금액보다 높지만,<br> 그 차이는 크지 않아 여성과 남성의 소비가 비슷한 것으로 보입니다.
+                                {% elif 5 < msub and msub < 10 %}
+                                    <br>남성 매출금액이 여성 매출금액보다 높아,<br> 남성이 여성보다 소비가 많은 것으로 보입니다.
+                                {% else %}
+                                    <br>남성 매출금액이 여성 매출금액보다 월등히 높아,<br> 남성이 여성보다 훨씬 소비가 많은 것으로 보입니다.
+                                {% endif %}
+                                {% endwith %}
+                                {% endif %}
+                                
                             {% endwith %}
-                            {% endif %}
-                            
-                        {% endwith %}
-                        {% endwith %}
-                        {% endwith %}
-                    </p>
+                            {% endwith %}
+                            {% endwith %}
+                        </p>
+                    </div>
                 </div>
                 <div class="chart-section">
                     <div class="chart-box">
@@ -158,13 +164,16 @@
             <br><br>
             <div class="wrapper">
                 <div class="chart-section">
+                    <div class="chart-box">
                     <canvas id="timesalesChart" width="350" height="250"></canvas>
+                    </div>
                 </div>
                 <div class="chart-section">
                     <div class="chart-box">
-                        <canvas id="populationChart" width="350" height="250"></canvas>
+                    <canvas id="populationChart" width="350" height="250"></canvas>
                     </div>
                 </div>
+                <br>
             </div>
         </div>
         <br>
@@ -174,13 +183,16 @@
             <br><br>
             <div class="wrapper">
                 <div class="chart-section">
+                    <div class="chart-box">
                     <canvas id="daysalesChart" width="350" height="250"></canvas>
+                    </div>
                 </div>
                 <div class="chart-section">
                     <div class="chart-box">
                         <canvas id="saleChart" width="350" height="250"></canvas>
                     </div>
                 </div>
+                <br>
             </div>
         </div>
         <br>
@@ -190,13 +202,16 @@
             <br><br>
             <div class="wrapper">
                 <div class="chart-section">
-                    <canvas id="agesalesChart"  width="350" height="250"></canvas>
+                    <div class="chart-box">
+                        <canvas id="agesalesChart"  width="350" height="250"></canvas>
+                    </div>
                 </div>
                 <div class="chart-section">
                     <div class="chart-box">
                         <canvas id="ageChart"  width="350" height="250"></canvas>
                     </div>
                 </div>
+                <br>
             </div>
         </div>
     </div>

@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-bullhorn fa-lg" style="color: #000000;"></i> 다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;분석한 상권 그룹의 "예측 데이터"입니다.
+        <h3><i class="fa-solid fa-bullhorn fa-lg" style="color: #000000;"></i> &nbsp;&nbsp;다음 데이터는 서울시 {{selected_industry_name}} 데이터와 {{ selected_neighborhood }}의 상권데이터를 기반으로 분석한 <br>선택 상권 그룹의 "예측 데이터"입니다.
         </h3>
         <br>
         <div class="small-container">
@@ -57,10 +57,20 @@
             <div class="wrapper">
                 <div class="text-section">
                     <br>
-                    <p>
-                        해당 상권 그룹의 평균 집객시설 수는 {{ final.0.집객시설수|div:3|floatformat:0|intcomma }}개,
-                        {{ selected_neighborhood }}의 평균 집객시설 수는 {{ district_facility|div:3|floatformat:0|intcomma }}개 입니다. 
-                    </p>
+                    <div class="text-box">
+                        <p>
+                            <br><br><br>
+                            {% if final.0.집객시설수 > district_facility %}
+                                선택 상권 그룹은 총 집객시설 수가 {{ selected_neighborhood }} 평균에 비해 많은 편입니다.
+                            {% else %}
+                                선택 상권 그룹은 총 집객시설 수가 {{ selected_neighborhood }} 평균에 비해 적은 편입니다.
+                            {% endif%}
+                        </p>
+                        <p style="font-size:13px">
+                            <br>
+                            * 총 집객시설 수는 주요 집객시설 수를 포함한 모든 집객시설의 수 입니다. 
+                        </p>
+                    </div>
                 </div>
                 <div class="chart-section">
                     <div class="chart-box">
@@ -73,10 +83,11 @@
         <div class="small-container">
             <br>
             {% if max_facility == "관공서" or max_facility == "대학교" %}
-                <h2 class="title">&nbsp;&nbsp;해당 상권 그룹에는 {{ max_facility }}가 가장 많습니다. </h2>
+                <h2 class="title">&nbsp;&nbsp;선택 상권 그룹에는 {{ max_facility }}가 가장 많습니다. </h2>
             {% else %}
-                <h2 class="title">&nbsp;&nbsp;해당 상권 그룹에는 {{ max_facility }}이 가장 많습니다. </h2>
+                <h2 class="title">&nbsp;&nbsp;선택 상권 그룹에는 {{ max_facility }}이 가장 많습니다. </h2>
             {% endif %}
+            <br>
             <br>
             <div class="chart">
                 <div class="chart-box">
@@ -119,7 +130,7 @@
             data:{
                 labels:[ '관공서', '은행', '대학교', '백화점', '슈퍼마켓', '의료시설', '교육시설', '여가시설', '교통시설'],
                 datasets:[{
-                    label: '집객시설 수',
+                    label: '주요 집객시설 수',
                     data: [{{ final.0.관공서수|div:3 }}, {{ final.0.은행수|div:3 }}, {{ final.0.대학교수|div:3 }}, {{ final.0.백화점수|div:3 }}, 
                     {{ final.0.슈퍼마켓수|div:3 }}, {{ final.0.의료시설수|div:3 }}, {{ final.0.교육시설수|div:3 }}, {{ final.0.여가시설수|div:3 }},{{ final.0.교통시설수|div:3 }}],
                     backgroundColor: '#ffaaaa',

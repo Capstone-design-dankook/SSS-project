@@ -81,16 +81,17 @@ h2 {
 }
 
 h3 {
-    text-align: left;
+    text-align: center;
+
 }
 
 .text-box {
     flex: 1;
-    margin-left: 1px;
+    margin-left: 15px;
     margin-right: 10px;
     background-color: white;
     border-radius: 8px;
-    width: 400px;
+    width: 340px;
     height: 300px;
     display: flex;
     flex-direction: column;
@@ -102,7 +103,6 @@ h3 {
     margin-left: 5px;
     margin-right: 10px;
     background-color: white;
-    border-radius: 8px;
     width: 400px;
     height: 300px;
     display: flex;
@@ -118,11 +118,11 @@ h3 {
 
 .text-section {
     flex: 1;
-    margin-left: 60px;
-    margin-right: 60px;
+    margin-left: 20px;
+    margin-right: 20px;
     background-color: white;
     border-radius: 8px;
-    width: 400px;
+    width: 380px;
     height: 200px;
     display: flex;
     flex-direction: column;
