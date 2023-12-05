@@ -88,7 +88,14 @@
                     <br>
                     <div class="text-box">
                         <p>
-                            말말말
+                            {% with total_sales=final.0.남성생활인구수|add:final.0.여성생활인구수 %}
+                            {% with female_percentage=final.0.여성생활인구수|div:total_sales|mul:100 %}
+                                여성 생활인구수는 전체 생활인구수의 {{ female_percentage|floatformat:1 }}%,<br> 
+                            {% with male_percentage=final.0.남성생활인구수|div:total_sales|mul:100 %}
+                                남성 생활인구수는 전체 생활인구수의 {{ male_percentage|floatformat:1 }}%를 차지합니다.
+                            {% endwith %}
+                            {% endwith %}
+                            {% endwith %}
                         </p>
                     </div>
                 </div>
