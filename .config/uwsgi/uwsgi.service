@@ -1,0 +1,12 @@
+Description=uWSGI service
+After=syslog.target
+
+ExecStart=/home/ubuntu/myvenv/bin/uwsgi -i /srv/SSS-project/.config/uwsgi/triples.ini
+
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+StandardError=syslog
+NotifyAccess=all
+
+WantedBy=multi-user.target
