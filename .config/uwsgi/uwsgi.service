@@ -1,7 +1,7 @@
 Description=uWSGI service
 After=syslog.target
 
-ExecStart=/home/ubuntu/myvenv/bin/uwsgi -i /srv/SSS-project/.config/uwsgi/triples.ini
+ExecStart=/home/ubuntu/capston/bin/uwsgi -i /srv/SSS-project/.config/uwsgi/triples.ini
 
 Restart=always
 KillSignal=SIGQUIT
