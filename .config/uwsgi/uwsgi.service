@@ -1,6 +1,8 @@
+[Unit]
 Description=uWSGI service
 After=syslog.target
 
+[Service]
 ExecStart=/home/ubuntu/capston/bin/uwsgi -i /srv/SSS-project/.config/uwsgi/triples.ini
 
 Restart=always
@@ -9,4 +11,5 @@ Type=notify
 StandardError=syslog
 NotifyAccess=all
 
+[Install]
 WantedBy=multi-user.target
