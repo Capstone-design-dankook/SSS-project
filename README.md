@@ -10,7 +10,8 @@
 ### 2024.04 ~ 2024.11
 
 ## TRIPLE S 팀
-### Fullstack develo
+### 공수빈 - HTML/CSS/Javascript, SQLite, 데이터 분석
+### 이나영 - Django, 서버 배포, 데이터 분석
 
 
 ## 사용 기술 스택
