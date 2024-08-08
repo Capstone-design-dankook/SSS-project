@@ -9,8 +9,14 @@
 2024.04 ~ 2024.11
 
 ## 사용 기술 스택
-Django, Python, jupyter Notebook, SQLite, AWS EC2
-Github, Notion
+### Backend
+- 프레임워크 : Django
+- 데이터베이스 : SQLite
+- 서버 : AWS EC2
+
+### Frontend
+- 장고 템플릿 시스템을 통해 관리
+- HTML, CSS, Javascript
 
 
 ## 원천 데이터
@@ -19,3 +25,8 @@ Github, Notion
 
 ## 예측 데이터 생성 로직
 ![image](https://github.com/user-attachments/assets/2dcffbf7-19f5-42e1-89c5-2483c22925ce)
+
+## 사용자 주요 사용 페이지
+### - 창업 희망 지역에서 희망 업종을 창업했을 때의 예상 데이터 제공 페이지
+![image](https://github.com/user-attachments/assets/cab47de8-6367-429e-8c16-1bca865271f2)
+
