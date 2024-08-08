@@ -10,7 +10,7 @@
 ### 2024.04 ~ 2024.11
 
 ## TRIPLE S 팀
-### Fullstack 
+### Fullstack develo
 
 
 ## 사용 기술 스택
