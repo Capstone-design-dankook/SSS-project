@@ -8,7 +8,8 @@
 ## 프로젝트 기간
 2024.04 ~ 2024.11
 
-## 사용 기술 스택
+## ![image](https://github.com/user-attachments/assets/3b35c07a-66a7-4620-907d-fdc838c92a95)
+사용 기술 스택
 ### Backend
 - 프레임워크 : Django
 - 데이터베이스 : SQLite
